@@ -20,7 +20,7 @@ export const GET = async (event) => {
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: '/dashboard'
+				Location: '/home'
 			}
 		});
 	}
@@ -77,7 +77,7 @@ export const GET = async (event) => {
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: '/dashboard'
+				Location: '/home'
 			}
 		});
 	} catch (e) {

@@ -11,8 +11,6 @@
 
 <ModeWatcher />
 <div class="relative flex min-h-screen flex-col">
-	<Navigation {user} />
-	<div class="mt-8 md:mt-12">
-		<slot />
-	</div>
+	<!-- <Navigation {user} /> -->
+	<slot />
 </div>

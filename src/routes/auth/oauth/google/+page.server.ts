@@ -2,10 +2,9 @@ import { redirect } from '@sveltejs/kit';
 import { generateState, generateCodeVerifier } from 'arctic';
 import { initializeGoogleOauth } from '$lib/server/lucia';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const load = async (event) => {
 	if (event.locals.user) {
-		redirect(302, '/dashboard');
+		redirect(302, '/home');
 	}
 
 	const state = generateState();

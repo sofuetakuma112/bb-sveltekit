@@ -24,45 +24,51 @@ import { drizzle } from 'drizzle-orm/d1';
 // };
 
 export const handle: Handle = async ({ event, resolve }) => {
-	// const startTimer = Date.now();
-	// event.locals.startTimer = startTimer;
+  // const startTimer = Date.now();
+  // event.locals.startTimer = startTimer;
 
-	event.locals.DB = <D1Database>event.platform?.env.DB;
-	event.locals.db = drizzle(event.locals.DB);
-	event.locals.lucia = initializeLucia(event.locals.db);
+  event.locals.DB = <D1Database>event.platform?.env.DB;
+  event.locals.db = drizzle(event.locals.DB);
+  event.locals.lucia = initializeLucia(event.locals.db);
 
-	const lucia = event.locals.lucia;
+  const lucia = event.locals.lucia;
 
-	const sessionId = event.cookies.get(lucia.sessionCookieName);
-	if (!sessionId) {
-		event.locals.user = null;
-		event.locals.session = null;
-		return resolve(event);
-	}
+  const isProtectedRoute = event.route.id?.startsWith('/(protected)');
 
-	const { session, user } = await lucia.validateSession(sessionId);
-	if (session && session.fresh) {
-		const sessionCookie = lucia.createSessionCookie(session.id);
-		event.cookies.set(sessionCookie.name, sessionCookie.value, {
-			path: '.',
-			...sessionCookie.attributes
-		});
-	}
-	if (!session) {
-		const sessionCookie = lucia.createBlankSessionCookie();
-		event.cookies.set(sessionCookie.name, sessionCookie.value, {
-			path: '.',
-			...sessionCookie.attributes
-		});
-	}
-	event.locals.user = user;
-	event.locals.session = session;
+  const sessionId = event.cookies.get(lucia.sessionCookieName);
+  if (!sessionId && !isProtectedRoute) {
+    event.locals.user = null;
+    event.locals.session = null;
+    return resolve(event);
+  }
+  if (!sessionId && isProtectedRoute) {
+    redirect(302, '/login');
+  }
 
-	if (event.route.id?.startsWith('/(protected)')) {
-		if (!user) redirect(302, '/');
-	}
+  const { session, user } = await lucia.validateSession(sessionId as string);
+  if (session && session.fresh) {
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    event.cookies.set(sessionCookie.name, sessionCookie.value, {
+      path: '.',
+      ...sessionCookie.attributes
+    });
+  }
+  if (!session) {
+    const sessionCookie = lucia.createBlankSessionCookie();
+    event.cookies.set(sessionCookie.name, sessionCookie.value, {
+      path: '.',
+      ...sessionCookie.attributes
+    });
+  }
+  event.locals.user = user;
+  event.locals.session = session;
 
-	const response = await resolve(event);
-	// log(response.status, event);
-	return response;
+  // この処理は必要ない？
+  if (isProtectedRoute) {
+    if (!user) redirect(302, '/login');
+  }
+
+  const response = await resolve(event);
+  // log(response.status, event);
+  return response;
 };

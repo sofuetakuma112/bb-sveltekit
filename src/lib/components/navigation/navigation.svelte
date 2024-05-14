@@ -39,8 +39,8 @@
 				>
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
-					href="/dashboard"
-					class:active={'/dashboard' === currentPage}>Protected</a
+					href="/home"
+					class:active={'/home' === currentPage}>Protected</a
 				>
 			</nav>
 		</div>
