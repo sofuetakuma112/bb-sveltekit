@@ -1,3 +1,4 @@
+import { getRecommendedPosts, getFollowingPosts } from '$lib/drizzle/get/post';
 import { redirect, type ServerLoadEvent } from '@sveltejs/kit';
 
 export const load = async (event: ServerLoadEvent) => {
@@ -9,5 +10,18 @@ export const load = async (event: ServerLoadEvent) => {
   if (!user) {
     redirect(302, '/login');
   }
-  return user;
+
+  const userId = user.id;
+
+  const type = event.url.searchParams.get('type') ?? 'recommend';
+
+  const db = event.locals.db;
+  const r2 = event.platform?.env.R2 as R2Bucket;
+
+  const { post } =
+    type === 'recommend'
+      ? await getRecommendedPosts(db, r2, userId)
+      : await getFollowingPosts(db, r2, userId);
+
+  return { type, post };
 };

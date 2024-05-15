@@ -7,7 +7,7 @@ import { BASE_URL } from '$lib/config/constants';
 import { Google } from 'arctic';
 import { env } from '$env/dynamic/private';
 
-export const initializeLucia = (db: DrizzleD1Database) => {
+export const initializeLucia = (db: DrizzleClient) => {
 	const adapter = new DrizzleSQLiteAdapter(db, sessionsTable, usersTable);
 	return new Lucia(adapter, {
 		sessionCookie: {

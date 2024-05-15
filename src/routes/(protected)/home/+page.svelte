@@ -1,10 +1,31 @@
-<section class="container grid items-center gap-6">
-	<div class="flex max-w-[980px] flex-col items-start gap-2">
-		<h1 class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-			Protected Area
-		</h1>
-		<p class="max-w-[700px] text-lg text-muted-foreground">
-			If you are seeing this page, you are logged in.
-		</p>
-	</div>
-</section>
+<script lang="ts">
+  import { Button } from '$lib/components/ui/button';
+  import { Tabs, TabsList, TabsTrigger, TabsContent } from '$lib/components/ui/tabs';
+  import { goto } from '$app/navigation';
+  import SwipeCards from '$lib/components/card/swipeCards.svelte';
+
+  export let data;
+</script>
+
+<div class="h-full px-2 sm:px-8">
+  <Tabs defaultValue="recommend" style={{ height: '100%' }} class="flex flex-col">
+    <div
+      class="flex h-16 sm:flex-1 items-center sm:max-h-[calc(100%-48px-785px-20px)] sm:min-h-[calc(48px+16px_*_2)] sm:py-4"
+    >
+      <TabsList class="mx-auto flex justify-center" variant="text">
+        <TabsTrigger value="recommend" variant="text" on:click={() => goto(`/home?type=recommend`)}>
+          おすすめ
+        </TabsTrigger>
+        <div class="mx-4 min-h-full w-0.5 bg-gray-300"></div>
+        <TabsTrigger value="following" variant="text" on:click={() => goto(`/home?type=following`)}>
+          フォロー中
+        </TabsTrigger>
+      </TabsList>
+    </div>
+    <div class="h-full max-h-[calc(100%-64px-64px)] flex-1 sm:max-h-full">
+      <TabsContent value={data.type} variant="text" class="h-full flex justify-center flex-1">
+        <SwipeCards tabValue={data.type} post={data.post} />
+      </TabsContent>
+    </div>
+  </Tabs>
+</div>

@@ -2,6 +2,7 @@ import { initializeLucia } from '$lib/server/lucia';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { drizzle } from 'drizzle-orm/d1';
 // import type { HandleServerError } from '@sveltejs/kit';
+import * as schema from '$lib/server/db/schema';
 
 // import log from '$lib/server/log';
 
@@ -28,7 +29,7 @@ export const handle: Handle = async ({ event, resolve }) => {
   // event.locals.startTimer = startTimer;
 
   event.locals.DB = <D1Database>event.platform?.env.DB;
-  event.locals.db = drizzle(event.locals.DB);
+  event.locals.db = drizzle(event.locals.DB, { schema });
   event.locals.lucia = initializeLucia(event.locals.db);
 
   const lucia = event.locals.lucia;
