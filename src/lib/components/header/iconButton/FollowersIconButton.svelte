@@ -5,6 +5,5 @@
 </script>
 
 <Button variant="smOutline" sp="menubar" class={className}>
-  <!-- <Icon name="follower" class="size-7 sm:size-8" /> -->
-  <iconify-icon icon="ic:baseline-people"></iconify-icon>
+  <span class="i-ic-baseline-people size-6 sm:size-7"></span>
 </Button>

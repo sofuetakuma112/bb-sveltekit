@@ -1,21 +1,18 @@
 <script lang="ts">
-	import { Tabs as TabsPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils";
+  import { Tabs as TabsPrimitive } from 'bits-ui';
+  import { cn } from '$lib/utils';
+  import { tabsContentVariants, type TabsContentProps } from '.';
 
-	type $$Props = TabsPrimitive.ContentProps;
-
-	let className: $$Props["class"] = undefined;
-	export let value: $$Props["value"];
-	export { className as class };
+  let className: TabsContentProps['class'] = undefined;
+  export let variant: TabsContentProps['variant'] = 'default';
+  export let value: TabsContentProps['value'];
+  export { className as class };
 </script>
 
 <TabsPrimitive.Content
-	class={cn(
-		"mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-		className
-	)}
-	{value}
-	{...$$restProps}
+  class={cn(tabsContentVariants({ variant, className }))}
+  {value}
+  {...$$restProps}
 >
-	<slot />
+  <slot />
 </TabsPrimitive.Content>

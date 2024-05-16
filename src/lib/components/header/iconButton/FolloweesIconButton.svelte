@@ -1,10 +1,8 @@
 <script>
-    import { Button } from '$lib/components/ui/button';
-    // import Icon from '$lib/components/ui/Icon.svelte';
-    export let className = '';
-  </script>
-  
-  <Button variant="smOutline" sp="menubar" class={className}>
-    <!-- <Icon name="follow" class="size-7 sm:size-8" /> -->
-    <iconify-icon icon="mdi:user"></iconify-icon>
-  </Button>
+  import { Button } from '$lib/components/ui/button';
+  export let className = '';
+</script>
+
+<Button variant="smOutline" sp="menubar" class={className}>
+  <span class="i-ic-baseline-person size-6 sm:size-7"></span>
+</Button>

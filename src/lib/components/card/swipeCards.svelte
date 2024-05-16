@@ -91,7 +91,7 @@
       >
         {#if Number(post.superLikeCount) > 0}
           <div class={commonClasses.superLikeIcon}>
-            <iconify-icon icon="material-symbols:star"></iconify-icon>
+            <span class="i-ic-baseline-star size-6 sm:size-7"></span>
             <span class="pl-2 text-sm font-bold text-blue-300"> superlikeされた投稿です！！ </span>
           </div>
         {/if}
@@ -104,8 +104,8 @@
           hidden: currentScrollIndex > 0
         })}
       >
-        <Button variant="smOutline" className={commonClasses.reload} on:click={handleReload}>
-            <iconify-icon icon="hugeicons:reload"></iconify-icon>
+        <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
+          <span class="i-ic-baseline-refresh size-8"></span>
         </Button>
       </div>
 
@@ -117,10 +117,10 @@
       >
         <Button
           variant="ghost"
-          className={commonClasses.scrollButton}
+          class={commonClasses.scrollButton}
           on:click={() => handleScroll('up')}
         >
-        <iconify-icon icon="bi:arrow-up"></iconify-icon>
+        <span class="i-ic-baseline-arrow-upward size-8"></span>
         </Button>
       </div>
 
@@ -132,10 +132,10 @@
       >
         <Button
           variant="ghost"
-          className={commonClasses.scrollButton}
+          class={commonClasses.scrollButton}
           on:click={() => handleScroll('down')}
         >
-        <iconify-icon icon="bi:arrow-down"></iconify-icon>
+        <span class="i-ic-baseline-arrow-downward size-8"></span>
         </Button>
       </div>
 
@@ -203,26 +203,24 @@
         <form method="post">
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="unlike" />
-          <Button type="submit" variant="lgOutline" className={buttonVariants.lgOutline}>
-            <iconify-icon icon="akar-icons:cross"></iconify-icon>
+          <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
+            <span class="i-akar-icons-cross size-8"></span>
           </Button>
         </form>
 
         <form method="post">
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="super_like" />
-          <Button type="submit" variant="lgOutline" className={buttonVariants.lgOutline}>
-            <!-- <Icon name="super-like" className="size-8 sm:size-16" /> -->
-            <iconify-icon icon="material-symbols:star"></iconify-icon>
+          <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
+            <span class="i-ic-baseline-star size-8 sm:size-16"></span>
           </Button>
         </form>
 
         <form method="post">
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="like" />
-          <Button type="submit" variant="lgOutline" className={buttonVariants.lgOutline}>
-            <!-- <Icon name="like" className="size-8 sm:size-16" /> -->
-            <iconify-icon icon="mdi:heart"></iconify-icon>
+          <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
+            <span class="i-ic-baseline-favorite size-8 sm:size-16"></span>
           </Button>
         </form>
       </div>
@@ -278,27 +276,24 @@
             <form method="post">
               <input name="postId" type="hidden" value={post.id} />
               <input name="likeType" type="hidden" value="unlike" />
-              <Button type="submit" variant="smOutline" className={buttonVariants.smOutline}>
-                <!-- <Icon name="nope" className="size-6" /> -->
-                <iconify-icon icon="akar-icons:cross"></iconify-icon>
+              <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
+                <span class="i-akar-icons-cross size-6"></span>
               </Button>
             </form>
 
             <form method="post">
               <input name="postId" type="hidden" value={post.id} />
               <input name="likeType" type="hidden" value="super_like" />
-              <Button type="submit" variant="smOutline" className={buttonVariants.smOutline}>
-                <!-- <Icon name="super-like" className="size-6" /> -->
-                <iconify-icon icon="material-symbols:star"></iconify-icon>
+              <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
+                <span class="i-ic-baseline-star size-6"></span>
               </Button>
             </form>
 
             <form method="post">
               <input name="postId" type="hidden" value={post.id} />
               <input name="likeType" type="hidden" value="like" />
-              <Button type="submit" variant="smOutline" className={buttonVariants.smOutline}>
-                <!-- <Icon name="like" className="size-6" /> -->
-                <iconify-icon icon="mdi:heart"></iconify-icon>
+              <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
+                <span class="i-ic-baseline-favorite size-6"></span>
               </Button>
             </form>
           </div>
@@ -313,7 +308,7 @@
             {#if Number(post.superLikeCount) > 0}
               <div class={commonClasses.superLikeIcon}>
                 <!-- <Icon name="super-like" width="32" height="32" /> -->
-                <iconify-icon icon="material-symbols:star"></iconify-icon>
+                <span class="i-ic-baseline-star size-8"></span>
                 <span class="pl-2 text-sm font-bold text-blue-300">
                   superlikeされた投稿です！！
                 </span>
@@ -328,9 +323,8 @@
               hidden: currentScrollIndex > 0
             })}
           >
-            <Button variant="smOutline" className={commonClasses.reload} on:click={handleReload}>
-              <!-- <Icon name="reload" width="32" height="32" /> -->
-              <iconify-icon icon="hugeicons:reload"></iconify-icon>
+            <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
+              <span class="i-ic-baseline-refresh size-8"></span>
             </Button>
           </div>
         </div>

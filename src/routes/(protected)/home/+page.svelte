@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Button } from '$lib/components/ui/button';
   import { Tabs, TabsList, TabsTrigger, TabsContent } from '$lib/components/ui/tabs';
   import { goto } from '$app/navigation';
   import SwipeCards from '$lib/components/card/swipeCards.svelte';
@@ -8,7 +7,7 @@
 </script>
 
 <div class="h-full px-2 sm:px-8">
-  <Tabs defaultValue="recommend" style={{ height: '100%' }} class="flex flex-col">
+  <Tabs value="recommend" class="flex flex-col h-full">
     <div
       class="flex h-16 sm:flex-1 items-center sm:max-h-[calc(100%-48px-785px-20px)] sm:min-h-[calc(48px+16px_*_2)] sm:py-4"
     >

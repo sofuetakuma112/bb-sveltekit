@@ -1,19 +1,20 @@
 <script>
   import LogOutDialog from './LogOutDialog.svelte';
   import { Button } from '$lib/components/ui/button';
+  import { createEventDispatcher } from 'svelte';
+  import { cn } from '@/utils';
   export let className = '';
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <LogOutDialog>
-  <div name="toggle">
-    <Button
-      variant="smOutline"
-      sp="menubar"
-      class={`hidden sm:flex ${className}`}
-      on:click={toggle}
-    >
-      <!-- <Icon name="logout" width="32" height="32" /> -->
-      <iconify-icon icon="material-symbols:logout"></iconify-icon>
-    </Button>
-  </div>
+  <Button
+    variant="smOutline"
+    sp="menubar"
+    class={cn('hidden sm:flex', className)}
+    on:click={() => dispatch('toggle')}
+  >
+    <span class="i-ic-baseline-logout size-8"></span>
+  </Button>
 </LogOutDialog>
