@@ -1,17 +1,15 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui/button';
   import FileUpload from '@/components/form/FileUpload.svelte';
-  import { Loader } from 'lucide-svelte';
   import { Input } from '$lib/components/ui/input';
   import type { EditProfileSchema } from '$lib/form/editProfile';
   import type { SuperValidated, Infer } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms';
 
+  export let formData: SuperValidated<Infer<EditProfileSchema>>;
   export let userName;
 
-  export let data: SuperValidated<Infer<EditProfileSchema>>;
-
-  const { form, errors, enhance } = superForm(data);
+  const { form, errors, enhance } = superForm(formData);
 </script>
 
 <!-- TODO: 正しいURLにする -->
@@ -41,8 +39,6 @@
         <p class="w-full text-red-500">{$errors.file}</p>
       {/if}
     </div>
-    <Button variant="upload" class="mt-9 font-semibold">
-      投稿する
-    </Button>
+    <Button variant="upload" class="mt-9 font-semibold">投稿する</Button>
   </div>
 </form>

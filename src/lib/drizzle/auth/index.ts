@@ -1,5 +1,5 @@
 import { usersTable } from "$lib/server/db/schema";
-import { DrizzleClient } from "$lib/types/drizzle";
+import type { DrizzleClient } from "$lib/types/drizzle";
 import { GoogleProfile } from "remix-auth-google";
 import { eq } from "drizzle-orm";
 

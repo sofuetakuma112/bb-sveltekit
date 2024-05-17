@@ -1,29 +1,27 @@
-import { drizzle } from "drizzle-orm/d1";
-import { faker } from "@faker-js/faker";
+import { drizzle } from 'drizzle-orm/d1';
+import { faker } from '@faker-js/faker';
 import {
   usersTable,
   postsTable,
   likesTable,
   followsTable,
   notificationsTable,
-} from "$lib/server/db/schema";
-import { v4 as uuidv4 } from "uuid";
-import { hashTags } from "./const";
+  hashtagsTable
+} from '@/server/db/schema';
+import { v4 as uuidv4 } from 'uuid';
+import { hashTags } from './const';
 
 interface Env {
   DB: D1Database;
 }
 
 function getRandomAge() {
-  const birthdate = faker.date.birthdate({ min: 18, max: 35, mode: "age" });
+  const birthdate = faker.date.birthdate({ min: 18, max: 35, mode: 'age' });
   const today = new Date();
   let age = today.getFullYear() - birthdate.getFullYear();
   const monthDiff = today.getMonth() - birthdate.getMonth();
 
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthdate.getDate())
-  ) {
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
     age--;
   }
 
@@ -36,7 +34,20 @@ function getRandomElements(hashTags: string[]) {
   return shuffledArray.slice(0, numElements); // ランダムな数の要素を選択して返す
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
+async function fetch30PicUrls(): Promise<string[]> {
+  const response = await fetch('https://api.waifu.pics/many/sfw/waifu', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({})
+  });
+  const res: {
+    files: string[];
+  } = await response.json();
+  return res.files;
+}
+
 export default {
   async fetch(
     request: Request,
@@ -45,10 +56,12 @@ export default {
   ): Promise<Response> {
     const db = drizzle(env.DB);
 
-    const seedImages = await request.json();
+    let existSeedImages = true;
+    let seedImages: string[] = ((await request.json()) as string[]).filter((fileName) => fileName);
 
-    if (!Array.isArray(seedImages)) {
-      throw Error("seedImages is invalid");
+    if (seedImages.length === 0) {
+      existSeedImages = false;
+      seedImages = (await Promise.all([...Array(4)].flatMap(() => fetch30PicUrls()))).flat();
     }
 
     // ユーザーデータの作成
@@ -58,56 +71,65 @@ export default {
         name: faker.person.fullName(),
         icon: faker.image.avatar(),
         imageS3Key: faker.image.avatar(),
-        provider: "google",
+        provider: 'google',
         providerId: uuidv4(),
+        email: faker.internet.email()
       });
     }
-    await Promise.all(
-      userData.map((data) => db.insert(usersTable).values(data))
-    );
+    await Promise.all(userData.map((data) => db.insert(usersTable).values(data)));
 
     // 投稿データの作成
     const postData: (typeof postsTable.$inferInsert)[] = [];
-    const userIds = await db
-      .select({ id: usersTable.id })
-      .from(usersTable)
-      .all();
+    const userIds = await db.select({ id: usersTable.id }).from(usersTable).all();
+    const allPostIds: string[] = [];
+
     for (let i = 0; i < seedImages.length; i++) {
       const userId = faker.helpers.arrayElement(userIds).id;
+      const postId = uuidv4();
+      allPostIds.push(postId);
+
       postData.push({
+        id: postId,
         prompt: faker.lorem.sentence(),
-        imageS3Key: `posts/${seedImages[i].split(".")[0]}`,
-        imageName: faker.person.firstName("female"),
+        imageS3Key: existSeedImages ? `posts/${seedImages[i].split('.')[0]}` : seedImages[i],
+        imageName: faker.person.firstName('female'),
         imageAge: getRandomAge().toString(),
         imageBirthplace: faker.location.country(),
         analysisResult: true,
-        hashTags: getRandomElements(hashTags),
-        userId,
+        userId
       });
     }
-    await Promise.all(
-      postData.map((data) => db.insert(postsTable).values(data))
-    );
+    await Promise.all(postData.map((data) => db.insert(postsTable).values(data)));
+
+    // ハッシュタグデータの作成
+    const hashTagData: (typeof hashtagsTable.$inferInsert)[] = [];
+
+    for (let i = 0; i < allPostIds.length; i++) {
+      const selectedTags = getRandomElements(hashTags);
+      for (const tag of selectedTags) {
+        hashTagData.push({
+          tag,
+          postId: allPostIds[i]
+        });
+      }
+    }
+
+    await Promise.all(hashTagData.map((data) => db.insert(hashtagsTable).values(data)));
 
     // いいねデータの作成
     const likeData: (typeof likesTable.$inferInsert)[] = [];
-    const postIds = await db
-      .select({ id: postsTable.id })
-      .from(postsTable)
-      .all();
+    const postIds = await db.select({ id: postsTable.id }).from(postsTable).all();
     for (let i = 0; i < 100; i++) {
       const userId = faker.helpers.arrayElement(userIds).id;
       const postId = faker.helpers.arrayElement(postIds).id;
       likeData.push({
-        likeType: faker.helpers.arrayElement(["like", "super_like", "unlike"]),
+        likeType: faker.helpers.arrayElement(['like', 'super_like', 'unlike']),
         userId,
-        postId,
+        postId
       });
     }
 
-    await Promise.all(
-      likeData.map((data) => db.insert(likesTable).values(data))
-    );
+    await Promise.all(likeData.map((data) => db.insert(likesTable).values(data)));
 
     // フォローデータの作成
     const followData: (typeof followsTable.$inferInsert)[] = [];
@@ -117,43 +139,33 @@ export default {
       if (followerId !== followeeId) {
         followData.push({
           followerId,
-          followeeId,
+          followeeId
         });
       }
     }
-    await db.insert(followsTable).values(followData);
+    await Promise.all(followData.map((data) => db.insert(followsTable).values(data)));
 
     // 通知データの作成
-
     const notificationData: (typeof notificationsTable.$inferInsert)[] = [];
     for (let i = 0; i < 200; i++) {
       const userId = faker.helpers.arrayElement(userIds).id;
       const notifierUserId = faker.helpers.arrayElement(userIds).id;
-      const postId =
-        Math.random() < 0.8
-          ? faker.helpers.arrayElement(postIds).id
-          : undefined;
+      const postId = Math.random() < 0.8 ? faker.helpers.arrayElement(postIds).id : undefined;
 
       if (userId !== notifierUserId) {
         notificationData.push({
-          notificationType: faker.helpers.arrayElement([
-            "like",
-            "super_like",
-            "follow",
-          ]),
+          notificationType: faker.helpers.arrayElement(['like', 'super_like', 'follow']),
           userId,
           notifierUserId,
-          postId,
+          postId
         });
       }
     }
 
-    await Promise.all(
-      notificationData.map((data) => db.insert(notificationsTable).values(data))
-    );
+    await Promise.all(notificationData.map((data) => db.insert(notificationsTable).values(data)));
 
     return Response.json({
-      message: "Seed done",
+      message: 'Seed done'
     });
-  },
+  }
 };

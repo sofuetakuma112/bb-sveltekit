@@ -1,6 +1,7 @@
 <script>
   import { Button } from '$lib/components/ui/button';
-  export let className = '';
+  export let className = undefined;
+  export { className as class };
 </script>
 
 <Button variant="smOutline" sp="menubar" class={className}>

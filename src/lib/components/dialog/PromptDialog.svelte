@@ -12,7 +12,11 @@
   import { cn } from '@/utils';
 
   export let imageUrl: string;
-  export let hashTags: string[] = [];
+  export let hashtags: {
+    id: string;
+    postId: string;
+    tag: string;
+  }[] = [];
   export let prompt: string;
   export let isUnderReviewPost = false;
 
@@ -30,9 +34,9 @@
       <DialogTitle>ハッシュタグ</DialogTitle>
     </DialogHeader>
     <DialogDescription>
-      {#each hashTags as hashTag, i}
+      {#each hashtags as hashTag, i (hashTag.id)}
         <Badge class={cn('mr-1', { hidden: isUnderReviewPost })}>
-          {hashTag}
+          {hashTag.tag}
         </Badge>
       {/each}
     </DialogDescription>

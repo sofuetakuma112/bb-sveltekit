@@ -13,7 +13,7 @@
     reload: 'bg-white-white',
     scrollButton: 'bg-white-white',
     scrollIcon: 'size-[18px] sm:size-[28px]',
-    hashTags: 'inline-flex flex-wrap gap-x-3 gap-y-6 pt-9',
+    hashtags: 'inline-flex flex-wrap gap-x-3 gap-y-6 pt-9',
     promptText: 'mt-9 rounded-2xl bg-white p-6 text-xl font-semibold text-slate-800'
   };
 
@@ -57,7 +57,7 @@
     <Card
       variant="single"
       color={Number(post.superLikeCount) > 0 ? 'superlike' : 'blue'}
-      className="relative h-full flex-col sm:max-h-[785px]"
+      class="relative h-full flex-col sm:max-h-[785px]"
     >
       <!-- User profile -->
       <div
@@ -120,7 +120,7 @@
           class={commonClasses.scrollButton}
           on:click={() => handleScroll('up')}
         >
-        <span class="i-ic-baseline-arrow-upward size-8"></span>
+          <span class="i-ic-baseline-arrow-upward size-8"></span>
         </Button>
       </div>
 
@@ -135,7 +135,7 @@
           class={commonClasses.scrollButton}
           on:click={() => handleScroll('down')}
         >
-        <span class="i-ic-baseline-arrow-downward size-8"></span>
+          <span class="i-ic-baseline-arrow-downward size-8"></span>
         </Button>
       </div>
 
@@ -174,10 +174,10 @@
           )}
         >
           <p class="text-center text-2xl font-bold">ハッシュタグ</p>
-          <div class={commonClasses.hashTags}>
-            {#each post.hashTags as hashTag, i}
-              <Badge key={`${post.imageUrl}-${hashTag}-${i}`}>
-                {hashTag}
+          <div class={commonClasses.hashtags}>
+            {#each post.hashtags as hashTag, i}
+              <Badge key={hashTag.id}>
+                {hashTag.tag}
               </Badge>
             {/each}
           </div>
@@ -231,7 +231,7 @@
     <Card
       variant="single"
       color={Number(post.superLikeCount) > 0 ? 'superlike' : 'blue'}
-      className="relative flex h-full flex-col"
+      class="relative flex h-full flex-col"
     >
       <!-- Image and user info -->
       <div class="scrollbar-hide h-full overflow-y-scroll rounded-3xl">
@@ -332,10 +332,10 @@
         <!-- Hashtags -->
         <div class="flex h-full flex-col items-center justify-center px-8">
           <p class="text-center text-2xl font-bold">ハッシュタグ</p>
-          <div class={commonClasses.hashTags}>
-            {#each post.hashTags as hashTag, i}
-              <Badge key={`${post.imageUrl}-${hashTag}-${i}`}>
-                {hashTag}
+          <div class={commonClasses.hashtags}>
+            {#each post.hashtags as hashTag, i}
+              <Badge key={hashTag.id}>
+                {hashTag.tag}
               </Badge>
             {/each}
           </div>

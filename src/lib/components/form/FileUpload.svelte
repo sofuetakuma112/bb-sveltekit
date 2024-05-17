@@ -1,6 +1,7 @@
 <script lang="ts">
   export let id;
   export let name;
+  export let value: File | undefined;
 
   let previewUrl: string | ArrayBuffer | null = null;
   let fileInputRef: HTMLInputElement;
@@ -8,19 +9,19 @@
   const ACCEPTED_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/gif'];
   const MAX_FILE_SIZE = 10485760; // 10MB
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result;
-        previewUrl = result;
-        // 派生イベントを発火することも可能
-        // dispatch('fileselect', { file, result });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleFileSelect = (event) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       const result = reader.result;
+  //       previewUrl = result;
+  //       // 派生イベントを発火することも可能
+  //       // dispatch('fileselect', { file, result });
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -63,8 +64,8 @@
     type="file"
     bind:this={fileInputRef}
     class="hidden"
-    on:change={handleFileSelect}
     accept="image/*"
+    bind:value
     {id}
     {name}
   />

@@ -10,18 +10,13 @@
   export let followerCount;
   export let followingCount;
   export let isFollowee;
-
-  let open = false;
-
-  function handleClose() {
-    open = false;
-  }
+  export let formData;
 </script>
 
 <div class="size-16 overflow-hidden rounded-lg sm:size-20">
   <Dialog>
     {#if userId === currentUserId}
-      <DialogTrigger asChild on:click={() => (open = true)} class="size-full">
+      <DialogTrigger asChild class="size-full">
         <button>
           <img src={profileUrl} alt="AI画像" class="size-full object-cover" />
         </button>
@@ -30,8 +25,8 @@
       <img src={profileUrl} alt="AI画像" class="size-full object-cover" />
     {/if}
 
-    <DialogContent class="px-0 py-4" bind:open>
-      <EditProfile {userName} close={handleClose} />
+    <DialogContent class="px-0 py-4">
+      <EditProfile {userName} {formData} />
     </DialogContent>
   </Dialog>
 </div>

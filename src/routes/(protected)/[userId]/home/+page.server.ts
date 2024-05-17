@@ -1,6 +1,3 @@
-import { getUserPosts } from '$lib/drizzle/get/post';
-import { getLikePosts } from '@/drizzle/get/like';
-import { getUser } from '@/drizzle/get/user';
 import { redirect, type ServerLoadEvent } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
@@ -18,18 +15,5 @@ export const load = async (event: ServerLoadEvent) => {
     error(400, 'userId is required');
   }
 
-  const db = event.locals.db;
-  const r2 = event.platform?.env.R2 as R2Bucket;
-
-  const [userPostsResponse, userResponse, superLikePostsResponse] = await Promise.all([
-    getUserPosts(db, r2, event.params.userId),
-    getUser(db, r2, event.params.userId, currentUser.id),
-    getLikePosts(db, r2, event.params.userId, currentUser.id, 'super_like')
-  ]);
-
-  const { posts } = userPostsResponse;
-  const { user } = userResponse;
-  const { posts: superLikePosts } = superLikePostsResponse;
-
-  return { posts, superLikePosts, user, currentUser };
+  return { currentUser };
 };

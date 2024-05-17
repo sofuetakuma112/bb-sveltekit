@@ -15,7 +15,11 @@
   export let postId: string | undefined;
   export let analysisResult: boolean | null = null;
   export let pageType: 'likes' | 'posts' = 'posts';
-  export let hashTags: string[] = [];
+  export let hashtags: {
+    id: string;
+    postId: string;
+    tag: string;
+  }[] = [];
   export let prompt: string;
 
   const isUnderReviewPost = currentUserId !== userId && analysisResult === null;
@@ -31,12 +35,7 @@
   <div class="relative h-[270px] pb-1">
     <PromptDialog
       {imageUrl}
-      {analysisResult}
-      {userId}
-      {postId}
-      {currentUserId}
-      {pageType}
-      {hashTags}
+      {hashtags}
       {prompt}
       {isUnderReviewPost}
     />

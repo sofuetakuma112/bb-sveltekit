@@ -8,9 +8,9 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
-		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
-		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
+		// adapter-autoがサポートしているのは一部の環境のみです。一覧はhttps://kit.svelte.dev/docs/adapter-auto
+		// もしあなたの環境がサポートされていなかったり、特定の環境に落ち着いた場合は、アダプターを交換してください。
+		// アダプターの詳細については、https://kit.svelte.dev/docs/adapters を参照
 		adapter: adapter(),
 		alias: {
 			'@/*': './src/lib/*'

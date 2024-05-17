@@ -1,7 +1,6 @@
 import { notificationsTable, usersTable } from "$lib/server/db/schema";
-import { InferSelectModel } from "drizzle-orm";
+import type { InferSelectModel } from "drizzle-orm";
 import { getImageUrlFromR2 } from "$lib/r2";
-import { AppLoadContext } from "@remix-run/cloudflare";
 
 export async function serializeNotification(
   r2: R2Bucket,
@@ -15,7 +14,7 @@ export async function serializeNotification(
     read: notification.read,
     createdAt: notification.createdAt,
     updatedAt: notification.updatedAt,
-    notifierUser: await serializeUser(context, notification.notifierUser),
+    notifierUser: await serializeUser(r2, notification.notifierUser),
   };
 }
 
@@ -23,7 +22,7 @@ async function serializeUser(
   r2: R2Bucket,
   user: InferSelectModel<typeof usersTable>
 ) {
-  const imageUrl = await getImageUrlFromR2(context, user.imageS3Key);
+  const imageUrl = await getImageUrlFromR2(r2, user.imageS3Key);
   return {
     id: user.id,
     name: user.name,

@@ -1,5 +1,5 @@
 import { likesTable, postsTable, notificationsTable } from "$lib/server/db/schema";
-import { DrizzleClient } from "$lib/types/drizzle";
+import type { DrizzleClient } from "$lib/types/drizzle";
 import { and, eq } from "drizzle-orm";
 
 export const like = async (

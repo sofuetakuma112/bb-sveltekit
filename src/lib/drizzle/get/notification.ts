@@ -1,7 +1,6 @@
 import { notificationsTable, usersTable } from "$lib/server/db/schema";
 import { serializeNotification } from "$lib/serializers/notification";
-import { DrizzleClient } from "$lib/types/drizzle";
-import { AppLoadContext } from "@remix-run/cloudflare";
+import type { DrizzleClient } from "$lib/types/drizzle";
 import { eq, desc, inArray } from "drizzle-orm";
 
 export const getNotifications = async (
@@ -42,7 +41,7 @@ export const getNotifications = async (
 
   return {
     notifications: await Promise.all(
-      notifications.map((n) => serializeNotification(context, n))
+      notifications.map((n) => serializeNotification(r2, n))
     ),
   };
 };

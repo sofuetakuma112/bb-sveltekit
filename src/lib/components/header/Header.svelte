@@ -40,7 +40,7 @@
         {/if}
       {/each}
       <div class="flex flex-col items-center xl:w-[100px]">
-        <LogOutDialogForPC className="bg-white-white" />
+        <LogOutDialogForPC class="bg-white-white" />
       </div>
     </div>
   </div>

@@ -1,0 +1,40 @@
+<script lang="ts">
+  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+  import { Tabs, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
+  import type { SerializedLikedPost } from '$lib/serializers/like';
+  import type { SerializedPost } from '$lib/serializers/post';
+
+  export let userId: string;
+  export let posts: SerializedPost[];
+  export let superLikePosts: SerializedLikedPost[];
+
+  $: selectedTab = $page.url.pathname.split('/')[2];
+</script>
+
+<Tabs
+  value={selectedTab}
+  style="height: 100%;"
+  class="mt-8 h-10 w-full max-w-[1072px] border-b-2 sm:mt-[64px]"
+>
+  <div class="flex h-10">
+    <TabsList class="flex gap-[48px]" variant="text">
+      <TabsTrigger value="home" variant="profileText" on:click={() => goto(`/${userId}/home`)}>
+        <div class="flex gap-8">
+          <p>投稿</p>
+          <p>{posts.length}</p>
+        </div>
+      </TabsTrigger>
+      <TabsTrigger
+        value="super-likes"
+        variant="profileText"
+        on:click={() => goto(`/${userId}/super-likes`)}
+      >
+        <div class="flex gap-8">
+          <p>スーパーライク</p>
+          <p>{superLikePosts.length}</p>
+        </div>
+      </TabsTrigger>
+    </TabsList>
+  </div>
+</Tabs>

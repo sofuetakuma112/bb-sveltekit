@@ -30,7 +30,7 @@
     {#if href}
       <a class="flex h-full flex-1 flex-col items-center" {href}>
         {#if selectedIconIndex === i}
-          <HeaderIconButton {type} className="bg-accent" />
+          <HeaderIconButton {type} class="bg-accent" />
         {:else}
           <HeaderIconButton {type} />
         {/if}
@@ -38,7 +38,7 @@
     {:else}
       <div class="flex h-full flex-1 flex-col items-center">
         {#if selectedIconIndex === i}
-          <HeaderIconButton {type} className="bg-accent" />
+          <HeaderIconButton {type} class="bg-accent" />
         {:else}
           <HeaderIconButton {type} />
         {/if}

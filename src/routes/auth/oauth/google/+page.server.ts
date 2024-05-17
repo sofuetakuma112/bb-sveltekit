@@ -1,8 +1,11 @@
 import { redirect } from '@sveltejs/kit';
 import { generateState, generateCodeVerifier } from 'arctic';
 import { initializeGoogleOauth } from '$lib/server/lucia';
+import { setupEvent } from '@/server/setupEvent';
 
 export const load = async (event) => {
+	await setupEvent(event);
+
 	if (event.locals.user) {
 		redirect(302, '/home');
 	}

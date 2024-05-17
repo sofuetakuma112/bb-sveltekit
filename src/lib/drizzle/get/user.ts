@@ -1,8 +1,7 @@
-import { usersTable } from "$lib/server/db/schema";
-import { serializeCurrentUser, serializeUser } from "$lib/serializers/user";
-import { DrizzleClient } from "$lib/types/drizzle";
-import { AppLoadContext } from "@remix-run/cloudflare";
-import { eq } from "drizzle-orm";
+import { usersTable } from '$lib/server/db/schema';
+import { serializeCurrentUser, serializeUser } from '$lib/serializers/user';
+import type { DrizzleClient } from '$lib/types/drizzle';
+import { eq } from 'drizzle-orm';
 
 export async function getUser(
   db: DrizzleClient,
@@ -17,45 +16,41 @@ export async function getUser(
         posts: true,
         likes: true,
         followers: true,
-        followees: true,
-      },
+        followees: true
+      }
     }),
     db.query.usersTable.findFirst({
       where: eq(usersTable.id, currentUserId),
       with: {
         notifications: true,
         followers: true,
-        followees: true,
-      },
-    }),
+        followees: true
+      }
+    })
   ]);
 
   if (!user) {
-    throw new Response("User not found", { status: 404 });
+    throw new Response('User not found', { status: 404 });
   }
   if (!currentUser) {
-    throw new Response("Unauthorized", { status: 401 });
+    throw new Response('Unauthorized', { status: 401 });
   }
 
   return {
-    user: await serializeUser(context, user, currentUser),
+    user: await serializeUser(r2, user, currentUser)
   };
 }
 
-export async function getCurerntUser(
-  db: DrizzleClient,
-  r2: R2Bucket,
-  currentUserId: string
-) {
+export async function getCurerntUser(db: DrizzleClient, r2: R2Bucket, currentUserId: string) {
   const currentUser = await db.query.usersTable.findFirst({
-    where: eq(usersTable.id, currentUserId),
-  })
+    where: eq(usersTable.id, currentUserId)
+  });
 
   if (!currentUser) {
-    throw new Response("User not found", { status: 404 });
+    throw new Response('User not found', { status: 404 });
   }
 
   return {
-    user: await serializeCurrentUser(context, currentUser),
+    user: await serializeCurrentUser(r2, currentUser)
   };
 }

@@ -1,5 +1,5 @@
 CREATE TABLE `follows` (
-	`id` text PRIMARY KEY DEFAULT (lower(hex(randomblob(4))) || '-' || lower(hex(randomblob(2))) || '-' || '4' || substr(lower(hex(randomblob(2))),2) || '-' || substr('89ab',abs(random()) % 4 + 1, 1) || substr(lower(hex(randomblob(2))),2) || '-' || lower(hex(randomblob(6)))) NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`created_at` integer DEFAULT (cast((julianday('now') - 2440587.5)*86400000 as integer)) NOT NULL,
 	`updated_at` integer DEFAULT (cast((julianday('now') - 2440587.5)*86400000 as integer)) NOT NULL,
 	`follower_id` text NOT NULL,
@@ -8,8 +8,14 @@ CREATE TABLE `follows` (
 	FOREIGN KEY (`followee_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
+CREATE TABLE `hash_tags` (
+	`id` text PRIMARY KEY NOT NULL,
+	`tag` text NOT NULL,
+	`post_id` text NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE `likes` (
-	`id` text PRIMARY KEY DEFAULT (lower(hex(randomblob(4))) || '-' || lower(hex(randomblob(2))) || '-' || '4' || substr(lower(hex(randomblob(2))),2) || '-' || substr('89ab',abs(random()) % 4 + 1, 1) || substr(lower(hex(randomblob(2))),2) || '-' || lower(hex(randomblob(6)))) NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`like_type` text NOT NULL,
 	`created_at` integer DEFAULT (cast((julianday('now') - 2440587.5)*86400000 as integer)) NOT NULL,
 	`updated_at` integer DEFAULT (cast((julianday('now') - 2440587.5)*86400000 as integer)) NOT NULL,
@@ -20,7 +26,7 @@ CREATE TABLE `likes` (
 );
 --> statement-breakpoint
 CREATE TABLE `notifications` (
-	`id` text PRIMARY KEY DEFAULT (lower(hex(randomblob(4))) || '-' || lower(hex(randomblob(2))) || '-' || '4' || substr(lower(hex(randomblob(2))),2) || '-' || substr('89ab',abs(random()) % 4 + 1, 1) || substr(lower(hex(randomblob(2))),2) || '-' || lower(hex(randomblob(6)))) NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`notification_type` text NOT NULL,
 	`read` integer DEFAULT false NOT NULL,
 	`created_at` integer DEFAULT (cast((julianday('now') - 2440587.5)*86400000 as integer)) NOT NULL,
@@ -34,13 +40,12 @@ CREATE TABLE `notifications` (
 );
 --> statement-breakpoint
 CREATE TABLE `posts` (
-	`id` text PRIMARY KEY DEFAULT (lower(hex(randomblob(4))) || '-' || lower(hex(randomblob(2))) || '-' || '4' || substr(lower(hex(randomblob(2))),2) || '-' || substr('89ab',abs(random()) % 4 + 1, 1) || substr(lower(hex(randomblob(2))),2) || '-' || lower(hex(randomblob(6)))) NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`prompt` text NOT NULL,
 	`image_s3_key` text,
 	`analysis_score` integer,
 	`analysis_result` integer,
 	`model_version` text,
-	`hash_tags` text DEFAULT (json_array()),
 	`image_name` text NOT NULL,
 	`image_age` text NOT NULL,
 	`image_birthplace` text,

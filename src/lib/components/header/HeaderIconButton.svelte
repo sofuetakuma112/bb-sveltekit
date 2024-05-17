@@ -5,21 +5,22 @@
   import FollowersIconButton from '$lib/components/header/iconButton/FollowersIconButton.svelte';
   import LikesIconButton from '$lib/components/header/iconButton/LikesIconButton.svelte';
   import PostIconButton from '$lib/components/header/iconButton/PostIconButton.svelte';
-  
+
   export let type;
-  export let className = '';
+  export let className = undefined;
+  export { className as class };
 </script>
 
 {#if type === 'home'}
-  <HomeIconButton {className} />
+  <HomeIconButton class={className} />
 {:else if type === 'notification'}
-  <NotificationIconButton {className} />
+  <NotificationIconButton class={className} />
 {:else if type === 'followees'}
-  <FolloweesIconButton {className} />
+  <FolloweesIconButton class={className} />
 {:else if type === 'followers'}
-  <FollowersIconButton {className} />
+  <FollowersIconButton class={className} />
 {:else if type === 'likes'}
-  <LikesIconButton {className} />
+  <LikesIconButton class={className} />
 {:else if type === 'post'}
-  <PostIconButton {className} />
+  <PostIconButton class={className} />
 {/if}

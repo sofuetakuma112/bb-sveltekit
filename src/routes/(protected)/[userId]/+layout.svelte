@@ -1,7 +1,8 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import Profile from '$lib/components/user/Profile.svelte';
+  import Tab from '$lib/components/profile/Tab.svelte';
 
-  export let data: PageData;
+  export let data;
 </script>
 
 <div class="flex flex-col px-4 pt-4 sm:px-12 sm:pb-[100px] sm:pt-9">
@@ -13,6 +14,7 @@
     followerCount={data.user.followerCount}
     followingCount={data.user.followingCount}
     isFollowee={data.user.isFollowee}
+    formData={data}
   />
   <Tab userId={data.user.id} posts={data.posts} superLikePosts={data.superLikePosts} />
   <div class="flex flex-col pt-4 sm:pb-[100px] sm:pt-9">

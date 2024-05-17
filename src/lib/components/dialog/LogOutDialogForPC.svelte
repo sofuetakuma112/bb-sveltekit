@@ -3,7 +3,9 @@
   import { Button } from '$lib/components/ui/button';
   import { createEventDispatcher } from 'svelte';
   import { cn } from '@/utils';
-  export let className = '';
+  
+  export let className = undefined;
+  export { className as class };
 
   const dispatch = createEventDispatcher();
 </script>

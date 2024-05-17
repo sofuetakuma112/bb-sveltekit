@@ -1,7 +1,7 @@
 <script>
   import { Button } from '$lib/components/ui/button';
-  // import Icon from '$lib/components/ui/Icon.svelte';
-  export let className = '';
+  export let className = undefined;
+  export { className as class };
 </script>
 
 <Button variant="smOutline" sp="menubar" class={className}>

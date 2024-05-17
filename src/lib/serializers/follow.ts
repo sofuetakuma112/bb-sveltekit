@@ -1,7 +1,6 @@
-import { followsTable, usersTable } from "$lib/server/db/schema";
-import { getImageUrlFromR2 } from "$lib/r2";
-import { AppLoadContext } from "@remix-run/cloudflare";
-import { InferSelectModel } from "drizzle-orm";
+import { followsTable, usersTable } from '$lib/server/db/schema';
+import { getImageUrlFromR2 } from '$lib/r2';
+import type { InferSelectModel } from 'drizzle-orm';
 
 export async function serializeFollowerUser(
   r2: R2Bucket,
@@ -13,18 +12,14 @@ export async function serializeFollowerUser(
     followees: InferSelectModel<typeof followsTable>[];
   }
 ) {
-  const imageUrl = await getImageUrlFromR2(context, user.imageS3Key);
+  const imageUrl = await getImageUrlFromR2(r2, user.imageS3Key);
   return {
     id: user.id,
     name: user.name,
     imageUrl: imageUrl || user.icon,
-    isFollowee: currentUser.followees.some(
-      ({ followeeId }) => followeeId === user.id
-    ),
-    isFollower: currentUser.followers.some(
-      ({ follower: { id } }) => id === user.id
-    ),
-    createdAt: user.createdAt,
+    isFollowee: currentUser.followees.some(({ followeeId }) => followeeId === user.id),
+    isFollower: currentUser.followers.some(({ follower: { id } }) => id === user.id),
+    createdAt: user.createdAt
     // updatedAt: user.updatedAt,
   };
 }
@@ -39,18 +34,14 @@ export async function serializeFolloweeUser(
     }[];
   }
 ) {
-  const imageUrl = await getImageUrlFromR2(context, user.imageS3Key);
+  const imageUrl = await getImageUrlFromR2(r2, user.imageS3Key);
   return {
     id: user.id,
     name: user.name,
     imageUrl: imageUrl || user.icon,
-    isFollowee: currentUser.followees.some(
-      ({ followee: { id } }) => id === user.id
-    ),
-    isFollower: currentUser.followers.some(
-      ({ followerId }) => followerId === user.id
-    ),
-    createdAt: user.createdAt,
+    isFollowee: currentUser.followees.some(({ followee: { id } }) => id === user.id),
+    isFollower: currentUser.followers.some(({ followerId }) => followerId === user.id),
+    createdAt: user.createdAt
     // updatedAt: user.updatedAt,
   };
 }

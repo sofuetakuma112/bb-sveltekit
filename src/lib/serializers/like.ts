@@ -1,7 +1,6 @@
-import { likesTable, postsTable, usersTable } from "$lib/server/db/schema";
-import { getImageUrlFromR2 } from "$lib/r2";
-import { AppLoadContext } from "@remix-run/cloudflare";
-import { InferSelectModel } from "drizzle-orm";
+import { hashtagsTable, likesTable, postsTable, usersTable } from '$lib/server/db/schema';
+import { getImageUrlFromR2 } from '$lib/r2';
+import type { InferSelectModel } from 'drizzle-orm';
 
 export async function serializeLike(
   r2: R2Bucket,
@@ -9,39 +8,36 @@ export async function serializeLike(
     post: InferSelectModel<typeof postsTable> & {
       user: InferSelectModel<typeof usersTable>;
       likes: InferSelectModel<typeof likesTable>[];
+      hashtags: InferSelectModel<typeof hashtagsTable>[];
     };
   }
 ) {
-  const imageUrl = await getImageUrlFromR2(context, like.post.imageS3Key);
+  const imageUrl = await getImageUrlFromR2(r2, like.post.imageS3Key);
 
   return {
     id: like.post.id,
     prompt: like.post.prompt,
     imageUrl,
     analysisResult: like.post.analysisResult,
-    likeCount: like.post.likes.filter((l) => l.likeType === "like").length,
-    superLikeCount: like.post.likes.filter((l) => l.likeType === "super_like")
-      .length,
+    likeCount: like.post.likes.filter((l) => l.likeType === 'like').length,
+    superLikeCount: like.post.likes.filter((l) => l.likeType === 'super_like').length,
     userId: like.post.userId,
-    hashTags: like.post.hashTags,
+    hashtags: like.post.hashtags,
     imageName: like.post.imageName,
     imageAge: like.post.imageAge,
     imageBirthplace: like.post.imageBirthplace,
-    user: await serializeUser(context, like.post.user),
-    superLikeUser: like.likeType === "super_like" ? like.post.user : null,
+    user: await serializeUser(r2, like.post.user),
+    superLikeUser: like.likeType === 'super_like' ? like.post.user : null
   };
 }
 
-export async function serializeUser(
-  r2: R2Bucket,
-  user: InferSelectModel<typeof usersTable>
-) {
-  const imageUrl = await getImageUrlFromR2(context, user.imageS3Key);
+export async function serializeUser(r2: R2Bucket, user: InferSelectModel<typeof usersTable>) {
+  const imageUrl = await getImageUrlFromR2(r2, user.imageS3Key);
 
   return {
     id: user.id,
     name: user.name,
-    imageUrl: imageUrl || user.icon,
+    imageUrl: imageUrl || user.icon
   };
 }
 

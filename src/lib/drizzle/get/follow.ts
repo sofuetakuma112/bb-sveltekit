@@ -3,8 +3,7 @@ import {
   serializeFolloweeUser,
   serializeFollowerUser,
 } from "$lib/serializers/follow";
-import { DrizzleClient } from "$lib/types/drizzle";
-import { AppLoadContext } from "@remix-run/cloudflare";
+import type { DrizzleClient } from "$lib/types/drizzle";
 import { eq } from "drizzle-orm";
 
 export const getFollowees = async (
@@ -36,7 +35,7 @@ export const getFollowees = async (
 
   const followees = await Promise.all(
     currentUser.followees.map(({ followee }) =>
-      serializeFolloweeUser(context, followee, currentUser)
+      serializeFolloweeUser(r2, followee, currentUser)
     )
   );
 
@@ -72,7 +71,7 @@ export const getFollowers = async (
 
   const followers = await Promise.all(
     currentUser.followers.map(({ follower }) =>
-      serializeFollowerUser(context, follower, currentUser)
+      serializeFollowerUser(r2, follower, currentUser)
     )
   );
 
