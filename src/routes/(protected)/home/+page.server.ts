@@ -6,12 +6,12 @@ export const load = async (event: ServerLoadEvent) => {
   // 再度ページをチェックするようにするためです。
   // クライアント側だけの場合、
   // ユーザーがログアウトしてもページが表示される可能性がある。
-  const user = event.locals.user;
-  if (!user) {
+  const currentUser = event.locals.user;
+  if (!currentUser) {
     redirect(302, '/login');
   }
 
-  const userId = user.id;
+  const userId = currentUser.id;
 
   const type = event.url.searchParams.get('type') ?? 'recommend';
 
@@ -22,6 +22,8 @@ export const load = async (event: ServerLoadEvent) => {
     type === 'recommend'
       ? await getRecommendedPosts(db, r2, userId)
       : await getFollowingPosts(db, r2, userId);
+
+  console.log('post => %o', post);
 
   return { type, post };
 };

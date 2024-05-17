@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Tabs, TabsList, TabsTrigger, TabsContent } from '$lib/components/ui/tabs';
   import { goto } from '$app/navigation';
-  import SwipeCards from '$lib/components/card/swipeCards.svelte';
+  import SwipeCards from '$lib/components/card/SwipeCards.svelte';
 
   export let data;
 </script>

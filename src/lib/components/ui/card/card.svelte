@@ -1,19 +1,14 @@
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-	import { cn } from "$lib/utils";
+  import type { HTMLAttributes } from 'svelte/elements';
+  import { cn } from '$lib/utils';
+  import { cardVariants, type Props } from '.';
 
-	type $$Props = HTMLAttributes<HTMLDivElement>;
-
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+  let className: Props['class'] = undefined;
+  export let variant: Props['variant'] = 'single';
+  export let color: Props['color'] = 'transparent';
+  export { className as class };
 </script>
 
-<div
-	class={cn(
-		"rounded-lg border bg-card text-card-foreground shadow-sm",
-		className
-	)}
-	{...$$restProps}
->
-	<slot />
+<div class={cn(cardVariants({ variant, color, className }))} {...$$restProps}>
+  <slot />
 </div>
