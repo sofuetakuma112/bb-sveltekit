@@ -6,5 +6,5 @@
 </script>
 
 <Button variant="smOutline" sp="menubar" class={className}>
-  <PersonIcon class="size-6 sm:size-7" />
+  <PersonIcon class="size-6 sm:size-7 bg-[#25AADA]" />
 </Button>

@@ -97,7 +97,7 @@
       >
         {#if Number(post.superLikeCount) > 0}
           <div class={commonClasses.superLikeIcon}>
-            <StarIcon class="size-6 sm:size-7" />
+            <StarIcon class="size-6 sm:size-7 bg-[#25AADA]" />
             <span class="pl-2 text-sm font-bold text-blue-300"> superlikeされた投稿です！！ </span>
           </div>
         {/if}
@@ -111,7 +111,7 @@
         })}
       >
         <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
-          <RefreshIcon class="size-8" />
+          <RefreshIcon class="size-8 bg-[#25AADA]" />
         </Button>
       </div>
 
@@ -126,7 +126,7 @@
           class={commonClasses.scrollButton}
           on:click={() => handleScroll('up')}
         >
-          <ArrowUpIcon class="size-8" />
+          <ArrowUpIcon class="size-8 bg-[#25AADA]" />
         </Button>
       </div>
 
@@ -141,7 +141,7 @@
           class={commonClasses.scrollButton}
           on:click={() => handleScroll('down')}
         >
-          <ArrowDownIcon class="size-8" />
+          <ArrowDownIcon class="size-8 bg-[#25AADA]" />
         </Button>
       </div>
 
@@ -218,7 +218,7 @@
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="super_like" />
           <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
-            <StarIcon class="size-8 sm:size-16" />
+            <StarIcon class="size-8 sm:size-16 bg-[#25AADA]" />
           </Button>
         </form>
 
@@ -226,7 +226,7 @@
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="like" />
           <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
-            <HeartIcon class="size-8 sm:size-16" />
+            <HeartIcon class="size-8 sm:size-16 bg-[#25AADA]" />
           </Button>
         </form>
       </div>
@@ -291,7 +291,7 @@
               <input name="postId" type="hidden" value={post.id} />
               <input name="likeType" type="hidden" value="super_like" />
               <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-                <StarIcon class="size-6" />
+                <StarIcon class="size-6 bg-[#25AADA]" />
               </Button>
             </form>
 
@@ -299,7 +299,7 @@
               <input name="postId" type="hidden" value={post.id} />
               <input name="likeType" type="hidden" value="like" />
               <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-                <HeartIcon class="size-6" />
+                <HeartIcon class="size-6 bg-[#25AADA]" />
               </Button>
             </form>
           </div>
@@ -313,7 +313,7 @@
           >
             {#if Number(post.superLikeCount) > 0}
               <div class={commonClasses.superLikeIcon}>
-                <StarIcon class="size-8" />
+                <StarIcon class="size-8 bg-[#25AADA]" />
                 <span class="pl-2 text-sm font-bold text-blue-300">
                   superlikeされた投稿です！！
                 </span>
@@ -329,7 +329,7 @@
             })}
           >
             <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
-              <RefreshIcon class="size-8" />
+              <RefreshIcon class="size-8 bg-[#25AADA]" />
             </Button>
           </div>
         </div>

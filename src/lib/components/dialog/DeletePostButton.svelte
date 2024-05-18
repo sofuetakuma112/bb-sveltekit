@@ -23,7 +23,7 @@
 
 <Dialog bind:open={dialogOpen}>
   <button class="absolute right-2 top-2" on:click={handleOpen}>
-    <DeleteIcon class="size-7" />
+    <DeleteIcon class="size-7 bg-[#25AADA]" />
   </button>
   <DialogContent class="bg-white">
     <DialogHeader>

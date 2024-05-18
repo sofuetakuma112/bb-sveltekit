@@ -9,6 +9,6 @@
 <form method="post" use:enhance>
   <input type="hidden" name="postId" value={postId} />
   <Button type="submit" variant="likeDelete" class="absolute right-1 top-1">
-    <DeleteIcon class="size-7" />
+    <DeleteIcon class="size-7 bg-[#25AADA]" />
   </Button>
 </form>

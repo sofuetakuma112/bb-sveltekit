@@ -5,4 +5,4 @@
   export { className as class };
 </script>
 
-<span class={clsx('i-ic-baseline-delete', className)} />
+<span class={clsx('i-ic-baseline-delete-outline', className)} />

@@ -9,7 +9,7 @@
 
 <div class="flex flex-col items-center pb-[100px] pt-5">
   <Button variant="ghost" class="border-amber-400">
-    <PeopleIcon class="size-8" />
+    <PeopleIcon class="size-8 bg-white" />
   </Button>
   <h1 class="mb-4 mt-2 h-8 w-[168px] text-center text-xl font-semibold sm:mb-8 sm:mt-4 sm:text-2xl">
     フォロー一覧

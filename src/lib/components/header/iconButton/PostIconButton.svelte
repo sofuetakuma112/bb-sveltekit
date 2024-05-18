@@ -7,5 +7,5 @@
 </script>
 
 <Button variant="smOutline" sp="menubar" class={className}>
-  <PostAddIcon class="size-6 sm:size-7" />
+  <PostAddIcon class="size-6 sm:size-7 bg-[#25AADA]" />
 </Button>

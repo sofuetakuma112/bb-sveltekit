@@ -18,6 +18,6 @@
     class={cn('hidden sm:flex', className)}
     on:click={() => dispatch('toggle')}
   >
-    <LogoutIcon class="size-8" />
+    <LogoutIcon class="size-8 bg-[#25AADA]" />
   </Button>
 </LogOutDialog>

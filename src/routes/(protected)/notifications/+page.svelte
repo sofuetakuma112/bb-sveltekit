@@ -8,7 +8,7 @@
 
 <div class="flex flex-col items-center pt-5">
   <Button variant="ghost" class="border-amber-400">
-    <NotificationsIcon class="size-7" />
+    <NotificationsIcon class="size-7 bg-white" />
   </Button>
   <h1 class="mt-4 h-8 w-[168px] text-center text-xl font-semibold sm:text-2xl">通知</h1>
   <div class="mt-4 w-full px-4 sm:mt-8 sm:px-0">

@@ -62,7 +62,7 @@
   on:click={openFileInput}
 >
   <div class="p-4">
-    <PostAddIcon class="size-8" />
+    <PostAddIcon class="size-8 bg-[#25AADA]" />
   </div>
   <input
     type="file"
