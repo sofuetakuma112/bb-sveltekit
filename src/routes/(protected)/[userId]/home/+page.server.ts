@@ -1,7 +1,7 @@
-import { editProfileSchema } from '@/form/editProfile';
-import { uploadImageToR2 } from '@/r2';
-import { usersTable, followsTable } from '@/server/db/schema';
-import { protectedRouteLoad, setupEvent } from '@/server/setupEvent';
+import { editProfileSchema } from '$lib/form/editProfile';
+import { uploadImageToR2 } from '$lib/r2';
+import { usersTable, postsTable } from '$lib/server/db/schema';
+import { protectedRouteLoad, setupEvent } from '$lib/server/setupEvent';
 import { error, fail, json, redirect } from '@sveltejs/kit';
 import { eq, and } from 'drizzle-orm';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -67,20 +67,21 @@ export const actions = {
     }
 
     const data = await event.request.formData();
-    const userId = data.get('userId')?.toString();
-    if (userId == null) {
-      return new Response('userId is required', { status: 400 });
+    const postId = data.get('postId')?.toString();
+    if (postId == null) {
+      return new Response('postId is required', { status: 400 });
     }
 
-    const follow = await event.locals.db.query.followsTable.findFirst({
-      where: and(eq(followsTable.followeeId, userId), eq(followsTable.followerId, currentUser.id))
+    // ログインユーザーの投稿かチェック
+    const post = await event.locals.db.query.postsTable.findFirst({
+      where: and(eq(postsTable.id, postId), eq(postsTable.userId, currentUser.id))
     });
 
-    if (!follow) {
-      return new Response('Follow not found', { status: 404 });
+    if (!post) {
+      return new Response('Post not found', { status: 404 });
     }
 
-    await event.locals.db.delete(followsTable).where(eq(followsTable.id, follow.id));
+    await event.locals.db.delete(postsTable).where(eq(postsTable.id, post.id));
 
     return { success: true };
   }

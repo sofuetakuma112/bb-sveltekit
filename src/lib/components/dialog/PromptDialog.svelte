@@ -24,10 +24,8 @@
 </script>
 
 <Dialog>
-  <DialogTrigger class="block w-full h-full" asChild>
-    <button class="h-full overflow-hidden rounded-2xl">
-      <img src={imageUrl} alt="AI画像" class="w-full h-full object-cover" />
-    </button>
+  <DialogTrigger class="block size-full rounded-2xl">
+    <img src={imageUrl} alt="AI画像" class="w-full h-full object-cover" />
   </DialogTrigger>
   <DialogContent class="bg-white">
     <DialogHeader>

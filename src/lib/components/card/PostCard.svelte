@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import PromptDialog from '$lib/components/dialog/PromptDialog.svelte';
-  import DeletePostDialog from '$lib/components/dialog/DeletePostDialog.svelte';
+  import DeletePostButton from '$lib/components/dialog/DeletePostButton.svelte';
   import RemoveLikeButton from '$lib/components/button/RemoveLikeButton.svelte';
   import { Card } from '$lib/components/ui/card';
   import { cn } from '@/utils';
@@ -33,14 +33,9 @@
   })}
 >
   <div class="relative h-[270px] pb-1">
-    <PromptDialog
-      {imageUrl}
-      {hashtags}
-      {prompt}
-      {isUnderReviewPost}
-    />
+    <PromptDialog {imageUrl} {hashtags} {prompt} {isUnderReviewPost} />
     {#if currentUserId === userId && pageType === 'posts' && postId}
-      <DeletePostDialog {postId} />
+      <DeletePostButton {postId} />
     {/if}
     {#if pageType === 'likes' && postId}
       <RemoveLikeButton {postId} />
