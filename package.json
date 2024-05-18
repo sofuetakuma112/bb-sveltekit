@@ -16,7 +16,7 @@
     "db:reset:remote": "wrangler d1 execute dev-sveltekit-d1 --remote --file=./reset.sql",
     "db:studio": "cross-env LOCAL_DB_PATH=$(find .wrangler/state/v3/d1/miniflare-D1DatabaseObject -type f -name '*.sqlite' -print -quit) drizzle-kit studio",
     "db:studio:prod": "drizzle-kit studio",
-    "db:seed": "cross-env SEED_IMAGES=$(ls -1 .wrangler/state/v3/r2/bb-sveltekit-dev/blobs | tr '\n' ',') node ./seed/seed-runner.js",
+    "db:seed": "cross-env SEED_IMAGES=$(ls -1 ./seed/images | tr '\n' ',') node ./seed/seed-runner.js",
     "db:seed:images": "cross-env LOCAL_R2_PATH=$(find .wrangler/state/v3/r2/miniflare-R2BucketObject -type f -name '*.sqlite' -print -quit) node ./seed/upload-images.js",
     "bucket:create": "wrangler r2 bucket create bb-sveltekit-dev",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

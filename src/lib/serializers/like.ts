@@ -1,4 +1,4 @@
-import { hashtagsTable, likesTable, postsTable, usersTable } from '$lib/server/db/schema';
+import { tagsTable, likesTable, postsTable, usersTable } from '$lib/server/db/schema';
 import { getImageUrlFromR2 } from '$lib/r2';
 import type { InferSelectModel } from 'drizzle-orm';
 
@@ -8,7 +8,9 @@ export async function serializeLike(
     post: InferSelectModel<typeof postsTable> & {
       user: InferSelectModel<typeof usersTable>;
       likes: InferSelectModel<typeof likesTable>[];
-      hashtags: InferSelectModel<typeof hashtagsTable>[];
+      hashtags: {
+        tag: InferSelectModel<typeof tagsTable>;
+      }[];
     };
   }
 ) {
@@ -22,7 +24,7 @@ export async function serializeLike(
     likeCount: like.post.likes.filter((l) => l.likeType === 'like').length,
     superLikeCount: like.post.likes.filter((l) => l.likeType === 'super_like').length,
     userId: like.post.userId,
-    hashtags: like.post.hashtags,
+    hashtags: like.post.hashtags.map(({ tag }) => tag),
     imageName: like.post.imageName,
     imageAge: like.post.imageAge,
     imageBirthplace: like.post.imageBirthplace,

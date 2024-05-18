@@ -13,7 +13,6 @@ export const postSchema = z.object({
   file: z
     .instanceof(File, { message: '画像ファイルは必須です' })
     .refine((file) => {
-      console.log(file);
       return file.size <= MAX_FILE_SIZE;
     }, `ファイルサイズが大きすぎます。${MAX_MB}MB以下のファイルを選択してください`)
     .refine(

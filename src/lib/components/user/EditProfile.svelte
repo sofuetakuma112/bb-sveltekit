@@ -6,7 +6,7 @@
   import type { SuperValidated, Infer } from 'sveltekit-superforms';
   import { fileProxy, superForm } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
-    import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   export let formData: SuperValidated<Infer<EditProfileSchema>>;
   let closeButtonElement: HTMLButtonElement;

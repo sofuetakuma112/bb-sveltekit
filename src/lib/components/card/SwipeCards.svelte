@@ -175,9 +175,9 @@
         >
           <p class="text-center text-2xl font-bold">ハッシュタグ</p>
           <div class={commonClasses.hashtags}>
-            {#each post.hashtags as hashTag, i}
-              <Badge key={hashTag.id}>
-                {hashTag.tag}
+            {#each post.hashtags as hashTag, i (hashTag.id)}
+              <Badge>
+                {hashTag.name}
               </Badge>
             {/each}
           </div>
@@ -333,9 +333,9 @@
         <div class="flex h-full flex-col items-center justify-center px-8">
           <p class="text-center text-2xl font-bold">ハッシュタグ</p>
           <div class={commonClasses.hashtags}>
-            {#each post.hashtags as hashTag, i}
-              <Badge key={hashTag.id}>
-                {hashTag.tag}
+            {#each post.hashtags as hashTag, i (hashTag.id)}
+              <Badge>
+                {hashTag.name}
               </Badge>
             {/each}
           </div>

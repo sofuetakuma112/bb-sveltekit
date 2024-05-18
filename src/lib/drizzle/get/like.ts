@@ -25,7 +25,11 @@ export async function getLikePosts(
         with: {
           user: true,
           likes: true,
-          hashtags: true
+          hashtags: {
+            with: {
+              tag: true
+            }
+          }
         }
       }
     }

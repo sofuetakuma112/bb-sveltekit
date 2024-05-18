@@ -5,7 +5,7 @@ import crypto from "crypto";
 import "dotenv/config";
 
 const imagesDir = "./seed/images";
-const blobsDir = ".wrangler/state/v3/r2/bb-dev/blobs";
+const blobsDir = ".wrangler/state/v3/r2/bb-sveltekit-dev/blobs";
 // eslint-disable-next-line no-undef
 const sqliteFile = process.env.LOCAL_R2_PATH;
 

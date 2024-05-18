@@ -24,7 +24,11 @@ export async function getUserPosts(db: DrizzleClient, r2: R2Bucket, userId: stri
           user: true
         }
       },
-      hashtags: true
+      hashtags: {
+        with: {
+          tag: true
+        }
+      }
     }
   });
 
@@ -58,7 +62,11 @@ export async function getRecommendedPosts(db: DrizzleClient, r2: R2Bucket, userI
           user: true
         }
       },
-      hashtags: true
+      hashtags: {
+        with: {
+          tag: true
+        }
+      }
     }
   });
 
@@ -130,7 +138,11 @@ export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, current
             user: true
           }
         },
-        hashtags: true
+        hashtags: {
+          with: {
+            tag: true
+          }
+        }
       }
     }),
     // フォロー中ユーザーがスーパーライクして、かつ自分がlike, unlike, super_likeしていない投稿
@@ -154,7 +166,11 @@ export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, current
             user: true
           }
         },
-        hashtags: true
+        hashtags: {
+          with: {
+            tag: true
+          }
+        }
       }
     })
   ]);

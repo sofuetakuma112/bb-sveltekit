@@ -6,10 +6,13 @@ import {
   likesTable,
   followsTable,
   notificationsTable,
-  hashtagsTable
+  tagsTable,
+  postTagsTable
 } from '@/server/db/schema';
+import * as schema from '@/server/db/schema';
 import { v4 as uuidv4 } from 'uuid';
 import { hashTags } from './const';
+import { eq } from 'drizzle-orm';
 
 interface Env {
   DB: D1Database;
@@ -54,7 +57,7 @@ export default {
     env: Env
     // ctx: ExecutionContext
   ): Promise<Response> {
-    const db = drizzle(env.DB);
+    const db = drizzle(env.DB, { schema });
 
     let existSeedImages = true;
     let seedImages: string[] = ((await request.json()) as string[]).filter((fileName) => fileName);
@@ -102,7 +105,7 @@ export default {
     await Promise.all(postData.map((data) => db.insert(postsTable).values(data)));
 
     // ハッシュタグデータの作成
-    const hashTagData: (typeof hashtagsTable.$inferInsert)[] = [];
+    const hashTagData: (typeof tagsTable.$inferInsert)[] = [];
 
     for (let i = 0; i < allPostIds.length; i++) {
       const selectedTags = getRandomElements(hashTags);
@@ -114,7 +117,25 @@ export default {
       }
     }
 
-    await Promise.all(hashTagData.map((data) => db.insert(hashtagsTable).values(data)));
+    const tagIdAndPostIds = await Promise.all(
+      hashTagData.map(async (data) => {
+        await db
+          .insert(tagsTable)
+          .values({
+            name: data.tag
+          })
+          .onConflictDoNothing({ target: tagsTable.name });
+        const row = await db.query.tagsTable.findFirst({
+          where: eq(tagsTable.name, data.tag)
+        });
+        return {
+          tagId: row.id,
+          postId: data.postId
+        };
+      })
+    );
+
+    await Promise.all(tagIdAndPostIds.map((data) => db.insert(postTagsTable).values(data)));
 
     // いいねデータの作成
     const likeData: (typeof likesTable.$inferInsert)[] = [];

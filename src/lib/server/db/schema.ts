@@ -1,5 +1,5 @@
 import { relations, sql } from 'drizzle-orm';
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const usersTable = sqliteTable('users', {
   id: text('id')
@@ -55,10 +55,10 @@ export const postsTable = sqliteTable('posts', {
   imageBirthplace: text('image_birthplace'),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
-    .default(sql`(cast((julianday('now') - 2440587.5)*86400000 as integer))`),
+    .default(sql`(current_timestamp)`),
   updatedAt: integer('updated_at', { mode: 'timestamp' })
     .notNull()
-    .default(sql`(cast((julianday('now') - 2440587.5)*86400000 as integer))`),
+    .default(sql`(current_timestamp)`),
   userId: text('user_id')
     .notNull()
     .references(() => usersTable.id)
@@ -71,22 +71,37 @@ export const postsRelations = relations(postsTable, ({ one, many }) => ({
     fields: [postsTable.userId], // リレーション元
     references: [usersTable.id] // リレーション先
   }),
-  hashtags: many(hashtagsTable)
+  hashtags: many(postTagsTable)
 }));
 
-export const hashtagsTable = sqliteTable('hash_tags', {
+export const tagsTable = sqliteTable('tags', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  tag: text('tag').notNull(),
-  postId: text('post_id').notNull()
+  name: text('name').notNull().unique()
 });
 
-export const hashtagsRelations = relations(hashtagsTable, ({ one }) => ({
-  post: one(postsTable, {
-    fields: [hashtagsTable.postId],
-    references: [postsTable.id]
-  })
+export const tagsRelations = relations(tagsTable, ({ many }) => ({
+  posts: many(postTagsTable)
+}));
+
+export const postTagsTable = sqliteTable('post_tags', {
+  postId: text('post_id')
+    .notNull()
+    .references(() => postsTable.id, { onDelete: 'cascade' }),
+  tagId: text('tag_id')
+    .notNull()
+    .references(() => tagsTable.id, { onDelete: 'cascade' }),
+}, (table) => {
+  return {
+    pk: primaryKey({ columns: [table.postId, table.tagId] }),
+    // pkWithCustomName: primaryKey({ name: 'custom_name', columns: [table.postId, table.tagId] }),
+  };
+});
+
+export const postTagsRelations = relations(postTagsTable, ({ one }) => ({
+  post: one(postsTable, { fields: [postTagsTable.postId], references: [postsTable.id] }),
+  tag: one(tagsTable, { fields: [postTagsTable.tagId], references: [tagsTable.id] })
 }));
 
 // Likes
@@ -97,10 +112,10 @@ export const likesTable = sqliteTable('likes', {
   likeType: text('like_type').notNull(),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
-    .default(sql`(cast((julianday('now') - 2440587.5)*86400000 as integer))`),
+    .default(sql`(current_timestamp)`),
   updatedAt: integer('updated_at', { mode: 'timestamp' })
     .notNull()
-    .default(sql`(cast((julianday('now') - 2440587.5)*86400000 as integer))`),
+    .default(sql`(current_timestamp)`),
   userId: text('user_id')
     .notNull()
     .references(() => usersTable.id),
@@ -127,10 +142,10 @@ export const followsTable = sqliteTable('follows', {
     .$defaultFn(() => crypto.randomUUID()),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
-    .default(sql`(cast((julianday('now') - 2440587.5)*86400000 as integer))`),
+    .default(sql`(current_timestamp)`),
   updatedAt: integer('updated_at', { mode: 'timestamp' })
     .notNull()
-    .default(sql`(cast((julianday('now') - 2440587.5)*86400000 as integer))`),
+    .default(sql`(current_timestamp)`),
   followerId: text('follower_id')
     .notNull()
     .references(() => usersTable.id),
@@ -161,10 +176,10 @@ export const notificationsTable = sqliteTable('notifications', {
   read: integer('read', { mode: 'boolean' }).notNull().default(false),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
-    .default(sql`(cast((julianday('now') - 2440587.5)*86400000 as integer))`),
+    .default(sql`(current_timestamp)`),
   updatedAt: integer('updated_at', { mode: 'timestamp' })
     .notNull()
-    .default(sql`(cast((julianday('now') - 2440587.5)*86400000 as integer))`),
+    .default(sql`(current_timestamp)`),
   userId: text('user_id')
     .notNull()
     .references(() => usersTable.id),

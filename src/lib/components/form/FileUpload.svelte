@@ -6,7 +6,7 @@
   let previewUrl: string | ArrayBuffer | null = null;
   let fileInputRef: HTMLInputElement;
 
-  const ACCEPTED_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/gif'];
+  const ACCEPTED_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
   const MAX_FILE_SIZE = 10485760; // 10MB
 
   const handleDragOver = (event) => {
@@ -35,7 +35,7 @@
     if (files.length !== 0) {
       const file = files[0];
 
-      if (ACCEPTED_IMAGE_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE) {
+      if (file && ACCEPTED_IMAGE_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE) {
         const reader = new FileReader();
         reader.onload = () => {
           const result = reader.result;
