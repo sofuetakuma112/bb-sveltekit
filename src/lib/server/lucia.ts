@@ -23,17 +23,15 @@ export const initializeLucia = (db: D1Database) => {
     },
     sessionExpiresIn: new TimeSpan(30, 'd'), // no more active/idle
     getUserAttributes: (attributes) => {
+      // TODO: R2から画像URLを取得する
       return {
         userId: attributes.id,
         provider: attributes.provider,
         providerId: attributes.providerId,
         email: attributes.email,
-        firstName: attributes.firstName,
-        lastName: attributes.lastName,
-        role: attributes.role,
-        verified: attributes.verified,
-        receiveEmail: attributes.receiveEmail,
-        token: attributes.token
+        name: attributes.name,
+        token: attributes.token,
+        imageUrl: attributes.icon
       };
     }
   });
@@ -52,12 +50,9 @@ interface DatabaseUserAttributes {
   provider: string;
   providerId: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-  verified: boolean;
-  receiveEmail: boolean;
+  name: string;
   token: string;
+  icon: string;
 }
 
 const googleRedirectUrl = dev

@@ -2,6 +2,7 @@
   import EditProfile from '$lib/components/user/EditProfile.svelte';
   import { Button } from '$lib/components/ui/button';
   import { Dialog, DialogContent, DialogTrigger } from '$lib/components/ui/dialog';
+  import { enhance } from '$app/forms';
 
   export let profileUrl;
   export let currentUserId;
@@ -31,16 +32,19 @@
   </Dialog>
 </div>
 <h1 class="mt-2 text-2xl font-medium sm:h-12 sm:text-4xl">{userName}</h1>
-<!-- Todo: 認証が入ったら修正, フォロー、フォロー中も -->
 {#if userId !== currentUserId && isFollowee}
-  <form action="/follows/delete" method="post">
+  <form action="/follows?/delete" method="POST" use:enhance>
     <input type="hidden" name="userId" value={userId} />
-    <Button variant="following" font="bold" class="text-black-black mt-2">フォロー中</Button>
+    <Button type="submit" variant="following" font="bold" class="text-black-black mt-2"
+      >フォロー中</Button
+    >
   </form>
 {:else if userId !== currentUserId}
-  <form action="/follows/create" method="post">
+  <form action="/follows?/create" method="POST" use:enhance>
     <input type="hidden" name="userId" value={userId} />
-    <Button variant="follow" font="bold" class="text-white-white mt-2">フォロー</Button>
+    <Button type="submit" variant="follow" font="bold" class="text-white-white mt-2"
+      >フォロー</Button
+    >
   </form>
 {/if}
 
