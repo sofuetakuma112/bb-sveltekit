@@ -1,4 +1,6 @@
 <script lang="ts">
+  import PostAddIcon from '$lib/components/icons/PostAddIcon.svelte';
+
   export let id;
   export let name;
   export let files: FileList;
@@ -60,7 +62,7 @@
   on:click={openFileInput}
 >
   <div class="p-4">
-    <span class="i-ic-baseline-post-add size-8"></span>
+    <PostAddIcon class="size-8" />
   </div>
   <input
     type="file"

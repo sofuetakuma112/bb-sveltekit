@@ -6,6 +6,11 @@
   import { Card } from '$lib/components/ui/card';
   import type { SerializedPost } from '$lib/serializers/post';
   import { enhance } from '$app/forms';
+  import StarIcon from '$lib/components/icons/StarIcon.svelte';
+  import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
+  import ArrowUpIcon from '$lib/components/icons/ArrowUpIcon.svelte';
+  import ArrowDownIcon from '$lib/components/icons/ArrowDownIcon.svelte';
+    import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
 
   const commonClasses = {
     profileImage: 'size-9 overflow-hidden rounded-lg',
@@ -92,7 +97,7 @@
       >
         {#if Number(post.superLikeCount) > 0}
           <div class={commonClasses.superLikeIcon}>
-            <span class="i-ic-baseline-star size-6 sm:size-7"></span>
+            <StarIcon class="size-6 sm:size-7" />
             <span class="pl-2 text-sm font-bold text-blue-300"> superlikeされた投稿です！！ </span>
           </div>
         {/if}
@@ -106,7 +111,7 @@
         })}
       >
         <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
-          <span class="i-ic-baseline-refresh size-8"></span>
+          <RefreshIcon class="size-8" />
         </Button>
       </div>
 
@@ -121,7 +126,7 @@
           class={commonClasses.scrollButton}
           on:click={() => handleScroll('up')}
         >
-          <span class="i-ic-baseline-arrow-upward size-8"></span>
+          <ArrowUpIcon class="size-8" />
         </Button>
       </div>
 
@@ -136,7 +141,7 @@
           class={commonClasses.scrollButton}
           on:click={() => handleScroll('down')}
         >
-          <span class="i-ic-baseline-arrow-downward size-8"></span>
+          <ArrowDownIcon class="size-8" />
         </Button>
       </div>
 
@@ -213,7 +218,7 @@
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="super_like" />
           <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
-            <span class="i-ic-baseline-star size-8 sm:size-16"></span>
+            <StarIcon class="size-8 sm:size-16" />
           </Button>
         </form>
 
@@ -221,7 +226,7 @@
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="like" />
           <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
-            <span class="i-ic-baseline-favorite size-8 sm:size-16"></span>
+            <HeartIcon class="size-8 sm:size-16" />
           </Button>
         </form>
       </div>
@@ -286,7 +291,7 @@
               <input name="postId" type="hidden" value={post.id} />
               <input name="likeType" type="hidden" value="super_like" />
               <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-                <span class="i-ic-baseline-star size-6"></span>
+                <StarIcon class="size-6" />
               </Button>
             </form>
 
@@ -294,7 +299,7 @@
               <input name="postId" type="hidden" value={post.id} />
               <input name="likeType" type="hidden" value="like" />
               <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-                <span class="i-ic-baseline-favorite size-6"></span>
+                <HeartIcon class="size-6" />
               </Button>
             </form>
           </div>
@@ -308,8 +313,7 @@
           >
             {#if Number(post.superLikeCount) > 0}
               <div class={commonClasses.superLikeIcon}>
-                <!-- <Icon name="super-like" width="32" height="32" /> -->
-                <span class="i-ic-baseline-star size-8"></span>
+                <StarIcon class="size-8" />
                 <span class="pl-2 text-sm font-bold text-blue-300">
                   superlikeされた投稿です！！
                 </span>
@@ -325,7 +329,7 @@
             })}
           >
             <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
-              <span class="i-ic-baseline-refresh size-8"></span>
+              <RefreshIcon class="size-8" />
             </Button>
           </div>
         </div>

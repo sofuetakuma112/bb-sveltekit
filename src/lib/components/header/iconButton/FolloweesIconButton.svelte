@@ -1,9 +1,10 @@
 <script>
   import { Button } from '$lib/components/ui/button';
+  import PersonIcon from '@/components/icons/PersonIcon.svelte';
   export let className = undefined;
   export { className as class };
 </script>
 
 <Button variant="smOutline" sp="menubar" class={className}>
-  <span class="i-ic-baseline-person size-6 sm:size-7"></span>
+  <PersonIcon class="size-6 sm:size-7" />
 </Button>

@@ -1,14 +1,15 @@
 <script>
   import { Button } from '$lib/components/ui/button';
   import UserCard from '$lib/components/card/UserCard.svelte';
-    import UserItem from '$lib/components/user/UserItem.svelte';
+  import UserItem from '$lib/components/user/UserItem.svelte';
+  import PeopleIcon from '@/components/icons/PeopleIcon.svelte';
 
   export let data;
 </script>
 
 <div class="flex flex-col items-center pb-[100px] pt-5">
   <Button variant="ghost" class="border-amber-400">
-    <span class="i-ic-baseline-people size-8"></span>
+    <PeopleIcon class="size-8" />
   </Button>
   <h1 class="mb-4 mt-2 h-8 w-[168px] text-center text-xl font-semibold sm:mb-8 sm:mt-4 sm:text-2xl">
     フォロワー一覧

@@ -8,6 +8,7 @@
     DialogTitle,
     DialogDescription
   } from '$lib/components/ui/dialog';
+  import DeleteIcon from '$lib/components/icons/DeleteIcon.svelte';
 
   export let postId;
 
@@ -22,7 +23,7 @@
 
 <Dialog bind:open={dialogOpen}>
   <button class="absolute right-2 top-2" on:click={handleOpen}>
-    <span class="i-ic-baseline-delete size-7"></span>
+    <DeleteIcon class="size-7" />
   </button>
   <DialogContent class="bg-white">
     <DialogHeader>

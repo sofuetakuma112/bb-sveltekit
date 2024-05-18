@@ -3,6 +3,7 @@
   import { Button } from '$lib/components/ui/button';
   import { createEventDispatcher } from 'svelte';
   import { cn } from '$lib/utils';
+    import LogoutIcon from '$lib/components/icons/LogoutIcon.svelte';
   
   export let className = undefined;
   export { className as class };
@@ -17,6 +18,6 @@
     class={cn('hidden sm:flex', className)}
     on:click={() => dispatch('toggle')}
   >
-    <span class="i-ic-baseline-logout size-8"></span>
+    <LogoutIcon class="size-8" />
   </Button>
 </LogOutDialog>

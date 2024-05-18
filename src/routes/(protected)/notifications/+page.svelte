@@ -1,13 +1,14 @@
 <script>
   import { convertToJST } from '$lib/date';
   import { Button } from '$lib/components/ui/button';
+  import NotificationsIcon from '@/components/icons/NotificationsIcon.svelte';
 
   export let data;
 </script>
 
 <div class="flex flex-col items-center pt-5">
   <Button variant="ghost" class="border-amber-400">
-    <span class="i-ic-baseline-notifications size-7"></span>
+    <NotificationsIcon class="size-7" />
   </Button>
   <h1 class="mt-4 h-8 w-[168px] text-center text-xl font-semibold sm:text-2xl">通知</h1>
   <div class="mt-4 w-full px-4 sm:mt-8 sm:px-0">
