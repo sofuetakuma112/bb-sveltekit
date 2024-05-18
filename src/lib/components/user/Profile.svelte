@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import EditProfile from '$lib/components/user/EditProfile.svelte';
   import { Button } from '$lib/components/ui/button';
   import * as Dialog from '$lib/components/ui/dialog';
@@ -18,9 +18,7 @@
   <Dialog.Root>
     {#if userId === currentUserId}
       <Dialog.Trigger class="size-full">
-        <!-- <button> -->
         <img src={profileUrl} alt="AI画像" class="size-full object-cover" />
-        <!-- </button> -->
       </Dialog.Trigger>
     {:else}
       <img src={profileUrl} alt="AI画像" class="size-full object-cover" />

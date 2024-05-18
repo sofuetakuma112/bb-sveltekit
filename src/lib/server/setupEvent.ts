@@ -8,7 +8,7 @@ import type { User } from 'lucia';
 export async function setupEvent(event: RequestEvent) {
   event.locals.DB = <D1Database>event.platform?.env?.DB;
   event.locals.db = drizzle(event.locals.DB, { schema });
-  event.locals.lucia = initializeLucia(event.locals.DB);
+  event.locals.lucia = initializeLucia(event.locals.db);
 
   const lucia = event.locals.lucia;
   const isProtectedRoute = event.route.id?.startsWith('/(protected)');

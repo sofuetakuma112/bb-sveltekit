@@ -24,12 +24,9 @@ export const actions = {
     }
 
     const form = await superValidate(event.request, zod(editProfileSchema));
-
     if (!form.valid) {
       return fail(400, { form });
     }
-
-    const formData = form.data;
 
     const foundUser = await event.locals.db.query.usersTable.findFirst({
       where: eq(usersTable.id, currentUser.id)
@@ -38,6 +35,7 @@ export const actions = {
       return json({ message: 'user not found' }, { status: 404 });
     }
 
+    const formData = form.data;
     const file = formData.file;
 
     let key;
@@ -48,7 +46,7 @@ export const actions = {
     const userName = formData.name;
 
     if (userName === foundUser.name && !key) {
-      return json({ message: 'no changed' }, { status: 200 });
+      return withFiles({ form });
     }
 
     await event.locals.db
@@ -59,7 +57,7 @@ export const actions = {
       })
       .where(eq(usersTable.id, currentUser.id));
 
-      return withFiles({ form })
+    return withFiles({ form });
   },
   deletePost: async (event) => {
     await setupEvent(event);

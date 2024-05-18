@@ -27,7 +27,5 @@ export const load = protectedRouteLoad(async (event, currentUser) => {
   const { user } = userResponse;
   const { posts: superLikePosts } = superLikePostsResponse;
 
-  form.data.name = currentUser.name;
-
   return { posts, superLikePosts, user, currentUser, form };
 });

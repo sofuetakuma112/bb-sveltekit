@@ -9,20 +9,6 @@
   const ACCEPTED_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/gif'];
   const MAX_FILE_SIZE = 10485760; // 10MB
 
-  // const handleFileSelect = (event) => {
-  //   const file = event.target.files?.[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       const result = reader.result;
-  //       previewUrl = result;
-  //       // 派生イベントを発火することも可能
-  //       // dispatch('fileselect', { file, result });
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
   const handleDragOver = (event) => {
     event.preventDefault();
   };

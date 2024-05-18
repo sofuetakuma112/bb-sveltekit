@@ -1,19 +1,15 @@
 import { Lucia, TimeSpan } from 'lucia';
-// import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle';
+import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle';
 import { dev } from '$app/environment';
-// import { sessionsTable, usersTable } from '$lib/server/db/schema';
+import { sessionsTable, usersTable } from '$lib/server/db/schema';
 import { BASE_URL } from '$lib/config/constants';
 import { Google } from 'arctic';
 import { env } from '$env/dynamic/private';
-import { D1Adapter } from '@lucia-auth/adapter-sqlite';
 import { getImageUrlFromR2 } from '$lib/r2';
+import type { DrizzleClient } from '@/types/drizzle';
 
-export const initializeLucia = (db: D1Database) => {
-  // const adapter = new DrizzleSQLiteAdapter(db, sessionsTable, usersTable);
-  const adapter = new D1Adapter(db, {
-    user: 'users',
-    session: 'sessions'
-  });
+export const initializeLucia = (db: DrizzleClient) => {
+  const adapter = new DrizzleSQLiteAdapter(db, sessionsTable, usersTable);
   return new Lucia(adapter, {
     sessionCookie: {
       name: 'session',
@@ -24,7 +20,6 @@ export const initializeLucia = (db: D1Database) => {
     },
     sessionExpiresIn: new TimeSpan(30, 'd'), // no more active/idle
     getUserAttributes: (attributes) => {
-      // TODO: R2から画像URLを取得する
       const imageUrl = getImageUrlFromR2(attributes.imageS3Key);
       return {
         userId: attributes.id,

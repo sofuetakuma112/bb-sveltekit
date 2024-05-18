@@ -6,14 +6,27 @@
   import type { SuperValidated, Infer } from 'sveltekit-superforms';
   import { fileProxy, superForm } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
+    import { onMount } from 'svelte';
 
   export let formData: SuperValidated<Infer<EditProfileSchema>>;
+  let closeButtonElement: HTMLButtonElement;
 
-  const { form, errors, enhance } = superForm(formData, {
-    validators: zod(editProfileSchema)
+  onMount(() => {
+    const button = document.querySelector('button[data-melt-dialog-close]');
+    if (!button) return;
+    closeButtonElement = button as HTMLButtonElement;
   });
 
-  const file = fileProxy(form, 'file')
+  const { form, errors, enhance } = superForm(formData, {
+    validators: zod(editProfileSchema),
+    onResult: ({ result }) => {
+      if (result.status === 200) {
+        closeButtonElement.click();
+      }
+    }
+  });
+
+  const file = fileProxy(form, 'file');
 </script>
 
 <form method="POST" action="?/updateUser" enctype="multipart/form-data" use:enhance>
