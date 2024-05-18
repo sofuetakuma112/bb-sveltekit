@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "f9cc2b74-3771-433b-937c-3c85704659b5",
+  "id": "2886db0f-a903-4d10-8dbc-a48407205324",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "follows": {
@@ -509,6 +509,14 @@
         },
         "created_at": {
           "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(current_timestamp)"
+        },
+        "updated_at": {
+          "name": "updated_at",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

@@ -1,10 +1,9 @@
-import { setupEvent } from '@/server/setupEvent';
+import { publicRouteLoad } from '@/server/setupEvent';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async (event) => {
-  await setupEvent(event);
-
+// 無限リダイレクトになるので、ここではprotectedRouteLoadは使わない
+export const load = publicRouteLoad(async (event) => {
   if (event.locals.user) {
     redirect(302, '/home');
   }
-};
+});

@@ -53,7 +53,7 @@
 {#if post === null}
   <div class="flex h-full items-center justify-center text-xl">表示する女性がいません</div>
 {:else}
-  <div class="hidden sm:block">
+  <div class="hidden sm:block w-full">
     <Card
       variant="single"
       color={Number(post.superLikeCount) > 0 ? 'superlike' : 'blue'}

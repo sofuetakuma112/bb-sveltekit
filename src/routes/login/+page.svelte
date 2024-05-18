@@ -12,12 +12,13 @@
   </h2>
   <div class="flex flex-1 flex-col items-center pt-32">
     <div class="flex flex-col items-center">
-      <Button
-        class="my-3 w-72 rounded-lg px-4 py-2 font-bold bg-white text-black border border-black"
-        on:click={() => goto('/auth/oauth/google')}
+      <a
+        class="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
+        href="/auth/oauth/google"
       >
+        <span class="i-logos-google-icon size-6"></span>
         Googleでログイン
-      </Button>
+      </a>
     </div>
   </div>
 </div>

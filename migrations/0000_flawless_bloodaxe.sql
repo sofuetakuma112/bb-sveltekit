@@ -71,7 +71,8 @@ CREATE TABLE `users` (
 	`icon` text,
 	`image_s3_key` text,
 	`token` text,
-	`created_at` text DEFAULT (current_timestamp) NOT NULL
+	`created_at` text DEFAULT (current_timestamp) NOT NULL,
+	`updated_at` text DEFAULT (current_timestamp) NOT NULL
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `users_provider_id_unique` ON `users` (`provider_id`);--> statement-breakpoint

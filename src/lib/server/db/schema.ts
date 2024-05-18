@@ -16,7 +16,7 @@ export const usersTable = sqliteTable('users', {
   createdAt: text('created_at')
     .notNull()
     .default(sql`(current_timestamp)`),
-  updatedAt: text('created_at')
+  updatedAt: text('updated_at')
     .notNull()
     .default(sql`(current_timestamp)`)
 });

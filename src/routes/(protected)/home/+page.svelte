@@ -22,7 +22,11 @@
       </TabsList>
     </div>
     <div class="h-full max-h-[calc(100%-64px-64px)] flex-1 sm:max-h-full">
-      <TabsContent value={data.type} variant="text" class="h-full flex justify-center flex-1">
+      <TabsContent
+        value={data.type}
+        variant="text"
+        class="h-full flex justify-center flex-1"
+      >
         <SwipeCards tabValue={data.type} post={data.post} />
       </TabsContent>
     </div>
