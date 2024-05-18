@@ -53,32 +53,6 @@ export async function getUserPostsCount(db: DrizzleClient, r2: R2Bucket, userId:
       )
     );
 
-  const posts = await db.query.postsTable.findMany({
-    where: (postsTable, { eq, and, or }) =>
-      and(
-        eq(postsTable.userId, userId),
-        or(isNull(postsTable.analysisResult), eq(postsTable.analysisResult, true))
-      ),
-    with: {
-      user: true,
-      likes: {
-        where: (likesTable, { eq }) => eq(likesTable.likeType, 'super_like'),
-        limit: 1,
-        with: {
-          user: true
-        }
-      },
-      hashtags: {
-        with: {
-          tag: true
-        }
-      }
-    }
-  });
-
-  console.log('postsCount:', postsCount);
-  console.log('posts.length:', posts.length);
-
   return {
     postsCount
   };

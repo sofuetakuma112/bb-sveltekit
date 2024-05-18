@@ -56,28 +56,9 @@ export async function getLikePostsCount(
   }
 
   const likePostsCount = await db
-  .select({ count: count() })
-  .from(likesTable).where(and(eq(likesTable.userId, currentUserId), eq(likesTable.likeType, likeType)))
-
-  const likes = await db.query.likesTable.findMany({
-    where: and(eq(likesTable.userId, currentUserId), eq(likesTable.likeType, likeType)),
-    with: {
-      post: {
-        with: {
-          user: true,
-          likes: true,
-          hashtags: {
-            with: {
-              tag: true
-            }
-          }
-        }
-      }
-    }
-  });
-
-  console.log('likePostsCount:', likePostsCount);
-  console.log('likes.length:', likes.length);
+    .select({ count: count() })
+    .from(likesTable)
+    .where(and(eq(likesTable.userId, currentUserId), eq(likesTable.likeType, likeType)));
 
   return {
     likePostsCount

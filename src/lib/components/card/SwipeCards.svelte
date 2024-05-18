@@ -5,6 +5,7 @@
   import { Button } from '$lib/components/ui/button';
   import { Card } from '$lib/components/ui/card';
   import type { SerializedPost } from '$lib/serializers/post';
+  import { enhance } from '$app/forms';
 
   const commonClasses = {
     profileImage: 'size-9 overflow-hidden rounded-lg',
@@ -200,7 +201,7 @@
 
       <!-- Action buttons -->
       <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 gap-x-16 sm:-bottom-12 sm:flex">
-        <form method="post">
+        <form method="post" use:enhance>
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="unlike" />
           <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
@@ -208,7 +209,7 @@
           </Button>
         </form>
 
-        <form method="post">
+        <form method="post" use:enhance>
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="super_like" />
           <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
@@ -216,7 +217,7 @@
           </Button>
         </form>
 
-        <form method="post">
+        <form method="post" use:enhance>
           <input name="postId" type="hidden" value={post.id} />
           <input name="likeType" type="hidden" value="like" />
           <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
