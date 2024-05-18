@@ -11,6 +11,8 @@
 
   // Icon型の定義
   export let links: Link[] = [];
+  export let userId;
+  export let profileUrl;
 
   function getInitialSelectedIconIndex(links: Link[], pathname: string) {
     return links.findIndex((icon) => icon.href === pathname);
@@ -28,7 +30,7 @@
 <div class="flex size-full sm:hidden">
   {#each links as { href, type }, i (href)}
     {#if href}
-      <a class="flex h-full flex-1 flex-col items-center" {href}>
+      <a class="flex h-full flex-1 flex-col items-center bg-white" {href}>
         {#if selectedIconIndex === i}
           <HeaderIconButton {type} class="bg-accent" />
         {:else}
@@ -36,7 +38,7 @@
         {/if}
       </a>
     {:else}
-      <div class="flex h-full flex-1 flex-col items-center">
+      <div class="flex h-full flex-1 flex-col items-center bg-white">
         {#if selectedIconIndex === i}
           <HeaderIconButton {type} class="bg-accent" />
         {:else}
@@ -45,5 +47,5 @@
       </div>
     {/if}
   {/each}
-  <UserIconMenu />
+  <UserIconMenu {profileUrl} {userId} />
 </div>

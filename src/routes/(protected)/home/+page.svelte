@@ -9,7 +9,7 @@
 <div class="h-full px-2 sm:px-8">
   <Tabs value="recommend" class="flex flex-col h-full">
     <div
-      class="flex h-16 sm:flex-1 items-center sm:max-h-[calc(100%-48px-785px-20px)] sm:min-h-[calc(48px+16px_*_2)] sm:py-4"
+      class="flex h-14 sm:flex-1 items-center sm:max-h-[calc(100%-48px-785px-20px)] sm:py-4"
     >
       <TabsList class="mx-auto flex justify-center" variant="text">
         <TabsTrigger value="recommend" variant="text" on:click={() => goto(`/home?type=recommend`)}>

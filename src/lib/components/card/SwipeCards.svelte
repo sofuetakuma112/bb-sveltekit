@@ -10,7 +10,7 @@
   import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
   import ArrowUpIcon from '$lib/components/icons/ArrowUpIcon.svelte';
   import ArrowDownIcon from '$lib/components/icons/ArrowDownIcon.svelte';
-    import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
+  import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
 
   const commonClasses = {
     profileImage: 'size-9 overflow-hidden rounded-lg',
@@ -68,7 +68,7 @@
       <!-- User profile -->
       <div
         class={clsx('absolute left-8 top-6 z-10', {
-          block: currentScrollIndex === 0,
+          'flex gap-x-2 flex-row': currentScrollIndex === 0,
           hidden: currentScrollIndex > 0
         })}
       >
@@ -256,8 +256,8 @@
 
           <!-- User profile -->
           <div
-            class={clsx('absolute left-4 top-4 z-10 flex', {
-              block: currentScrollIndex === 0,
+            class={clsx('absolute left-4 top-4 z-10', {
+              'flex flex-col': currentScrollIndex === 0,
               hidden: currentScrollIndex > 0
             })}
           >

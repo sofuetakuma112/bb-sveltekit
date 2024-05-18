@@ -18,9 +18,9 @@
 
 <div class="pb-16 sm:pb-0">
   <form method="POST" enctype="multipart/form-data" use:enhance>
-    <div class="mt-8 flex flex-col items-center px-4 sm:mt-8 max-w-[500px] mx-auto">
+    <div class="mt-4 sm:mt-8 flex flex-col items-center px-4 max-w-[500px] mx-auto">
       <h1 class="text-xl font-bold sm:text-2xl">さあ、写真をアップロードしよう</h1>
-      <div class="mt-6 w-full sm:mt-12 flex flex-col">
+      <div class="mt-4 w-full sm:mt-12 flex flex-col">
         <label for="file">デスクトップから写真をドラッグできます。</label>
         <FileUpload id="file" name="file" bind:files={$file} />
         {#if $errors.file}

@@ -44,5 +44,5 @@
       </div>
     </div>
   </div>
-  <MobileMenubar links={links} />
+  <MobileMenubar {links} profileUrl={user.imageUrl ?? ''} {userId} />
 </header>
