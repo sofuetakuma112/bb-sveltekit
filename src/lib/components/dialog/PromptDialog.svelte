@@ -14,8 +14,7 @@
   export let imageUrl: string;
   export let hashtags: {
     id: string;
-    postId: string;
-    tag: string;
+    name: string;
   }[] = [];
   export let prompt: string;
   export let isUnderReviewPost = false;
@@ -34,7 +33,7 @@
     <DialogDescription>
       {#each hashtags as hashTag, i (hashTag.id)}
         <Badge class={cn('mr-1', { hidden: isUnderReviewPost })}>
-          {hashTag.tag}
+          {hashTag.name}
         </Badge>
       {/each}
     </DialogDescription>

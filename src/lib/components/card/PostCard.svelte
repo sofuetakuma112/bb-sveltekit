@@ -17,10 +17,11 @@
   export let pageType: 'likes' | 'posts' = 'posts';
   export let hashtags: {
     id: string;
-    postId: string;
-    tag: string;
+    name: string;
   }[] = [];
   export let prompt: string;
+
+  console.log('hashtags => %o', hashtags);
 
   const isUnderReviewPost = currentUserId !== userId && analysisResult === null;
 </script>
