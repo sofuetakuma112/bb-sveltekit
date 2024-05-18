@@ -9,18 +9,6 @@ export async function getUser(
   userId: string,
   currentUserId: string
 ) {
-  const sql = db.query.usersTable
-    .findFirst({
-      where: eq(usersTable.id, userId),
-      with: {
-        posts: true,
-        likes: true,
-        followers: true,
-        followees: true
-      }
-    })
-    .toSQL();
-
   const [user, currentUser] = await Promise.all([
     db.query.usersTable.findFirst({
       where: eq(usersTable.id, userId),
