@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import { generateState, generateCodeVerifier } from 'arctic';
 import { initializeGoogleOauth } from '$lib/server/lucia';
-import { publicRouteLoad } from '@/server/setupEvent';
+import { publicRouteLoad } from '$lib/server/setupEvent';
 
 export const load = publicRouteLoad(async (event) => {
   const state = generateState();

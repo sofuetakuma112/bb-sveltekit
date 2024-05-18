@@ -1,6 +1,6 @@
 import { getRecommendedPosts, getFollowingPosts } from '$lib/drizzle/get/post';
-import { like } from '@/drizzle/mutation/like';
-import { protectedRouteLoad, setupEvent } from '@/server/setupEvent';
+import { like } from '$lib/drizzle/mutation/like';
+import { protectedRouteLoad, setupEvent } from '$lib/server/setupEvent';
 import { redirect } from '@sveltejs/kit';
 
 export const load = protectedRouteLoad(async (event, currentUser) => {

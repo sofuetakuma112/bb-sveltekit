@@ -1,8 +1,8 @@
-import { getLikePostsCount } from '@/drizzle/get/like';
-import { getUserPostsCount } from '@/drizzle/get/post';
-import { getUser } from '@/drizzle/get/user';
-import { editProfileSchema } from '@/form/editProfile';
-import { protectedRouteLoad } from '@/server/setupEvent';
+import { getLikePostsCount } from '$lib/drizzle/get/like';
+import { getUserPostsCount } from '$lib/drizzle/get/post';
+import { getUser } from '$lib/drizzle/get/user';
+import { editProfileSchema } from '$lib/form/editProfile';
+import { protectedRouteLoad } from '$lib/server/setupEvent';
 import { error } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';

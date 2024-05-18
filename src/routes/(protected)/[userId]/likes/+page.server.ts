@@ -1,6 +1,6 @@
-import { getLikePosts } from '@/drizzle/get/like';
-import { likesTable } from '@/server/db/schema';
-import { protectedRouteLoad, setupEvent } from '@/server/setupEvent';
+import { getLikePosts } from '$lib/drizzle/get/like';
+import { likesTable } from '$lib/server/db/schema';
+import { protectedRouteLoad, setupEvent } from '$lib/server/setupEvent';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 

@@ -6,7 +6,7 @@ import { BASE_URL } from '$lib/config/constants';
 import { Google } from 'arctic';
 import { env } from '$env/dynamic/private';
 import { getImageUrlFromR2 } from '$lib/r2';
-import type { DrizzleClient } from '@/types/drizzle';
+import type { DrizzleClient } from '$lib/types/drizzle';
 
 export const initializeLucia = (db: DrizzleClient) => {
   const adapter = new DrizzleSQLiteAdapter(db, sessionsTable, usersTable);

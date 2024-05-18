@@ -2,9 +2,9 @@
   import { fileProxy, superForm } from 'sveltekit-superforms';
   import { postSchema } from '$lib/form/post';
   import { zod } from 'sveltekit-superforms/adapters';
-  import FileUpload from '@/components/form/FileUpload.svelte';
+  import FileUpload from '$lib/components/form/FileUpload.svelte';
   import { Input } from '$lib/components/ui/input';
-  import { Textarea } from '@/components/ui/textarea';
+  import { Textarea } from '$lib/components/ui/textarea';
   import { Button } from '$lib/components/ui/button';
 
   export let data;

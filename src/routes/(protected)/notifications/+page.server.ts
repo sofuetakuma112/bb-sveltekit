@@ -1,5 +1,5 @@
-import { getNotifications } from '@/drizzle/get/notification';
-import { protectedRouteLoad } from '@/server/setupEvent';
+import { getNotifications } from '$lib/drizzle/get/notification';
+import { protectedRouteLoad } from '$lib/server/setupEvent';
 
 export const load = protectedRouteLoad(async (event, currentUser) => {
   const db = event.locals.db;

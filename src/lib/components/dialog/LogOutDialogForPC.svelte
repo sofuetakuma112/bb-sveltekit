@@ -2,7 +2,7 @@
   import LogOutDialog from './LogOutDialog.svelte';
   import { Button } from '$lib/components/ui/button';
   import { createEventDispatcher } from 'svelte';
-  import { cn } from '@/utils';
+  import { cn } from '$lib/utils';
   
   export let className = undefined;
   export { className as class };

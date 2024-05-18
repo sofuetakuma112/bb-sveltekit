@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui/button';
-  import FileUpload from '@/components/form/FileUpload.svelte';
+  import FileUpload from '$lib/components/form/FileUpload.svelte';
   import { Input } from '$lib/components/ui/input';
   import { editProfileSchema, type EditProfileSchema } from '$lib/form/editProfile';
   import type { SuperValidated, Infer } from 'sveltekit-superforms';

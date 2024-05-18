@@ -1,4 +1,4 @@
-import { publicRouteLoad } from '@/server/setupEvent';
+import { publicRouteLoad } from '$lib/server/setupEvent';
 import { redirect } from '@sveltejs/kit';
 
 // 無限リダイレクトになるので、ここではprotectedRouteLoadは使わない

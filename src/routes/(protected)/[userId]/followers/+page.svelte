@@ -1,7 +1,7 @@
 <script>
   import { Button } from '$lib/components/ui/button';
   import UserCard from '$lib/components/card/UserCard.svelte';
-    import UserItem from '@/components/user/UserItem.svelte';
+    import UserItem from '$lib/components/user/UserItem.svelte';
 
   export let data;
 </script>

@@ -4,7 +4,7 @@
   import DeletePostButton from '$lib/components/dialog/DeletePostButton.svelte';
   import RemoveLikeButton from '$lib/components/button/RemoveLikeButton.svelte';
   import { Card } from '$lib/components/ui/card';
-  import { cn } from '@/utils';
+  import { cn } from '$lib/utils';
 
   export let imageUrl: string;
   export let imageName: string;

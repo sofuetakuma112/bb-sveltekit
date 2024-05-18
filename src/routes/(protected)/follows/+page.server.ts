@@ -1,5 +1,5 @@
-import { followsTable } from '@/server/db/schema';
-import { setupEvent } from '@/server/setupEvent.js';
+import { followsTable } from '$lib/server/db/schema';
+import { setupEvent } from '$lib/server/setupEvent.js';
 import { redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 

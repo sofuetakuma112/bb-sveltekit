@@ -9,7 +9,7 @@
     DialogTitle,
     DialogDescription
   } from '$lib/components/ui/dialog';
-  import { cn } from '@/utils';
+  import { cn } from '$lib/utils';
 
   export let imageUrl: string;
   export let hashtags: {

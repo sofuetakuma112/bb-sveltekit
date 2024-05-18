@@ -1,6 +1,6 @@
 <script>
-  import { Button } from '@/components/ui/button';
-  import { Card } from '@/components/ui/card';
+  import { Button } from '$lib/components/ui/button';
+  import { Card } from '$lib/components/ui/card';
   import { enhance } from '$app/forms';
 
   export let profileUrl;
