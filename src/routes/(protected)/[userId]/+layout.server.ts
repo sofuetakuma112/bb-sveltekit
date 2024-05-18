@@ -1,5 +1,5 @@
-import { getLikePosts } from '@/drizzle/get/like';
-import { getUserPosts } from '@/drizzle/get/post';
+import { getLikePostsCount } from '@/drizzle/get/like';
+import { getUserPostsCount } from '@/drizzle/get/post';
 import { getUser } from '@/drizzle/get/user';
 import { editProfileSchema } from '@/form/editProfile';
 import { protectedRouteLoad } from '@/server/setupEvent';
@@ -18,14 +18,20 @@ export const load = protectedRouteLoad(async (event, currentUser) => {
   const r2 = event.platform?.env.R2 as R2Bucket;
 
   const [userPostsResponse, userResponse, superLikePostsResponse] = await Promise.all([
-    getUserPosts(db, r2, event.params.userId),
+    getUserPostsCount(db, r2, event.params.userId),
     getUser(db, r2, event.params.userId, currentUser.id),
-    getLikePosts(db, r2, event.params.userId, currentUser.id, 'super_like')
+    getLikePostsCount(db, r2, event.params.userId, currentUser.id, 'super_like')
   ]);
 
-  const { posts } = userPostsResponse;
+  const { count: postsCount } = userPostsResponse.postsCount[0];
   const { user } = userResponse;
-  const { posts: superLikePosts } = superLikePostsResponse;
+  const { count: likePostsCount } = superLikePostsResponse.likePostsCount[0];
 
-  return { posts, superLikePosts, user, currentUser, form };
+  return {
+    postsCount: postsCount,
+    likePostsCount: likePostsCount,
+    user,
+    currentUser,
+    form
+  };
 });

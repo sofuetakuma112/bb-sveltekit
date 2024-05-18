@@ -16,7 +16,7 @@
     isFollowee={data.user.isFollowee}
     formData={data.form}
   />
-  <Tab userId={data.user.id} posts={data.posts} superLikePosts={data.superLikePosts} />
+  <Tab userId={data.user.id} postsCount={data.postsCount} likePostsCount={data.likePostsCount} />
   <div class="flex flex-col pt-4 sm:pb-[100px] sm:pt-9">
     <slot />
   </div>

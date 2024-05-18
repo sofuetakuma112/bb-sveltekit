@@ -2,17 +2,29 @@ import { editProfileSchema } from '$lib/form/editProfile';
 import { uploadImageToR2 } from '$lib/r2';
 import { usersTable, postsTable } from '$lib/server/db/schema';
 import { protectedRouteLoad, setupEvent } from '$lib/server/setupEvent';
+import { getLikePosts } from '@/drizzle/get/like';
+import { getUserPosts } from '@/drizzle/get/post';
 import { error, fail, json, redirect } from '@sveltejs/kit';
 import { eq, and } from 'drizzle-orm';
 import { zod } from 'sveltekit-superforms/adapters';
 import { superValidate, withFiles } from 'sveltekit-superforms/server';
 
-export const load = protectedRouteLoad((event, currentUser) => {
+export const load = protectedRouteLoad(async (event, currentUser) => {
   if (!event.params.userId) {
     error(400, 'userId is required');
   }
 
-  return { currentUser };
+  const type = event.url.searchParams.get('type') ?? '';
+
+  const db = event.locals.db;
+  const r2 = event.platform?.env.R2 as R2Bucket;
+
+  const { posts } =
+    type === 'super-like'
+      ? await getLikePosts(db, r2, event.params.userId, currentUser.id, 'super_like')
+      : await getUserPosts(db, r2, event.params.userId);
+
+  return { posts, currentUser };
 });
 
 export const actions = {

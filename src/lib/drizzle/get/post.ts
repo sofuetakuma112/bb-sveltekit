@@ -1,7 +1,7 @@
 import { followsTable, likesTable, postsTable, usersTable } from '$lib/server/db/schema';
 import { serializePost } from '$lib/serializers/post';
 import type { DrizzleClient } from '$lib/types/drizzle';
-import { eq, desc, and, not, notInArray, isNull, inArray, or } from 'drizzle-orm';
+import { eq, desc, and, not, notInArray, isNull, inArray, or, count } from 'drizzle-orm';
 
 export async function getUserPosts(db: DrizzleClient, r2: R2Bucket, userId: string) {
   const user = await db.select().from(usersTable).where(eq(usersTable.id, userId)).limit(1);
@@ -34,6 +34,53 @@ export async function getUserPosts(db: DrizzleClient, r2: R2Bucket, userId: stri
 
   return {
     posts: await Promise.all(posts.map((post) => serializePost(r2, post)))
+  };
+}
+
+export async function getUserPostsCount(db: DrizzleClient, r2: R2Bucket, userId: string) {
+  const user = await db.select().from(usersTable).where(eq(usersTable.id, userId)).limit(1);
+  if (!user[0]) {
+    throw new Response('User not found', { status: 404 });
+  }
+
+  const postsCount = await db
+    .select({ count: count() })
+    .from(postsTable)
+    .where(
+      and(
+        eq(postsTable.userId, userId),
+        or(isNull(postsTable.analysisResult), eq(postsTable.analysisResult, true))
+      )
+    );
+
+  const posts = await db.query.postsTable.findMany({
+    where: (postsTable, { eq, and, or }) =>
+      and(
+        eq(postsTable.userId, userId),
+        or(isNull(postsTable.analysisResult), eq(postsTable.analysisResult, true))
+      ),
+    with: {
+      user: true,
+      likes: {
+        where: (likesTable, { eq }) => eq(likesTable.likeType, 'super_like'),
+        limit: 1,
+        with: {
+          user: true
+        }
+      },
+      hashtags: {
+        with: {
+          tag: true
+        }
+      }
+    }
+  });
+
+  console.log('postsCount:', postsCount);
+  console.log('posts.length:', posts.length);
+
+  return {
+    postsCount
   };
 }
 
