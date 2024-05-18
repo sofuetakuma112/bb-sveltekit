@@ -10,7 +10,7 @@ export async function serializePost(
     hashtags: InferSelectModel<typeof hashtagsTable>[];
   }
 ) {
-  const imageUrl = await getImageUrlFromR2(r2, post.imageS3Key);
+  const imageUrl = getImageUrlFromR2(post.imageS3Key);
 
   return {
     id: post.id,
@@ -33,7 +33,7 @@ export async function serializeUser(
   r2: R2Bucket,
   user: InferSelectModel<typeof usersTable>
 ) {
-  const imageUrl = await getImageUrlFromR2(r2, user.imageS3Key);
+  const imageUrl = getImageUrlFromR2(user.imageS3Key);
 
   return {
     id: user.id,

@@ -1,7 +1,7 @@
 <script>
   import EditProfile from '$lib/components/user/EditProfile.svelte';
   import { Button } from '$lib/components/ui/button';
-  import { Dialog, DialogContent, DialogTrigger } from '$lib/components/ui/dialog';
+  import * as Dialog from '$lib/components/ui/dialog';
   import { enhance } from '$app/forms';
 
   export let profileUrl;
@@ -15,21 +15,20 @@
 </script>
 
 <div class="size-16 overflow-hidden rounded-lg sm:size-20">
-  <Dialog>
+  <Dialog.Root>
     {#if userId === currentUserId}
-      <DialogTrigger asChild class="size-full">
-        <button>
-          <img src={profileUrl} alt="AI画像" class="size-full object-cover" />
-        </button>
-      </DialogTrigger>
+      <Dialog.Trigger class="size-full">
+        <!-- <button> -->
+        <img src={profileUrl} alt="AI画像" class="size-full object-cover" />
+        <!-- </button> -->
+      </Dialog.Trigger>
     {:else}
       <img src={profileUrl} alt="AI画像" class="size-full object-cover" />
     {/if}
-
-    <DialogContent class="px-0 py-4">
-      <EditProfile {userName} {formData} />
-    </DialogContent>
-  </Dialog>
+    <Dialog.Content class="px-0 py-4">
+      <EditProfile {formData} />
+    </Dialog.Content>
+  </Dialog.Root>
 </div>
 <h1 class="mt-2 text-2xl font-medium sm:h-12 sm:text-4xl">{userName}</h1>
 {#if userId !== currentUserId && isFollowee}

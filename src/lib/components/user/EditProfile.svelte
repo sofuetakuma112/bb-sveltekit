@@ -2,18 +2,21 @@
   import { Button } from '$lib/components/ui/button';
   import FileUpload from '@/components/form/FileUpload.svelte';
   import { Input } from '$lib/components/ui/input';
-  import type { EditProfileSchema } from '$lib/form/editProfile';
+  import { editProfileSchema, type EditProfileSchema } from '$lib/form/editProfile';
   import type { SuperValidated, Infer } from 'sveltekit-superforms';
-  import { superForm } from 'sveltekit-superforms';
+  import { fileProxy, superForm } from 'sveltekit-superforms';
+  import { zod } from 'sveltekit-superforms/adapters';
 
   export let formData: SuperValidated<Infer<EditProfileSchema>>;
-  export let userName;
 
-  const { form, errors, enhance } = superForm(formData);
+  const { form, errors, enhance } = superForm(formData, {
+    validators: zod(editProfileSchema)
+  });
+
+  const file = fileProxy(form, 'file')
 </script>
 
-<!-- TODO: 正しいURLにする -->
-<form method="POST" action="/">
+<form method="POST" action="?/updateUser" enctype="multipart/form-data" use:enhance>
   <div class="mt-4 flex flex-col items-center px-4 sm:px-8">
     <h1 class="text-lg font-bold sm:text-2xl">プロフィールを編集しよう</h1>
     <div class="mt-7 w-full">
@@ -26,7 +29,6 @@
         id="name"
         name="name"
         bind:value={$form.name}
-        defaultValue={userName}
       />
       {#if $errors.name}
         <p class="w-full text-red-500">{$errors.name}</p>
@@ -34,11 +36,11 @@
     </div>
     <div class="mt-12 w-full">
       <label for="file" class="text-md font-semibold">プロフィール画像</label>
-      <FileUpload id="file" name="file" bind:value={$form.file} />
+      <FileUpload id="file" name="file" bind:files={$file} />
       {#if $errors.file}
         <p class="w-full text-red-500">{$errors.file}</p>
       {/if}
     </div>
-    <Button variant="upload" class="mt-9 font-semibold">投稿する</Button>
+    <Button type="submit" variant="upload" class="mt-9 font-semibold">投稿する</Button>
   </div>
 </form>

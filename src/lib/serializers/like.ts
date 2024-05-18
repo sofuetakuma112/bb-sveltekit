@@ -12,7 +12,7 @@ export async function serializeLike(
     };
   }
 ) {
-  const imageUrl = await getImageUrlFromR2(r2, like.post.imageS3Key);
+  const imageUrl = getImageUrlFromR2(like.post.imageS3Key);
 
   return {
     id: like.post.id,
@@ -32,7 +32,7 @@ export async function serializeLike(
 }
 
 export async function serializeUser(r2: R2Bucket, user: InferSelectModel<typeof usersTable>) {
-  const imageUrl = await getImageUrlFromR2(r2, user.imageS3Key);
+  const imageUrl = getImageUrlFromR2(user.imageS3Key);
 
   return {
     id: user.id,

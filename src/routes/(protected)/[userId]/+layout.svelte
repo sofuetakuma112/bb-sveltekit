@@ -14,7 +14,7 @@
     followerCount={data.user.followerCount}
     followingCount={data.user.followingCount}
     isFollowee={data.user.isFollowee}
-    formData={data}
+    formData={data.form}
   />
   <Tab userId={data.user.id} posts={data.posts} superLikePosts={data.superLikePosts} />
   <div class="flex flex-col pt-4 sm:pb-[100px] sm:pt-9">

@@ -6,6 +6,7 @@ import { BASE_URL } from '$lib/config/constants';
 import { Google } from 'arctic';
 import { env } from '$env/dynamic/private';
 import { D1Adapter } from '@lucia-auth/adapter-sqlite';
+import { getImageUrlFromR2 } from '$lib/r2';
 
 export const initializeLucia = (db: D1Database) => {
   // const adapter = new DrizzleSQLiteAdapter(db, sessionsTable, usersTable);
@@ -24,6 +25,7 @@ export const initializeLucia = (db: D1Database) => {
     sessionExpiresIn: new TimeSpan(30, 'd'), // no more active/idle
     getUserAttributes: (attributes) => {
       // TODO: R2から画像URLを取得する
+      const imageUrl = getImageUrlFromR2(attributes.imageS3Key);
       return {
         userId: attributes.id,
         provider: attributes.provider,
@@ -31,7 +33,7 @@ export const initializeLucia = (db: D1Database) => {
         email: attributes.email,
         name: attributes.name,
         token: attributes.token,
-        imageUrl: attributes.icon
+        imageUrl: imageUrl || attributes.icon
       };
     }
   });
@@ -53,6 +55,7 @@ interface DatabaseUserAttributes {
   name: string;
   token: string;
   icon: string;
+  imageS3Key: string | null;
 }
 
 const googleRedirectUrl = dev

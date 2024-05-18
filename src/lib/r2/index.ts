@@ -2,11 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 type S3ImageType = 'avatars' | 'posts';
 
-async function uploadImageToR2(
-  r2: R2Bucket,
-  file: File,
-  type: S3ImageType
-): Promise<string> {
+async function uploadImageToR2(r2: R2Bucket, file: File, type: S3ImageType): Promise<string> {
   const key = `${type}/${uuidv4()}`;
 
   const arrayBuffer = await file.arrayBuffer();
@@ -20,7 +16,7 @@ async function uploadImageToR2(
   return key;
 }
 
-async function getImageUrlFromR2(r2: R2Bucket, key: string | null) {
+function getImageUrlFromR2(key: string | null) {
   if (!key) return '';
 
   if (key.startsWith('http') || key.startsWith('https')) {

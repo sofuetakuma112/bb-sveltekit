@@ -12,7 +12,7 @@ export async function serializeFollowerUser(
     followees: InferSelectModel<typeof followsTable>[];
   }
 ) {
-  const imageUrl = await getImageUrlFromR2(r2, user.imageS3Key);
+  const imageUrl = getImageUrlFromR2(user.imageS3Key);
   return {
     id: user.id,
     name: user.name,
@@ -34,7 +34,7 @@ export async function serializeFolloweeUser(
     }[];
   }
 ) {
-  const imageUrl = await getImageUrlFromR2(r2, user.imageS3Key);
+  const imageUrl = getImageUrlFromR2(user.imageS3Key);
   return {
     id: user.id,
     name: user.name,

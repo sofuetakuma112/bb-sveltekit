@@ -22,7 +22,7 @@ export async function serializeUser(
     notifications: InferSelectModel<typeof notificationsTable>[];
   }
 ) {
-  const imageUrl = await getImageUrlFromR2(r2, user.imageS3Key);
+  const imageUrl = getImageUrlFromR2(user.imageS3Key);
 
   return {
     id: user.id,
@@ -54,7 +54,7 @@ export async function serializeCurrentUser(
   r2: R2Bucket,
   currentUser: InferSelectModel<typeof usersTable>
 ) {
-  const imageUrl = await getImageUrlFromR2(r2, currentUser.imageS3Key);
+  const imageUrl = getImageUrlFromR2(currentUser.imageS3Key);
 
   return {
     id: currentUser.id,
