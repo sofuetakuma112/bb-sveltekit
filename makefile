@@ -19,3 +19,6 @@ seed-images:
 
 studio:
 	npm run db:studio
+
+post-seed-request:
+	@ls -1 ./seed/images | tr '\n' ',' | xargs -I {} sh -c 'curl -H "Content-Type: application/json" -d "{\"seedImages\": \"{}\"}" http://localhost:8787'

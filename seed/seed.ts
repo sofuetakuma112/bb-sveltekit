@@ -12,7 +12,7 @@ import {
 import * as schema from '$lib/server/db/schema';
 import { v4 as uuidv4 } from 'uuid';
 import { hashTags } from './const';
-import { eq } from 'drizzle-orm';
+import { inArray } from 'drizzle-orm';
 
 interface Env {
   DB: D1Database;
@@ -51,15 +51,42 @@ async function fetch30PicUrls(): Promise<string[]> {
   return res.files;
 }
 
+async function insertInBatches<T>(
+  data: T[],
+  insertFunction: (data: T[]) => unknown,
+  batchSize = 10
+) {
+  for (let i = 0; i < data.length; i += batchSize) {
+    const batch = data.slice(i, i + batchSize);
+    await insertFunction(batch);
+  }
+}
+
+async function selectInBatches<T>(
+  selectFunction: (conditions: string[]) => Promise<T[]>,
+  conditions: string[],
+  batchSize = 20
+): Promise<T[]> {
+  const results: T[] = [];
+  for (let i = 0; i < conditions.length; i += batchSize) {
+    const batchConditions = conditions.slice(i, i + batchSize);
+    const batchResults = await selectFunction(batchConditions);
+    results.push(...batchResults);
+  }
+  return results;
+}
+
 export default {
-  async fetch(
-    request: Request,
-    env: Env
-  ): Promise<Response> {
-    const db = drizzle(env.DB, { schema });
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const data = (await request.json()) as {
+      seedImages: string[];
+    };
+
+    const DB = env.DB;
+    const db = drizzle(DB, { schema });
 
     let existSeedImages = true;
-    let seedImages: string[] = ((await request.json()) as string[]).filter((fileName) => fileName);
+    let seedImages: string[] = data.seedImages.filter((fileName) => fileName);
 
     if (seedImages.length === 0) {
       existSeedImages = false;
@@ -78,7 +105,7 @@ export default {
         email: faker.internet.email()
       });
     }
-    await Promise.all(userData.map((data) => db.insert(usersTable).values(data)));
+    await insertInBatches(userData, (data) => db.insert(usersTable).values(data));
 
     // 投稿データの作成
     const postData: (typeof postsTable.$inferInsert)[] = [];
@@ -101,40 +128,54 @@ export default {
         userId
       });
     }
-    await Promise.all(postData.map((data) => db.insert(postsTable).values(data)));
+    await insertInBatches(postData, (data) => db.insert(postsTable).values(data));
 
     // ハッシュタグデータの作成
-    const hashTagData: (typeof tagsTable.$inferInsert)[] = [];
+    const hashTagData: {
+      name: string;
+      postId: string;
+    }[] = [];
 
     for (let i = 0; i < allPostIds.length; i++) {
       const selectedTags = getRandomElements(hashTags);
       for (const tag of selectedTags) {
         hashTagData.push({
-          tag,
+          name: tag,
           postId: allPostIds[i]
         });
       }
     }
 
-    const tagIdAndPostIds = await Promise.all(
-      hashTagData.map(async (data) => {
-        await db
-          .insert(tagsTable)
-          .values({
-            name: data.tag
-          })
-          .onConflictDoNothing({ target: tagsTable.name });
-        const row = await db.query.tagsTable.findFirst({
-          where: eq(tagsTable.name, data.tag)
-        });
-        return {
-          tagId: row.id,
-          postId: data.postId
-        };
-      })
+    const uniqueHashTags = Array.from(new Set(hashTagData.map(data => data.name))).map(name => ({
+      name,
+    }));
+
+    await insertInBatches(uniqueHashTags, batch =>
+      db.insert(tagsTable).values(batch).onConflictDoNothing({ target: tagsTable.name })
     );
 
-    await Promise.all(tagIdAndPostIds.map((data) => db.insert(postTagsTable).values(data)));
+    // 取得したタグデータをまとめて取得
+    const tagNames = uniqueHashTags.map(tag => tag.name);
+
+    const existingTags = await selectInBatches(
+      async (names) => await db.select({ name: tagsTable.name, id: tagsTable.id })
+        .from(tagsTable)
+        .where(inArray(tagsTable.name, names))
+        .all(),
+      tagNames,
+      20
+    );
+    
+    const tagMappings = new Map(existingTags.map(tag => [tag.name, tag.id]));
+    const tagIdAndPostIds = hashTagData.map(data => {
+      const tagId = tagMappings.get(data.name);
+      if (!tagId) throw new Error('tag not found');
+      return {
+        tagId: tagId,
+        postId: data.postId
+      };
+    });
+    await insertInBatches(tagIdAndPostIds, (data) => db.insert(postTagsTable).values(data));
 
     // いいねデータの作成
     const likeData: (typeof likesTable.$inferInsert)[] = [];
@@ -148,8 +189,7 @@ export default {
         postId
       });
     }
-
-    await Promise.all(likeData.map((data) => db.insert(likesTable).values(data)));
+    await insertInBatches(likeData, (data) => db.insert(likesTable).values(data));
 
     // フォローデータの作成
     const followData: (typeof followsTable.$inferInsert)[] = [];
@@ -163,7 +203,7 @@ export default {
         });
       }
     }
-    await Promise.all(followData.map((data) => db.insert(followsTable).values(data)));
+    await insertInBatches(followData, (data) => db.insert(followsTable).values(data));
 
     // 通知データの作成
     const notificationData: (typeof notificationsTable.$inferInsert)[] = [];
@@ -181,8 +221,7 @@ export default {
         });
       }
     }
-
-    await Promise.all(notificationData.map((data) => db.insert(notificationsTable).values(data)));
+    await insertInBatches(notificationData, (data) => db.insert(notificationsTable).values(data));
 
     return Response.json({
       message: 'Seed done'
