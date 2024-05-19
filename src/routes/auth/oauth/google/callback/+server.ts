@@ -32,7 +32,10 @@ export const GET = publicRouteLoad(async (event) => {
     error(400, 'invalid parameteres');
   }
   try {
-    const googleOauth = initializeGoogleOauth();
+    const googleOauth = initializeGoogleOauth(
+      event.platform?.env.GOOGLE_CLIENT_ID ?? "",
+      event.platform?.env.GOOGLE_CLIENT_SECRET ?? ""
+    );
     const tokens = await googleOauth.validateAuthorizationCode(code, storedCodeVerifier);
     const response = await fetch('https://openidconnect.googleapis.com/v1/userinfo', {
       headers: {

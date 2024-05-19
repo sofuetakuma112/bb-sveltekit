@@ -7,7 +7,10 @@ export const load = publicRouteLoad(async (event) => {
   const state = generateState();
   const codeVerifier = generateCodeVerifier();
 
-  const googleOauth = initializeGoogleOauth();
+  const googleOauth = initializeGoogleOauth(
+    event.platform?.env.GOOGLE_CLIENT_ID ?? '',
+    event.platform?.env.GOOGLE_CLIENT_SECRET ?? ''
+  );
   const url = await googleOauth.createAuthorizationURL(state, codeVerifier, {
     scopes: ['profile', 'email']
   });

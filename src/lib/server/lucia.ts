@@ -4,7 +4,6 @@ import { dev } from '$app/environment';
 import { sessionsTable, usersTable } from '$lib/server/db/schema';
 import { BASE_URL } from '$lib/config/constants';
 import { Google } from 'arctic';
-import { env } from '$env/dynamic/private';
 import { getImageUrlFromR2 } from '$lib/r2';
 import type { DrizzleClient } from '$lib/types/drizzle';
 
@@ -57,6 +56,6 @@ const googleRedirectUrl = dev
   ? 'http://localhost:5173/auth/oauth/google/callback'
   : `${BASE_URL}/auth/oauth/google/callback`;
 
-export const initializeGoogleOauth = () => {
-  return new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, googleRedirectUrl);
+export const initializeGoogleOauth = (clientId: string, clientSecret: string) => {
+  return new Google(clientId, clientSecret, googleRedirectUrl);
 };
