@@ -13,7 +13,7 @@
 <Tabs
   value={selectedTab}
   style="height: 100%;"
-  class="mt-8 h-10 w-full max-w-[1072px] border-b-2 sm:mt-[64px]"
+  class="mt-4 h-10 w-full border-b-2 sm:mt-8"
 >
   <div class="flex h-10">
     <TabsList class="flex gap-[48px]" variant="text">

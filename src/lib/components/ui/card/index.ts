@@ -7,7 +7,8 @@ const cardVariants = tv({
   variants: {
     variant: {
       single: 'max-w-[1172px] rounded-3xl',
-      list: 'max-w-[270px] rounded-xl'
+      list: 'max-w-[270px] rounded-xl',
+      post: 'h-[60vh] sm:h-[45vh]'
     },
     color: {
       transparent: 'bg-transparent',

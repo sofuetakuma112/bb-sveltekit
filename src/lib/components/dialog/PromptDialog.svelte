@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { Badge } from '$lib/components/ui/badge';
   import {
     Dialog,
@@ -19,12 +18,20 @@
   export let prompt: string;
   export let isUnderReviewPost = false;
 
-  const dispatch = createEventDispatcher();
+  let styles = {
+    'background-image': `url("${imageUrl}")`,
+  };
+
+  $: cssVarStyles = Object.entries(styles)
+    .map(([key, value]) => `${key}:${value}`)
+    .join(';');
 </script>
 
 <Dialog>
   <DialogTrigger class="block size-full rounded-2xl">
-    <img src={imageUrl} alt="AI画像" class="w-full h-full object-cover" />
+    <div class="size-full bg-no-repeat bg-cover bg-center backdrop-blur-md" style={cssVarStyles}>
+      <img src={imageUrl} alt="AI画像" class="size-full object-cover hover:object-contain backdrop-blur-md" />
+    </div>
   </DialogTrigger>
   <DialogContent class="bg-white">
     <DialogHeader>

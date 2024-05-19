@@ -1,5 +1,5 @@
 <script lang="ts">
-  import PostCard from '$lib/components/card/PostCard.svelte';
+  import PostCards from '$lib/components/card/PostCards.svelte';
   import { Button } from '$lib/components/ui/button';
   import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
   import type { PageData } from './$types';
@@ -12,23 +12,7 @@
     <HeartIcon class="size-7 bg-white" />
   </Button>
   <h1 class="mt-4 h-8 w-[168px] text-center text-2xl font-semibold">いいね一覧</h1>
-  <div class="mt-12">
-    <div class="grid gap-x-16 gap-y-9 sm:grid-cols-2 sm:px-8 lg:grid-cols-3 2xl:grid-cols-4">
-      {#each data.posts as post (post.id)}
-        <PostCard
-          postId={post.id}
-          pageType="likes"
-          userId={post.user.id}
-          imageUrl={post.imageUrl ?? ''}
-          imageName={post.imageName}
-          profileUrl={post.user.imageUrl ?? ''}
-          userName={post.user.name ?? ''}
-          analysisResult={post.analysisResult}
-          hashtags={post.hashtags}
-          prompt={post.prompt}
-          currentUserId={data.currentUser.id}
-        />
-      {/each}
-    </div>
+  <div class="sm:mt-12">
+    <PostCards posts={data.posts} currentUser={data.currentUser} />
   </div>
 </div>

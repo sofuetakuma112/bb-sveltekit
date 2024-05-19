@@ -18,7 +18,7 @@
     formData={data.form}
   />
   <Tab userId={data.user.id} postsCount={data.postsCount} likePostsCount={data.likePostsCount} />
-  <div class="flex flex-col pt-4 sm:pb-[100px] sm:pt-9">
+  <div class="flex-col pt-4 pb-[64px] sm:pt-9 flex items-center">
     <slot />
   </div>
 </div>

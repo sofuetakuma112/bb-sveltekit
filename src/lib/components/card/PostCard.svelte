@@ -25,13 +25,13 @@
 </script>
 
 <Card
-  variant="list"
+  variant="post"
   color="transparent"
-  class={cn('mx-auto flex flex-col', {
+  class={cn('flex flex-col md:flex-col-4 md:max-w-[33.333333%] mt-3 pt-3 px-3', {
     hidden: analysisResult === false
   })}
 >
-  <div class="relative h-[270px] pb-1">
+  <div class="relative size-full rounded-xl overflow-hidden">
     <PromptDialog {imageUrl} {hashtags} {prompt} {isUnderReviewPost} />
     {#if currentUserId === userId && pageType === 'posts' && postId}
       <DeletePostButton {postId} />
@@ -39,18 +39,24 @@
     {#if pageType === 'likes' && postId}
       <RemoveLikeButton {postId} />
     {/if}
-  </div>
-  <p class="pb-1 text-lg font-semibold">{imageName}</p>
-  <div class="flex">
-    <a href={`/${userId}/home`}>
-      <div class="mr-1 h-9 w-9 overflow-hidden rounded-lg">
-        <img src={profileUrl} alt="ユーザープロフィール画像" class="object-cover w-full h-full" />
+    <div class="absolute w-full left-0 bottom-0 flex justify-between h-[64px] bg-image-shadow p-4">
+      <div class="flex items-end">
+        <a href={`/${userId}/home`}>
+          <div class="mr-3 h-6 w-6 overflow-hidden rounded-full">
+            <img
+              src={profileUrl}
+              alt="ユーザープロフィール画像"
+              class="object-cover w-full h-full"
+            />
+          </div>
+        </a>
+        <div class="flex items-center">
+          <a href={`/${userId}/home`}>
+            <span class="text-base text-[#FFFFFFE6]">{userName}</span>
+          </a>
+        </div>
       </div>
-    </a>
-    <div class="flex items-center">
-      <a href={`/${userId}/home`}>
-        <span class="text-base text-gray-600">{userName}</span>
-      </a>
+      <p class="text-lg font-semibold text-[#FFFFFFE6] flex items-end">{imageName}</p>
     </div>
   </div>
 </Card>

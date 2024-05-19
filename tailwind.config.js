@@ -143,10 +143,17 @@ const config = {
           foreground: 'hsl(var(--card-foreground))'
         }
       },
+      backgroundImage: {
+        'image-shadow': 'linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%)',
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
+      },
+      flex: {
+        'col-4': '0 0 33.333333%',
+        'col-6': '0 0 50%',
       },
       keyframes: {
         'accordion-down': {
