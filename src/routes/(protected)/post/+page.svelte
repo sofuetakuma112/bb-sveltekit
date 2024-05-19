@@ -6,8 +6,9 @@
   import { Input } from '$lib/components/ui/input';
   import { Textarea } from '$lib/components/ui/textarea';
   import { Button } from '$lib/components/ui/button';
+  import type { PageData } from './$types';
 
-  export let data;
+  export let data: PageData;
 
   const { form, errors, enhance } = superForm(data.form, {
     validators: zod(postSchema)

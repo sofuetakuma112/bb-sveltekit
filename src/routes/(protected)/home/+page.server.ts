@@ -1,9 +1,14 @@
 import { getRecommendedPosts, getFollowingPosts } from '$lib/drizzle/get/post';
 import { like } from '$lib/drizzle/mutation/like';
-import { protectedRouteLoad, setupEvent } from '$lib/server/setupEvent';
 import { redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
-export const load = protectedRouteLoad(async (event, currentUser) => {
+export const load: PageServerLoad = async (event) => {
+  const currentUser = event.locals.user;
+  if (!currentUser) {
+    redirect(302, '/login');
+  }
+
   const userId = currentUser.id;
 
   const type = event.url.searchParams.get('type') ?? 'recommend';
@@ -17,11 +22,10 @@ export const load = protectedRouteLoad(async (event, currentUser) => {
       : await getFollowingPosts(db, r2, userId);
 
   return { type, post };
-});
+};
 
 export const actions = {
   default: async (event) => {
-    await setupEvent(event);
     const currentUser = event.locals.user;
     if (!currentUser) {
       redirect(302, '/login');

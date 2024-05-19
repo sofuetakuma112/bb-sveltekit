@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
   import { Button } from '$lib/components/ui/button';
   import UserCard from '$lib/components/card/UserCard.svelte';
   import UserItem from '$lib/components/user/UserItem.svelte';
   import PeopleIcon from '@/components/icons/PeopleIcon.svelte';
+  import type { PageData } from './$types';
 
-  export let data;
+  export let data: PageData;
 </script>
 
 <div class="flex flex-col items-center pb-[100px] pt-5">

@@ -1,5 +1,4 @@
-export function convertToJST(utcDate: string): string {
-  const date = new Date(utcDate);
+export function convertToJST(date: Date): string {
   const jstOffset = 9 * 60 * 60 * 1000;
   const jstDate = new Date(date.getTime() + jstOffset);
   const nowUTC = new Date();

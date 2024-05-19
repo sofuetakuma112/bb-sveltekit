@@ -4,17 +4,16 @@ import { uploadImageToR2 } from '$lib/r2';
 import { zod } from 'sveltekit-superforms/adapters';
 import { postSchema } from '$lib/form/post';
 import { superValidate, withFiles } from 'sveltekit-superforms/server';
-import { protectedRouteLoad, setupEvent } from '$lib/server/setupEvent';
 import { inArray } from 'drizzle-orm';
+import type { PageServerLoad } from './$types';
 
-export const load = protectedRouteLoad(async () => {
+export const load: PageServerLoad = async () => {
   const form = await superValidate(zod(postSchema));
   return { form };
-});
+};
 
 export const actions = {
   default: async (event) => {
-    await setupEvent(event);
     const currentUser = event.locals.user;
     if (!currentUser) {
       redirect(302, '/login');

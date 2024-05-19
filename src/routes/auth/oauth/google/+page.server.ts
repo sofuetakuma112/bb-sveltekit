@@ -1,9 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import { generateState, generateCodeVerifier } from 'arctic';
 import { initializeGoogleOauth } from '$lib/server/lucia';
-import { publicRouteLoad } from '$lib/server/setupEvent';
+import type { PageServerLoad } from './$types';
 
-export const load = publicRouteLoad(async (event) => {
+export const load: PageServerLoad = async (event) => {
   const state = generateState();
   const codeVerifier = generateCodeVerifier();
 
@@ -29,4 +29,4 @@ export const load = publicRouteLoad(async (event) => {
   });
 
   return redirect(302, url);
-});
+};

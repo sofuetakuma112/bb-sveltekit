@@ -2,13 +2,17 @@ import { getLikePostsCount } from '$lib/drizzle/get/like';
 import { getUserPostsCount } from '$lib/drizzle/get/post';
 import { getUser } from '$lib/drizzle/get/user';
 import { editProfileSchema } from '$lib/form/editProfile';
-import { protectedRouteLoad } from '$lib/server/setupEvent';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import type { LayoutServerLoad } from './$types';
 
-export const load = protectedRouteLoad(async (event, currentUser) => {
+export const load: LayoutServerLoad  = async (event) => {
   const form = await superValidate(zod(editProfileSchema));
+  const currentUser = event.locals.user;
+    if (!currentUser) {
+      redirect(302, '/login');
+    }
 
   if (!event.params.userId) {
     error(400, 'userId is required');
@@ -34,4 +38,4 @@ export const load = protectedRouteLoad(async (event, currentUser) => {
     currentUser,
     form
   };
-});
+}

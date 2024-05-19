@@ -1,8 +1,8 @@
 import { getFollowers } from '$lib/drizzle/get/follow';
-import { protectedRouteLoad } from '$lib/server/setupEvent';
 import { redirect, error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
-export const load = protectedRouteLoad(async (event) => {
+export const load: PageServerLoad = async (event) => {
   const currentUser = event.locals.user;
   if (!currentUser) {
     redirect(302, '/login');
@@ -18,4 +18,4 @@ export const load = protectedRouteLoad(async (event) => {
   const data = await getFollowers(db, r2, event.params.userId, currentUser.id);
 
   return { followers: data.followers };
-});
+}

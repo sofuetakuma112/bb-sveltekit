@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
   import { convertToJST } from '$lib/date';
   import { Button } from '$lib/components/ui/button';
   import NotificationsIcon from '@/components/icons/NotificationsIcon.svelte';
+  import type { PageData } from './$types';
 
-  export let data;
+  export let data: PageData;
 </script>
 
 <div class="flex flex-col items-center pt-5">
@@ -26,25 +27,22 @@
           </a>
           {#if notification.notificationType === 'like'}
             <p class="flex items-center">
-              <a href={`/${notification.notifierUser.id}/home`}
-                >{notification.notifierUser.userName}</a
+              <a href={`/${notification.notifierUser.id}/home`}>{notification.notifierUser.name}</a
               >にいいねされました
             </p>
           {:else if notification.notificationType === 'follow'}
             <p class="flex items-center">
-              <a href={`/${notification.notifierUser.id}/home`}
-                >{notification.notifierUser.userName}</a
+              <a href={`/${notification.notifierUser.id}/home`}>{notification.notifierUser.name}</a
               >にフォローされました
             </p>
           {:else if notification.notificationType === 'super_like'}
             <p class="flex items-center">
-              <a href={`/${notification.notifierUser.id}/home`}
-                >{notification.notifierUser.userName}</a
+              <a href={`/${notification.notifierUser.id}/home`}>{notification.notifierUser.name}</a
               >にスーパーライクされました
             </p>
           {/if}
         </div>
-        <p class="text-gray-300">{convertToJST(notification.createdAt.toString())}</p>
+        <p class="text-gray-300">{convertToJST(notification.createdAt)}</p>
       </div>
     {/each}
   </div>

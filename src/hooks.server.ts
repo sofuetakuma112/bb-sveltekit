@@ -1,6 +1,7 @@
 // import { D1Database$ } from 'cfw-bindings-wrangler-bridge';
 
-import type { Handle } from "@sveltejs/kit";
+import { setupEvent } from '@/server/setupEvent';
+import type { Handle } from '@sveltejs/kit';
 
 // import log from '$lib/server/log';
 
@@ -28,7 +29,7 @@ import type { Handle } from "@sveltejs/kit";
 
 // FIXME: ここではevent.platform?.env?.DBがundefinedで渡ってくることがあるので、
 // 代わりにload関数でsetupEventを呼び出す
-// export const handle: Handle = async ({ event, resolve }) => {
-//   // await setupEvent(event)
-//   return await resolve(event);
-// };
+export const handle: Handle = async ({ event, resolve }) => {
+  await setupEvent(event);
+  return await resolve(event);
+};

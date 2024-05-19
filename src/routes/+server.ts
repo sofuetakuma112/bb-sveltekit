@@ -1,6 +1,4 @@
-import { publicRouteLoad } from '@/server/setupEvent';
-
-export const GET = publicRouteLoad(async (event) => {
+export const GET = async (event) => {
   if (event.locals.user) {
     return new Response(null, {
       status: 302,
@@ -16,4 +14,4 @@ export const GET = publicRouteLoad(async (event) => {
       Location: '/login'
     }
   });
-});
+};

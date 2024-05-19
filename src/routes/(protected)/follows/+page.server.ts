@@ -1,11 +1,9 @@
 import { followsTable } from '$lib/server/db/schema';
-import { setupEvent } from '$lib/server/setupEvent.js';
 import { redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 
 export const actions = {
   create: async (event) => {
-    await setupEvent(event);
     const currentUser = event.locals.user;
     if (!currentUser) {
       redirect(302, '/login');
@@ -25,7 +23,6 @@ export const actions = {
     return { success: true };
   },
   delete: async (event) => {
-    await setupEvent(event);
     const currentUser = event.locals.user;
     if (!currentUser) {
       redirect(302, '/login');

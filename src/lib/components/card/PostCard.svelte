@@ -21,8 +21,6 @@
   }[] = [];
   export let prompt: string;
 
-  console.log('hashtags => %o', hashtags);
-
   const isUnderReviewPost = currentUserId !== userId && analysisResult === null;
 </script>
 

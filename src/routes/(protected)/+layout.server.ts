@@ -1,5 +1,5 @@
-import { protectedRouteLoad } from '$lib/server/setupEvent';
+import type { LayoutServerLoad } from './$types';
 
-export const load = protectedRouteLoad(async (event) => {
+export const load: LayoutServerLoad = async (event) => {
   return { user: event.locals.user };
-});
+};

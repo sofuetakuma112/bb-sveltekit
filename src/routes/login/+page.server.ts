@@ -1,9 +1,8 @@
-import { publicRouteLoad } from '$lib/server/setupEvent';
 import { redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
-// 無限リダイレクトになるので、ここではprotectedRouteLoadは使わない
-export const load = publicRouteLoad(async (event) => {
+export const load: PageServerLoad = async (event) => {
   if (event.locals.user) {
     redirect(302, '/home');
   }
-});
+}

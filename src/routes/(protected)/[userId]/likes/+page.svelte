@@ -2,8 +2,9 @@
   import PostCard from '$lib/components/card/PostCard.svelte';
   import { Button } from '$lib/components/ui/button';
   import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
+  import type { PageData } from './$types';
 
-  export let data;
+  export let data: PageData;
 </script>
 
 <div class="flex flex-col items-center pb-[100px] pt-5">
@@ -23,8 +24,9 @@
           profileUrl={post.user.imageUrl ?? ''}
           userName={post.user.name ?? ''}
           analysisResult={post.analysisResult}
-          hashTags={post.hashTags}
+          hashtags={post.hashtags}
           prompt={post.prompt}
+          currentUserId={data.currentUser.id}
         />
       {/each}
     </div>

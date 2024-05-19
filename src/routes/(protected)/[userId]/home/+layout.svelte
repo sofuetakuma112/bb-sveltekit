@@ -1,8 +1,9 @@
 <script lang="ts">
   import Profile from '$lib/components/user/Profile.svelte';
   import Tab from '$lib/components/profile/Tab.svelte';
+  import type { LayoutData } from './$types';
 
-  export let data;
+  export let data: LayoutData;
 </script>
 
 <div class="flex flex-col px-4 pt-4 sm:px-12 sm:pb-[100px] sm:pt-9">

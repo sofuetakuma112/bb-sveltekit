@@ -2,8 +2,8 @@ import { initializeLucia } from '$lib/server/lucia';
 import { redirect } from '@sveltejs/kit';
 import { drizzle } from 'drizzle-orm/d1';
 import * as schema from '$lib/server/db/schema';
-import type { RequestEvent, ServerLoadEvent } from '@sveltejs/kit';
-import type { Lucia, User } from 'lucia';
+import type { RequestEvent } from '@sveltejs/kit';
+import type { Lucia } from 'lucia';
 
 export async function setupDatabase(event: RequestEvent) {
   event.locals.DB = <D1Database>event.platform?.env?.DB;
@@ -63,24 +63,24 @@ export async function setupEvent(event: RequestEvent) {
   await handleExistingSession(event, lucia, sessionId as string);
 }
 
-export const publicRouteLoad = (callback: (event: ServerLoadEvent) => unknown) => {
-  return async (event: ServerLoadEvent) => {
-    await setupEvent(event);
+// export const publicRouteLoad = (callback: (event: ServerLoadEvent) => unknown) => {
+//   return async (event: ServerLoadEvent) => {
+//     await setupEvent(event);
 
-    return callback(event);
-  };
-};
+//     return callback(event);
+//   };
+// };
 
-export const protectedRouteLoad = (
-  callback: (event: ServerLoadEvent, currentUser: User) => unknown
-) => {
-  return async (event: ServerLoadEvent) => {
-    await setupEvent(event);
-    const currentUser = event.locals.user;
-    if (!currentUser) {
-      redirect(302, '/login');
-    }
+// export const protectedRouteLoad = (
+//   callback: (event: ServerLoadEvent, currentUser: User) => unknown
+// ) => {
+//   return async (event: ServerLoadEvent) => {
+//     await setupEvent(event);
+//     const currentUser = event.locals.user;
+//     if (!currentUser) {
+//       redirect(302, '/login');
+//     }
 
-    return callback(event, currentUser);
-  };
-};
+//     return callback(event, currentUser);
+//   };
+// };

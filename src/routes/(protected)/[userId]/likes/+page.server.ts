@@ -1,10 +1,10 @@
 import { getLikePosts } from '$lib/drizzle/get/like';
 import { likesTable } from '$lib/server/db/schema';
-import { protectedRouteLoad, setupEvent } from '$lib/server/setupEvent';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
+import type { PageServerLoad } from './$types';
 
-export const load = protectedRouteLoad(async (event) => {
+export const load: PageServerLoad = async (event) => {
   const currentUser = event.locals.user;
   if (!currentUser) {
     redirect(302, '/login');
@@ -19,12 +19,11 @@ export const load = protectedRouteLoad(async (event) => {
 
   const likePosts = await getLikePosts(db, r2, event.params.userId, currentUser.id, 'like');
 
-  return { posts: likePosts.posts };
-});
+  return { posts: likePosts.posts, currentUser };
+};
 
 export const actions = {
   default: async (event) => {
-    await setupEvent(event);
     const currentUser = event.locals.user;
     if (!currentUser) {
       redirect(302, '/login');

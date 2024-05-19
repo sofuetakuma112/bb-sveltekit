@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { LayoutData } from './$types';
   import Header from '$lib/components/header/Header.svelte';
 
-  export let data;
-  let user: PageData['user'];
+  export let data: LayoutData;
+  let user: LayoutData['user'];
   $: user = data.user;
 </script>
 

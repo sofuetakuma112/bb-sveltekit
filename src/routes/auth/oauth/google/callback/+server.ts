@@ -2,7 +2,6 @@ import { error } from '@sveltejs/kit';
 import { getUserByEmail, createUser } from '$lib/server/db/user-model';
 import { initializeGoogleOauth } from '$lib/server/lucia';
 import { OAuth2RequestError } from 'arctic';
-import { publicRouteLoad } from '$lib/server/setupEvent';
 
 type GoogleUser = {
   sub: string;
@@ -15,7 +14,7 @@ type GoogleUser = {
   locale: string;
 };
 
-export const GET = publicRouteLoad(async (event) => {
+export const GET = async (event) => {
   if (event.locals.user) {
     return new Response(null, {
       status: 302,
@@ -86,4 +85,4 @@ export const GET = publicRouteLoad(async (event) => {
       error(400, 'invalid verification code');
     }
   }
-});
+}
