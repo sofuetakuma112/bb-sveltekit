@@ -21,7 +21,7 @@
   class="fixed bottom-0 z-10 h-14 w-full sm:static sm:z-0 sm:flex sm:h-auto sm:w-20 xl:col-span-2 xl:w-[280px]"
 >
   <div
-    class="hidden min-h-screen flex-1 flex-col border-r-2 bg-white-white p-2 sm:flex"
+    class="hidden min-h-svh sm:min-h-screen flex-1 flex-col border-r-2 bg-white-white p-2 sm:flex"
     style="overflow: visible;"
   >
     <UserProfile profileUrl={user.imageUrl ?? ''} {userId} userName={user.name} />

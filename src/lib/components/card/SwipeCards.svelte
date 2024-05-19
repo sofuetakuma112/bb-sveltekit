@@ -306,7 +306,7 @@
 
           <!-- Superlike badge -->
           <div
-            class={clsx('absolute left-4 top-14 z-10', {
+            class={clsx('absolute left-1/2 top-4 z-10 -translate-x-1/2 whitespace-nowrap', {
               block: currentScrollIndex === 0,
               hidden: currentScrollIndex > 0
             })}

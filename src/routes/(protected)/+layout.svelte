@@ -10,7 +10,7 @@
 <svelte:head>
   <title>BeauBelle</title>
 </svelte:head>
-<div class="flex min-h-screen">
+<div class="flex min-h-svh sm:min-h-screen">
   <Header {user} />
   <div class="relative h-screen flex-1 overflow-auto">
     <slot />
