@@ -27,9 +27,12 @@
 <Card
   variant="post"
   color="transparent"
-  class={cn('flex flex-col md:flex-col-4 md:max-w-[33.333333%] mt-3 pt-3 px-3', {
-    hidden: analysisResult === false
-  })}
+  class={cn(
+    'flex flex-col sm:flex-col-6 sm:max-w-[50%] lg:flex-col-4 lg:max-w-[33.333333%] mt-3 pt-3 px-3',
+    {
+      hidden: analysisResult === false
+    }
+  )}
 >
   <div class="relative size-full rounded-xl overflow-hidden">
     <PromptDialog {imageUrl} {hashtags} {prompt} {isUnderReviewPost} />

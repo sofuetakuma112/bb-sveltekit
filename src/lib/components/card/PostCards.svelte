@@ -23,9 +23,7 @@
   export let currentUser: User;
 </script>
 
-<div
-  class="flex flex-wrap sm:w-auto sm:pb-0 xl:max-w-[1140px]"
->
+<div class="flex flex-wrap w-full sm:pb-0 xl:max-w-[1140px]">
   {#each posts as post (post.id)}
     <PostCard
       postId={post.id}
