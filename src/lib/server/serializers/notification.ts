@@ -1,6 +1,6 @@
 import { notificationsTable, usersTable } from "$lib/server/db/schema";
 import type { InferSelectModel } from "drizzle-orm";
-import { getImageUrlFromR2 } from "$lib/r2";
+import { getImageUrlFromR2 } from "$lib/server/r2";
 
 export async function serializeNotification(
   r2: R2Bucket,

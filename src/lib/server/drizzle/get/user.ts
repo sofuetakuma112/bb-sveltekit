@@ -1,6 +1,6 @@
 import { usersTable } from '$lib/server/db/schema';
-import { serializeCurrentUser, serializeUser } from '$lib/serializers/user';
-import type { DrizzleClient } from '$lib/types/drizzle';
+import { serializeCurrentUser, serializeUser } from '$lib/server/serializers/user';
+import type { DrizzleClient } from '$lib/server/types/drizzle';
 import { eq } from 'drizzle-orm';
 
 export async function getUser(

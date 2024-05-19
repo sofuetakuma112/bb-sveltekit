@@ -1,7 +1,7 @@
 <script lang="ts">
   import { convertToJST } from '$lib/date';
   import { Button } from '$lib/components/ui/button';
-  import NotificationsIcon from '@/components/icons/NotificationsIcon.svelte';
+  import NotificationsIcon from '$lib/components/icons/NotificationsIcon.svelte';
   import type { PageData } from './$types';
 
   export let data: PageData;

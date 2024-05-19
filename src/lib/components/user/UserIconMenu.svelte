@@ -19,7 +19,7 @@
         <LogOutDialogForMobile on:openLogoutDialog />
       </Menubar.Item>
       <Menubar.Item
-        ><a href={`/${userId}/home`} class="text-center inline-block w-full">ユーザープロフィール</a
+        ><a href={`/${userId}/home`} class="text-center inline-block w-full py-2">ユーザープロフィール</a
         ></Menubar.Item
       >
     </Menubar.Content>

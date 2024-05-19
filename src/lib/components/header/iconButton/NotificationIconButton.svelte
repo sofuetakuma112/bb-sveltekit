@@ -1,6 +1,6 @@
 <script>
   import { Button } from '$lib/components/ui/button';
-  import NotificationsIcon from '@/components/icons/NotificationsIcon.svelte';
+  import NotificationsIcon from '$lib/components/icons/NotificationsIcon.svelte';
 
   export let className = undefined;
   export { className as class };

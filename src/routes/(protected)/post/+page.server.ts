@@ -1,6 +1,6 @@
 import { redirect, fail } from '@sveltejs/kit';
 import { postTagsTable, postsTable, tagsTable } from '$lib/server/db/schema';
-import { uploadImageToR2 } from '$lib/r2';
+import { uploadImageToR2 } from '$lib/server/r2';
 import { zod } from 'sveltekit-superforms/adapters';
 import { postSchema } from '$lib/form/post';
 import { superValidate, withFiles } from 'sveltekit-superforms/server';

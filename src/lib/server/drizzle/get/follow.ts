@@ -2,8 +2,8 @@ import { usersTable } from "$lib/server/db/schema";
 import {
   serializeFolloweeUser,
   serializeFollowerUser,
-} from "$lib/serializers/follow";
-import type { DrizzleClient } from "$lib/types/drizzle";
+} from "$lib/server/serializers/follow";
+import type { DrizzleClient } from "$lib/server/types/drizzle";
 import { eq } from "drizzle-orm";
 
 export const getFollowees = async (

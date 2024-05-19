@@ -8,8 +8,8 @@ import {
   notificationsTable,
   tagsTable,
   postTagsTable
-} from '@/server/db/schema';
-import * as schema from '@/server/db/schema';
+} from '$lib/server/db/schema';
+import * as schema from '$lib/server/db/schema';
 import { v4 as uuidv4 } from 'uuid';
 import { hashTags } from './const';
 import { eq } from 'drizzle-orm';

@@ -1,6 +1,6 @@
 import { notificationsTable, usersTable } from "$lib/server/db/schema";
-import { serializeNotification } from "$lib/serializers/notification";
-import type { DrizzleClient } from "$lib/types/drizzle";
+import { serializeNotification } from "$lib/server/serializers/notification";
+import type { DrizzleClient } from "$lib/server/types/drizzle";
 import { eq, desc, inArray } from "drizzle-orm";
 
 export const getNotifications = async (

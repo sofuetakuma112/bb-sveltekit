@@ -1,5 +1,5 @@
 import { tagsTable, likesTable, postsTable, usersTable } from '$lib/server/db/schema';
-import { getImageUrlFromR2 } from '$lib/r2';
+import { getImageUrlFromR2 } from '$lib/server/r2';
 import type { InferSelectModel } from 'drizzle-orm';
 
 export async function serializeLike(

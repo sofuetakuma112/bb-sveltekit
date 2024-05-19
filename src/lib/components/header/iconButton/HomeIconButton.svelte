@@ -1,6 +1,6 @@
 <script>
   import { Button } from '$lib/components/ui/button';
-  import HomeIcon from '@/components/icons/HomeIcon.svelte';
+  import HomeIcon from '$lib/components/icons/HomeIcon.svelte';
   export let className = undefined;
   export { className as class };
 </script>

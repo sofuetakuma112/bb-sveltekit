@@ -1,8 +1,8 @@
 import { editProfileSchema } from '$lib/form/editProfile';
-import { uploadImageToR2 } from '$lib/r2';
+import { uploadImageToR2 } from '$lib/server/r2';
 import { usersTable, postsTable } from '$lib/server/db/schema';
-import { getLikePosts } from '$lib/drizzle/get/like';
-import { getUserPosts } from '$lib/drizzle/get/post';
+import { getLikePosts } from '$lib/server/drizzle/get/like';
+import { getUserPosts } from '$lib/server/drizzle/get/post';
 import { error, fail, json, redirect } from '@sveltejs/kit';
 import { eq, and } from 'drizzle-orm';
 import { zod } from 'sveltekit-superforms/adapters';

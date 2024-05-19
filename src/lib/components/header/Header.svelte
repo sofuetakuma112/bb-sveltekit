@@ -41,6 +41,7 @@
       {/each}
       <div class="flex flex-col items-center xl:w-[100px]">
         <LogOutDialogForPC class="bg-white-white" />
+        <p class="hidden py-1 text-sm xl:block">ログアウト</p>
       </div>
     </div>
   </div>

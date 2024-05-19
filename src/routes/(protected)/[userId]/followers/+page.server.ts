@@ -1,4 +1,4 @@
-import { getFollowers } from '$lib/drizzle/get/follow';
+import { getFollowers } from '$lib/server/drizzle/get/follow';
 import { redirect, error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

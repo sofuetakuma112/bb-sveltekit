@@ -1,12 +1,11 @@
 export function convertToJST(date: Date): string {
-  const jstOffset = 9 * 60 * 60 * 1000;
-  const jstDate = new Date(date.getTime() + jstOffset);
+  const jstDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
   const nowUTC = new Date();
-  const now = new Date(nowUTC.getTime() + jstOffset);
+  const now = new Date(nowUTC.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
   const diff = now.getTime() - jstDate.getTime();
 
   if (diff < 1000 * 60) {
-    return "1分前";
+    return '1分前';
   } else if (diff < 1000 * 60 * 60) {
     const minutes = Math.floor(diff / (1000 * 60));
     return `${minutes}分前`;

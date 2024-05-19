@@ -1,4 +1,4 @@
-import { getNotifications } from '$lib/drizzle/get/notification';
+import { getNotifications } from '$lib/server/drizzle/get/notification';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

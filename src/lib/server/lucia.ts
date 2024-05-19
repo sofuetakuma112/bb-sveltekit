@@ -5,8 +5,8 @@ import { sessionsTable, usersTable } from '$lib/server/db/schema';
 import { BASE_URL } from '$lib/config/constants';
 import { Google } from 'arctic';
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private';
-import { getImageUrlFromR2 } from '$lib/r2';
-import type { DrizzleClient } from '$lib/types/drizzle';
+import { getImageUrlFromR2 } from '$lib/server/r2';
+import type { DrizzleClient } from '$lib/server/types/drizzle';
 
 export const initializeLucia = (db: DrizzleClient) => {
   const adapter = new DrizzleSQLiteAdapter(db, sessionsTable, usersTable);

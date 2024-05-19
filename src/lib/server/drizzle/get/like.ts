@@ -1,6 +1,6 @@
 import { likesTable, usersTable } from '$lib/server/db/schema';
-import { serializeLike } from '$lib/serializers/like';
-import type { DrizzleClient } from '$lib/types/drizzle';
+import { serializeLike } from '$lib/server/serializers/like';
+import type { DrizzleClient } from '$lib/server/types/drizzle';
 import { eq, and, count } from 'drizzle-orm';
 
 export async function getLikePosts(

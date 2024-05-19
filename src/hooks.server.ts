@@ -1,6 +1,6 @@
 // import { D1Database$ } from 'cfw-bindings-wrangler-bridge';
 
-import { setupEvent } from '@/server/setupEvent';
+import { setupEvent } from '$lib/server/setupEvent';
 import type { Handle } from '@sveltejs/kit';
 
 // import log from '$lib/server/log';

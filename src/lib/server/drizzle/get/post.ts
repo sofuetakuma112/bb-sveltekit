@@ -1,6 +1,6 @@
 import { followsTable, likesTable, postsTable, usersTable } from '$lib/server/db/schema';
-import { serializePost } from '$lib/serializers/post';
-import type { DrizzleClient } from '$lib/types/drizzle';
+import { serializePost } from '$lib/server/serializers/post';
+import type { DrizzleClient } from '$lib/server/types/drizzle';
 import { eq, desc, and, not, notInArray, isNull, inArray, or, count } from 'drizzle-orm';
 
 export async function getUserPosts(db: DrizzleClient, r2: R2Bucket, userId: string) {

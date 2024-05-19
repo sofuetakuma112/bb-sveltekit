@@ -4,6 +4,7 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<button class="mx-auto inline-block text-sm sm:hidden" on:click={() => dispatch('openLogoutDialog')}
-  >ログアウトする</button
+<button
+  class="mx-auto inline-block text-sm sm:hidden py-2"
+  on:click={() => dispatch('openLogoutDialog')}>ログアウトする</button
 >

@@ -1,5 +1,5 @@
-import { getRecommendedPosts, getFollowingPosts } from '$lib/drizzle/get/post';
-import { like } from '$lib/drizzle/mutation/like';
+import { getRecommendedPosts, getFollowingPosts } from '$lib/server/drizzle/get/post';
+import { like } from '$lib/server/drizzle/mutation/like';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

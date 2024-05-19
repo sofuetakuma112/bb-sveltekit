@@ -1,6 +1,6 @@
 <script>
   import { Button } from '$lib/components/ui/button';
-  import PeopleIcon from '@/components/icons/PeopleIcon.svelte';
+  import PeopleIcon from '$lib/components/icons/PeopleIcon.svelte';
 
   export let className = undefined;
   export { className as class };

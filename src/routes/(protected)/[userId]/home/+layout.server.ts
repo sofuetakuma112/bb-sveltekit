@@ -1,6 +1,6 @@
-import { getLikePostsCount } from '$lib/drizzle/get/like';
-import { getUserPostsCount } from '$lib/drizzle/get/post';
-import { getUser } from '$lib/drizzle/get/user';
+import { getLikePostsCount } from '$lib/server/drizzle/get/like';
+import { getUserPostsCount } from '$lib/server/drizzle/get/post';
+import { getUser } from '$lib/server/drizzle/get/user';
 import { editProfileSchema } from '$lib/form/editProfile';
 import { error, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';

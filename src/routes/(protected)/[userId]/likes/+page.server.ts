@@ -1,4 +1,4 @@
-import { getLikePosts } from '$lib/drizzle/get/like';
+import { getLikePosts } from '$lib/server/drizzle/get/like';
 import { likesTable } from '$lib/server/db/schema';
 import { error, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';

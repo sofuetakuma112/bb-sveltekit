@@ -2,7 +2,7 @@
   import { Button } from '$lib/components/ui/button';
   import UserCard from '$lib/components/card/UserCard.svelte';
   import UserItem from '$lib/components/user/UserItem.svelte';
-  import PeopleIcon from '@/components/icons/PeopleIcon.svelte';
+  import PeopleIcon from '$lib/components/icons/PeopleIcon.svelte';
   import type { PageData } from './$types';
 
   export let data: PageData;

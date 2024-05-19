@@ -13,7 +13,7 @@ const config = {
 		// アダプターの詳細については、https://kit.svelte.dev/docs/adapters を参照
 		adapter: adapter(),
 		alias: {
-			'@/*': './src/lib/*'
+			'$lib/*': './src/lib/*'
 		}
 	}
 };

@@ -4,7 +4,7 @@
   import { Badge } from '$lib/components/ui/badge';
   import { Button } from '$lib/components/ui/button';
   import { Card } from '$lib/components/ui/card';
-  import type { SerializedPost } from '$lib/serializers/post';
+  import type { SerializedPost } from '$lib/server/serializers/post';
   import { enhance } from '$app/forms';
   import StarIcon from '$lib/components/icons/StarIcon.svelte';
   import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
@@ -104,7 +104,7 @@
       </div>
 
       <!-- Reload button -->
-      <div
+      <!-- <div
         class={clsx('absolute right-2 top-2 z-10 sm:right-8 sm:top-6', {
           block: currentScrollIndex === 0,
           hidden: currentScrollIndex > 0
@@ -113,7 +113,7 @@
         <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
           <RefreshIcon class="size-8 bg-[#25AADA]" />
         </Button>
-      </div>
+      </div> -->
 
       <!-- Scroll up button -->
       <div
@@ -322,7 +322,7 @@
           </div>
 
           <!-- Reload button -->
-          <div
+          <!-- <div
             class={clsx('absolute right-2 top-2 z-10', {
               block: currentScrollIndex === 0,
               hidden: currentScrollIndex > 0
@@ -331,7 +331,7 @@
             <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
               <RefreshIcon class="size-8 bg-[#25AADA]" />
             </Button>
-          </div>
+          </div> -->
         </div>
 
         <!-- Hashtags -->
