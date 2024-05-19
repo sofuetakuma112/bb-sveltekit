@@ -5,4 +5,4 @@
   export let data: PageData;
 </script>
 
-<PostCards posts={data.posts} currentUser={data.currentUser} />
+<PostCards posts={data.posts} currentUser={data.currentUser} pageType="posts" />

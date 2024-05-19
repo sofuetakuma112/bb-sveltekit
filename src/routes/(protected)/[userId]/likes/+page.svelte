@@ -13,6 +13,6 @@
   </Button>
   <h1 class="mt-4 h-8 w-[168px] text-center text-2xl font-semibold">いいね一覧</h1>
   <div class="sm:mt-12">
-    <PostCards posts={data.posts} currentUser={data.currentUser} />
+    <PostCards posts={data.posts} currentUser={data.currentUser} pageType="likes" />
   </div>
 </div>
