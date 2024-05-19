@@ -16,10 +16,10 @@
     >
     <Menubar.Content>
       <Menubar.Item>
-        <LogOutDialogForMobile />
+        <LogOutDialogForMobile on:openLogoutDialog />
       </Menubar.Item>
       <Menubar.Item
-        ><a href={`/${userId}/home`} class="flex justify-center">ユーザープロフィール</a
+        ><a href={`/${userId}/home`} class="text-center inline-block w-full">ユーザープロフィール</a
         ></Menubar.Item
       >
     </Menubar.Content>

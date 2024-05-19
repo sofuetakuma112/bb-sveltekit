@@ -2,6 +2,7 @@
   import { page } from '$app/stores';
   import HeaderIconButton from '$lib/components/header/HeaderIconButton.svelte';
   import UserIconMenu from '$lib/components/user/UserIconMenu.svelte';
+  import LogOutDialog from '$lib/components/dialog/LogOutDialog.svelte';
 
   type Link = {
     href: string;
@@ -14,9 +15,15 @@
   export let userId;
   export let profileUrl;
 
+  let logoutDialogButton: HTMLButtonElement;
+
   function getInitialSelectedIconIndex(links: Link[], pathname: string) {
     return links.findIndex((icon) => icon.href === pathname);
   }
+
+  const handleOpenLogoutDialog = () => {
+    logoutDialogButton.click();
+  };
 
   // 現在のページパスを取得
   $: pathname = $page.url.pathname;
@@ -47,5 +54,6 @@
       </div>
     {/if}
   {/each}
-  <UserIconMenu {profileUrl} {userId} />
+  <UserIconMenu {profileUrl} {userId} on:openLogoutDialog={handleOpenLogoutDialog} />
+  <LogOutDialog><button class="hidden" bind:this={logoutDialogButton}></button></LogOutDialog>
 </div>

@@ -1,7 +1,9 @@
 <script>
-  import LogOutDialog from './LogOutDialog.svelte';
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 </script>
 
-<LogOutDialog>
-  <button class="mx-auto inline-block text-sm sm:hidden" name="toggle">ログアウトする</button>
-</LogOutDialog>
+<button class="mx-auto inline-block text-sm sm:hidden" on:click={() => dispatch('openLogoutDialog')}
+  >ログアウトする</button
+>
