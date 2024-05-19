@@ -16,3 +16,5 @@ vite.config.ts.timestamp-*
 .dev.vars
 
 seed/images
+
+wrangler.toml
