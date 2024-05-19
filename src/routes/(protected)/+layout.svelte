@@ -7,6 +7,9 @@
   $: user = data.user;
 </script>
 
+<svelte:head>
+  <title>BeauBelle</title>
+</svelte:head>
 <div class="flex min-h-screen">
   <Header {user} />
   <div class="relative h-screen flex-1 overflow-auto">
