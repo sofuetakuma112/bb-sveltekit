@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Profile from '$lib/components/user/Profile.svelte';
+  import Profile from '$lib/components/profile/Profile.svelte';
   import Tab from '$lib/components/profile/Tab.svelte';
   import type { LayoutData } from './$types';
 

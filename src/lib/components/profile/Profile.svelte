@@ -1,5 +1,5 @@
 <script lang="ts">
-  import EditProfile from '$lib/components/user/EditProfile.svelte';
+  import EditProfile from '$lib/components/profile/EditProfile.svelte';
   import { Button } from '$lib/components/ui/button';
   import * as Dialog from '$lib/components/ui/dialog';
   import { enhance } from '$app/forms';
