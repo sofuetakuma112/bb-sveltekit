@@ -10,6 +10,9 @@ async function main() {
   const seedImages = process.env.SEED_IMAGES.split(',');
   const local = process.env.LOCAL === 'true';
 
+  // FIXME: このやり方だとリモートのD1にシードを流す際に、
+  // wrangler.tomlのpreview_database_idを、
+  // 本番のDBのidに変更する必要があるので修正する
   const workerPath = path.resolve(__dirname, './seed.ts');
   const worker = await unstable_dev(workerPath, {
     local,
@@ -20,7 +23,7 @@ async function main() {
   const response = await worker.fetch('/', {
     method: 'POST',
     body: JSON.stringify({
-      seedImages,
+      seedImages
     })
   });
   console.log(await response.text());
