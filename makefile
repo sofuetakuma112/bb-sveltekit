@@ -15,7 +15,7 @@ seed-db:
 	npm run db:seed
 
 seed-images:
-	npm run db:seed:images
+	npm run db:seed:images:local
 
 studio:
 	npm run db:studio
