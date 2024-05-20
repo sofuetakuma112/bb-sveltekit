@@ -6,6 +6,7 @@ export const GET: RequestHandler = async (event) => {
   const type = event.params.type;
   const name = event.params.name;
 
+  // FIXME: ローカル開発でもwasm-image-optimizationからimportできるようにする
   let optimizeImage
   if (dev) {
     optimizeImage = await import('wasm-image-optimization/node').then(
@@ -16,12 +17,6 @@ export const GET: RequestHandler = async (event) => {
       (module) => module.optimizeImage
     );
   }
-
-  // const query = event.url.searchParams.toString();
-
-  // const queryString = query ? `?${query}` : '';
-  // console.log(`http://localhost:8787/images/${type}/${name}${queryString}`)
-  // const res = await fetch(`http://localhost:8787/images/${type}/${name}${queryString}`);
 
   const queryParams = event.url.searchParams;
   const w = queryParams.get('w');
@@ -56,18 +51,4 @@ export const GET: RequestHandler = async (event) => {
       'Cache-Control': 'public, max-age=31536000, immutable'
     }
   });
-
-  // const object = await event.platform?.env.R2.get(`${type}/${name}`);
-
-  // if (object == null) {
-  //   error(404);
-  // }
-
-  // const blob = await object.blob();
-
-  // const headers: HeadersInit = new Headers();
-  // headers.set('contentType', blob.type.split('/').pop() ?? '');
-  // headers.set('etag', object.etag);
-
-  // return new Response(blob, { headers });
 };
