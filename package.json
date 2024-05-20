@@ -81,6 +81,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwind-variants": "^0.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "wasm-image-optimization": "^1.0.1"
   }
 }
