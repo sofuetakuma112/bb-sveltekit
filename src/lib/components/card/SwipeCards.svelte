@@ -7,7 +7,6 @@
   import type { SerializedPost } from '$lib/server/serializers/post';
   import { enhance } from '$app/forms';
   import StarIcon from '$lib/components/icons/StarIcon.svelte';
-  import RefreshIcon from '$lib/components/icons/RefreshIcon.svelte';
   import ArrowUpIcon from '$lib/components/icons/ArrowUpIcon.svelte';
   import ArrowDownIcon from '$lib/components/icons/ArrowDownIcon.svelte';
   import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
@@ -75,7 +74,7 @@
         <a href={`/${post.user.id}/home`}>
           <div class="mr-1 size-9 overflow-hidden rounded-lg">
             <img
-              src={post.user.imageUrl}
+              src={`${post.user.imageUrl}?w=36&q=80`}
               alt="ユーザープロフィール画像"
               class="size-full object-cover"
             />
@@ -155,7 +154,7 @@
           })}
         >
           <div class="flex-1 w-1/2">
-            <img src={post.imageUrl} alt="AI画像" class="size-full object-cover" />
+            <img src={`${post.imageUrl}?w=530&q=80`} alt="AI画像" class="size-full object-cover" />
           </div>
           <div class="flex flex-1 items-center justify-center w-1/2 px-2 sm:px-4">
             <div class="my-auto">
@@ -243,7 +242,7 @@
       <div class="scrollbar-hide h-full overflow-y-scroll rounded-3xl">
         <div class="relative flex h-full">
           <div class="flex-1">
-            <img src={post.imageUrl} alt="AI画像" class="size-full object-cover" />
+            <img src={`${post.imageUrl}?w=360&q=80`} alt="AI画像" class="size-full object-cover" />
           </div>
           <div class="absolute bottom-4 left-4">
             <span class="pr-4 text-2xl font-semibold text-white">
@@ -264,7 +263,7 @@
             <a href={`/${post.user.id}/home`}>
               <div class={commonClasses.profileImage}>
                 <img
-                  src={post.user.imageUrl}
+                  src={`${post.user.imageUrl}?w=36&q=80`}
                   alt="ユーザープロフィール画像"
                   class="size-full object-cover"
                 />
