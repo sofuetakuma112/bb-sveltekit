@@ -1,4 +1,6 @@
 <script>
+  import { constructImageUrl } from '$lib/url';
+
   export let profileUrl = '';
   export let userId = '';
   export let userName = '';
@@ -7,7 +9,13 @@
 <div class="flex items-center pb-[60px]">
   <a href={`/${userId}/home`}>
     <div class="size-16 overflow-hidden rounded-lg">
-      <img src={profileUrl} alt="ユーザープロフィール画像" class="size-full object-cover" />
+      <img
+        src={constructImageUrl(profileUrl, {
+          width: 128
+        })}
+        alt="ユーザープロフィール画像"
+        class="size-full object-cover"
+      />
     </div>
   </a>
   <a href={`/${userId}/home`}>

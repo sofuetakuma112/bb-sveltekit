@@ -12,8 +12,8 @@
 
   // Icon型の定義
   export let links: Link[] = [];
-  export let userId;
-  export let profileUrl;
+  export let userId: string;
+  export let profileUrl: string;
 
   let logoutDialogButton: HTMLButtonElement;
 

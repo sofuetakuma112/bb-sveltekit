@@ -8,6 +8,7 @@
   import StarIcon from '$lib/components/icons/StarIcon.svelte';
   import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
   import { enhance } from '$app/forms';
+  import { constructImageUrl } from '$lib/url';
 
   const commonClasses = {
     profileImage: 'size-9 overflow-hidden rounded-lg',
@@ -44,7 +45,13 @@
     <div class="scrollbar-hide h-full overflow-y-scroll rounded-3xl">
       <div class="relative flex h-full">
         <div class="flex-1">
-          <img src={`${post.imageUrl}?w=360&q=80`} alt="AI画像" class="size-full object-cover" />
+          <img
+            src={constructImageUrl(post.imageUrl, {
+              width: 360
+            })}
+            alt="AI画像"
+            class="size-full object-cover"
+          />
         </div>
         <div class="absolute bottom-4 left-4">
           <span class="pr-4 text-2xl font-semibold text-white">
@@ -65,7 +72,9 @@
           <a href={`/${post.user.id}/home`}>
             <div class={commonClasses.profileImage}>
               <img
-                src={`${post.user.imageUrl}?w=36&q=80`}
+                src={constructImageUrl(post.user.imageUrl ?? '', {
+                  width: 72
+                })}
                 alt="ユーザープロフィール画像"
                 class="size-full object-cover"
               />

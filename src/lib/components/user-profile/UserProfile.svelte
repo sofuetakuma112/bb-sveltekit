@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { constructImageUrl } from '$lib/url';
+
   export let profileUrl: string;
   export let userId: string;
   export let userName: string;
@@ -8,7 +10,13 @@
   <a href={`/${userId}/home`}>
     <div class="size-16 overflow-hidden rounded-lg">
       <!-- TODO: Imageコンポーネントに置き換える -->
-      <img src={`${profileUrl}?w=64`} alt="ユーザープロフィール画像" class="size-full object-cover" />
+      <img
+        src={constructImageUrl(profileUrl, {
+          width: 128
+        })}
+        alt="ユーザープロフィール画像"
+        class="size-full object-cover"
+      />
     </div>
   </a>
   <a href={`/${userId}/home`}>

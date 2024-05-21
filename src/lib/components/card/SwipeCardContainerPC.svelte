@@ -10,6 +10,7 @@
   import ArrowUpIcon from '$lib/components/icons/ArrowUpIcon.svelte';
   import ArrowDownIcon from '$lib/components/icons/ArrowDownIcon.svelte';
   import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
+  import { constructImageUrl } from '$lib/url';
 
   const commonClasses = {
     profileImage: 'size-9 overflow-hidden rounded-lg',
@@ -64,7 +65,9 @@
         <a href={`/${post.user.id}/home`}>
           <div class="mr-1 size-9 overflow-hidden rounded-lg">
             <img
-              src={`${post.user.imageUrl}?w=36&q=80`}
+              src={constructImageUrl(post.user.imageUrl ?? '', {
+                width: 72
+              })}
               alt="ユーザープロフィール画像"
               class="size-full object-cover"
             />
@@ -132,7 +135,13 @@
           })}
         >
           <div class="flex-1 w-1/2">
-            <img src={`${post.imageUrl}?w=530&q=80`} alt="AI画像" class="size-full object-cover" />
+            <img
+              src={constructImageUrl(post.imageUrl, {
+                width: 530
+              })}
+              alt="AI画像"
+              class="size-full object-cover"
+            />
           </div>
           <div class="flex flex-1 items-center justify-center w-1/2 px-2 sm:px-4">
             <div class="my-auto">

@@ -5,6 +5,7 @@
   import RemoveLikeButton from '$lib/components/button/RemoveLikeButton.svelte';
   import { Card } from '$lib/components/ui/card';
   import { cn } from '$lib/utils';
+    import { constructImageUrl } from '$lib/url';
 
   export let imageUrl: string;
   export let imageName: string;
@@ -47,7 +48,9 @@
         <a href={`/${userId}/home`}>
           <div class="mr-3 h-6 w-6 overflow-hidden rounded-full">
             <img
-              src={`${profileUrl}?w=24`}
+              src={constructImageUrl(profileUrl, {
+                width: 24
+              })}
               alt="ユーザープロフィール画像"
               class="object-cover w-full h-full"
             />

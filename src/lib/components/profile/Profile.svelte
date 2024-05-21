@@ -3,6 +3,7 @@
   import { Button } from '$lib/components/ui/button';
   import * as Dialog from '$lib/components/ui/dialog';
   import { enhance } from '$app/forms';
+  import { constructImageUrl } from '$lib/url';
 
   export let profileUrl;
   export let currentUserId;
@@ -18,7 +19,13 @@
   <Dialog.Root>
     {#if userId === currentUserId}
       <Dialog.Trigger class="size-full">
-        <img src={`${profileUrl}?w=64`} alt="AI画像" class="size-full object-cover" />
+        <img
+          src={constructImageUrl(profileUrl, {
+            width: 128
+          })}
+          alt="AI画像"
+          class="size-full object-cover"
+        />
       </Dialog.Trigger>
     {:else}
       <img src={profileUrl} alt="AI画像" class="size-full object-cover" />
