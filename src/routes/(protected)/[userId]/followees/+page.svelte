@@ -18,21 +18,24 @@
   <div
     class="w-full gap-x-16 gap-y-9 px-4 sm:grid sm:w-auto sm:grid-cols-2 sm:px-8 lg:grid-cols-3 2xl:grid-cols-4"
   >
-    {#each data.followees as followee (followee.id)}
-      <UserCard
-        profileUrl={followee.imageUrl ?? ''}
-        userId={followee.id}
-        userName={followee.name ?? ''}
-        isFollowee={followee.isFollowee}
-        class="hidden sm:block"
-      />
-      <UserItem
-        profileUrl={followee.imageUrl ?? ''}
-        userId={followee.id}
-        userName={followee.name ?? ''}
-        isFollowee={followee.isFollowee}
-        class="sm:hidden"
-      />
-    {/each}
+    {#if data.isMobile}
+      {#each data.followees as followee (followee.id)}
+        <UserItem
+          profileUrl={followee.imageUrl ?? ''}
+          userId={followee.id}
+          userName={followee.name ?? ''}
+          isFollowee={followee.isFollowee}
+        />
+      {/each}
+    {:else}
+      {#each data.followees as followee (followee.id)}
+        <UserCard
+          profileUrl={followee.imageUrl ?? ''}
+          userId={followee.id}
+          userName={followee.name ?? ''}
+          isFollowee={followee.isFollowee}
+        />
+      {/each}
+    {/if}
   </div>
 </div>

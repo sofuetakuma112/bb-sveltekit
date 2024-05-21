@@ -4,6 +4,7 @@ import { drizzle } from 'drizzle-orm/d1';
 import * as schema from '$lib/server/db/schema';
 import type { RequestEvent } from '@sveltejs/kit';
 import type { Lucia } from 'lucia';
+import { UAParser } from 'ua-parser-js';
 
 export async function setupDatabase(event: RequestEvent) {
   event.locals.DB = <D1Database>event.platform?.env?.DB;
@@ -51,6 +52,10 @@ async function handleExistingSession(event: RequestEvent, lucia: Lucia, sessionI
 
 export async function setupEvent(event: RequestEvent) {
   await setupDatabase(event);
+
+  const ua = event.request.headers.get('user-agent');
+  const device = new UAParser(ua || '').getDevice();
+  event.locals.isMobile = device.type === 'mobile';
 
   const lucia = event.locals.lucia;
   const sessionId = event.cookies.get(lucia.sessionCookieName);

@@ -10,6 +10,7 @@ declare global {
       >;
       user: import('lucia').User | null;
       session: import('lucia').Session | null;
+      isMobile: boolean;
     }
     interface Platform {
       env: {

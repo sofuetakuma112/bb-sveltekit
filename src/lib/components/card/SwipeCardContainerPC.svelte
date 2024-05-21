@@ -23,7 +23,6 @@
   };
 
   const buttonVariants = {
-    smOutline: 'bg-white-white',
     lgOutline: 'bg-white-white'
   };
 
@@ -35,15 +34,6 @@
 
   $: currentScrollIndex =
     tabValue === 'recommend' ? $recommendCurrentScrollIndex : $followingCurrentScrollIndex;
-
-  const mutate = () => {
-    console.log('mutate!');
-  };
-
-  const handleReload = () => {
-    // TODO: リロード処理を実装する
-    mutate();
-  };
 
   const handleScroll = (type: 'up' | 'down') => {
     // 現在のカードに基づいて次のカードを表示
@@ -58,7 +48,7 @@
 {#if post === null}
   <div class="flex h-full items-center justify-center text-xl">表示する女性がいません</div>
 {:else}
-  <div class="hidden sm:flex justify-center w-full">
+  <div class="flex justify-center w-full">
     <Card
       variant="single"
       color={Number(post.superLikeCount) > 0 ? 'superlike' : 'blue'}
@@ -101,18 +91,6 @@
           </div>
         {/if}
       </div>
-
-      <!-- Reload button -->
-      <!-- <div
-        class={clsx('absolute right-2 top-2 z-10 sm:right-8 sm:top-6', {
-          block: currentScrollIndex === 0,
-          hidden: currentScrollIndex > 0
-        })}
-      >
-        <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
-          <RefreshIcon class="size-8 bg-[#25AADA]" />
-        </Button>
-      </div> -->
 
       <!-- Scroll up button -->
       <div
@@ -228,132 +206,6 @@
             <HeartIcon class="size-8 sm:size-16 bg-[#25AADA]" />
           </Button>
         </form>
-      </div>
-    </Card>
-  </div>
-
-  <div class="sm:hidden">
-    <Card
-      variant="single"
-      color={Number(post.superLikeCount) > 0 ? 'superlike' : 'blue'}
-      class="relative flex h-full flex-col"
-    >
-      <!-- Image and user info -->
-      <div class="scrollbar-hide h-full overflow-y-scroll rounded-3xl">
-        <div class="relative flex h-full">
-          <div class="flex-1">
-            <img src={`${post.imageUrl}?w=360&q=80`} alt="AI画像" class="size-full object-cover" />
-          </div>
-          <div class="absolute bottom-4 left-4">
-            <span class="pr-4 text-2xl font-semibold text-white">
-              {post.imageName}
-            </span>
-            <span class="text-xl font-semibold text-white">
-              {Number(post.imageAge)}
-            </span>
-          </div>
-
-          <!-- User profile -->
-          <div
-            class={clsx('absolute left-4 top-4 z-10', {
-              'flex flex-col': currentScrollIndex === 0,
-              hidden: currentScrollIndex > 0
-            })}
-          >
-            <a href={`/${post.user.id}/home`}>
-              <div class={commonClasses.profileImage}>
-                <img
-                  src={`${post.user.imageUrl}?w=36&q=80`}
-                  alt="ユーザープロフィール画像"
-                  class="size-full object-cover"
-                />
-              </div>
-            </a>
-            <div class="flex items-center">
-              <a href={`/${post.user.id}/home`}>
-                <span class="text-base text-white">{post.user.name}</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Action buttons -->
-          <div class="absolute bottom-2 right-2 flex gap-x-2">
-            <form method="post">
-              <input name="postId" type="hidden" value={post.id} />
-              <input name="likeType" type="hidden" value="unlike" />
-              <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-                <span class="i-akar-icons-cross size-6"></span>
-              </Button>
-            </form>
-
-            <form method="post">
-              <input name="postId" type="hidden" value={post.id} />
-              <input name="likeType" type="hidden" value="super_like" />
-              <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-                <StarIcon class="size-6 bg-[#25AADA]" />
-              </Button>
-            </form>
-
-            <form method="post">
-              <input name="postId" type="hidden" value={post.id} />
-              <input name="likeType" type="hidden" value="like" />
-              <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-                <HeartIcon class="size-6 bg-[#25AADA]" />
-              </Button>
-            </form>
-          </div>
-
-          <!-- Superlike badge -->
-          <div
-            class={clsx('absolute left-1/2 top-4 z-10 -translate-x-1/2 whitespace-nowrap', {
-              block: currentScrollIndex === 0,
-              hidden: currentScrollIndex > 0
-            })}
-          >
-            {#if Number(post.superLikeCount) > 0}
-              <div class={commonClasses.superLikeIcon}>
-                <StarIcon class="size-8 bg-[#25AADA]" />
-                <span class="pl-2 text-sm font-bold text-blue-300">
-                  superlikeされた投稿です！！
-                </span>
-              </div>
-            {/if}
-          </div>
-
-          <!-- Reload button -->
-          <!-- <div
-            class={clsx('absolute right-2 top-2 z-10', {
-              block: currentScrollIndex === 0,
-              hidden: currentScrollIndex > 0
-            })}
-          >
-            <Button variant="smOutline" class={commonClasses.reload} on:click={handleReload}>
-              <RefreshIcon class="size-8 bg-[#25AADA]" />
-            </Button>
-          </div> -->
-        </div>
-
-        <!-- Hashtags -->
-        <div class="flex h-full flex-col items-center justify-center px-8">
-          <p class="text-center text-2xl font-bold">ハッシュタグ</p>
-          <div class={commonClasses.hashtags}>
-            {#each post.hashtags as hashTag, i (hashTag.id)}
-              <Badge>
-                {hashTag.name}
-              </Badge>
-            {/each}
-          </div>
-        </div>
-
-        <!-- Prompt -->
-        <div class="flex h-full flex-col items-center px-2 pt-4 sm:px-8 sm:pt-8">
-          <p class="text-center text-2xl font-bold">プロンプト</p>
-          <p
-            class="mt-9 rounded-2xl bg-white p-6 text-base font-semibold text-slate-800 sm:text-xl"
-          >
-            {post.prompt}
-          </p>
-        </div>
       </div>
     </Card>
   </div>

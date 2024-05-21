@@ -122,7 +122,6 @@ export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, current
           eq(likesTable.likeType, 'super_like')
         ),
         columns: { postId: true }
-        // distinctOn: likesTable.postId,
       })
       .then((likes) => likes.map((like) => like.postId)),
     // ログインユーザーがいいね/スーパーライクしたPostのIDの配列を取得
@@ -133,8 +132,12 @@ export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, current
       })
       .then((likes) => likes.map((like) => like.postId))
   ]);
+  
   const hasSuperLikePostId = superLikePostIds.length > 0;
   const hasMyLikesPostId = myLikesPostIds.length > 0;
+
+  // 自分がlike, unlike, super_likeした投稿を除外する条件
+  const excludeMyLikesCondition = hasMyLikesPostId ? not(inArray(postsTable.id, myLikesPostIds)) : undefined;
 
   const [followingPost, superLikedPost] = await Promise.all([
     // フォロー中ユーザーの投稿でかつ、自分がlike, unlike, super_likeしていない投稿
@@ -142,11 +145,7 @@ export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, current
       where: and(
         eq(postsTable.analysisResult, true),
         inArray(postsTable.userId, followingUserIds),
-        or(
-          hasSuperLikePostId ? not(inArray(postsTable.id, superLikePostIds)) : undefined,
-          not(eq(postsTable.userId, currentUserId)),
-          hasMyLikesPostId ? not(inArray(postsTable.id, myLikesPostIds)) : undefined
-        )
+        excludeMyLikesCondition
       ),
       orderBy: desc(postsTable.id),
       with: {
@@ -171,10 +170,7 @@ export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, current
       where: and(
         eq(postsTable.analysisResult, true),
         hasSuperLikePostId ? inArray(postsTable.id, superLikePostIds) : undefined,
-        or(
-          not(eq(postsTable.userId, currentUserId)),
-          hasMyLikesPostId ? not(inArray(postsTable.id, myLikesPostIds)) : undefined
-        )
+        excludeMyLikesCondition
       ),
       orderBy: desc(postsTable.id),
       with: {

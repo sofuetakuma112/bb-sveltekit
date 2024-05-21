@@ -17,5 +17,5 @@ export const load: PageServerLoad = async (event) => {
 
   const data = await getFollowers(db, r2, event.params.userId, currentUser.id);
 
-  return { followers: data.followers };
-}
+  return { followers: data.followers, isMobile: event.locals.isMobile };
+};
