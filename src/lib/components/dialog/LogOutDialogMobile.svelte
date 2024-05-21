@@ -5,6 +5,6 @@
 </script>
 
 <button
-  class="mx-auto inline-block text-sm sm:hidden py-2"
+  class="mx-auto inline-block text-sm py-2"
   on:click={() => dispatch('openLogoutDialog')}>ログアウトする</button
 >

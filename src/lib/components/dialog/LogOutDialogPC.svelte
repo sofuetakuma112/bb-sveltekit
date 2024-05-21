@@ -15,7 +15,7 @@
   <Button
     variant="smOutline"
     sp="menubar"
-    class={cn('hidden sm:flex', className)}
+    class={cn('flex', className)}
     on:click={() => dispatch('toggle')}
   >
     <LogoutIcon class="size-8 bg-[#25AADA]" />
