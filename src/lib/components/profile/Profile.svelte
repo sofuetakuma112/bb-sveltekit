@@ -28,7 +28,9 @@
         />
       </Dialog.Trigger>
     {:else}
-      <img src={profileUrl} alt="AI画像" class="size-full object-cover" />
+      <img src={constructImageUrl(profileUrl, {
+        width: 128
+      })} alt="AI画像" class="size-full object-cover" />
     {/if}
     <Dialog.Content class="px-0 py-4">
       <EditProfile {formData} />

@@ -20,7 +20,9 @@
   export let isUnderReviewPost = false;
 
   let styles = {
-    'background-image': `url("${imageUrl}")`
+    'background-image': `url("${constructImageUrl(imageUrl, {
+      width: 356
+    })}")`
   };
 
   $: cssVarStyles = Object.entries(styles)
