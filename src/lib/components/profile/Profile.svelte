@@ -18,7 +18,7 @@
   <Dialog.Root>
     {#if userId === currentUserId}
       <Dialog.Trigger class="size-full">
-        <img src={profileUrl} alt="AI画像" class="size-full object-cover" />
+        <img src={`${profileUrl}?w=64`} alt="AI画像" class="size-full object-cover" />
       </Dialog.Trigger>
     {:else}
       <img src={profileUrl} alt="AI画像" class="size-full object-cover" />

@@ -47,7 +47,7 @@
         <a href={`/${userId}/home`}>
           <div class="mr-3 h-6 w-6 overflow-hidden rounded-full">
             <img
-              src={profileUrl}
+              src={`${profileUrl}?w=24`}
               alt="ユーザープロフィール画像"
               class="object-cover w-full h-full"
             />
