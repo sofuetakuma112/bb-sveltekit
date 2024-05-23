@@ -6,7 +6,7 @@ export const GET: RequestHandler = async (event) => {
   const type = event.params.type;
   const name = event.params.name;
 
-  // FIXME: ローカル開発でもwasm-image-optimizationからimportできるようにする
+  // FIXME: dynamic importやめる
   let photon;
   if (dev) {
     photon = await import('@cf-wasm/photon/node');
