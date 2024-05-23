@@ -33,13 +33,13 @@
 <Dialog>
   <DialogTrigger class="block size-full rounded-2xl">
     <div class="size-full bg-no-repeat bg-cover bg-center backdrop-blur-md" style={cssVarStyles}>
-      <!-- <img
+      <img
         src={constructImageUrl(imageUrl, {
           width: 356
         })}
         alt="AI画像"
         class="size-full object-cover hover:object-contain backdrop-blur-md"
-      /> -->
+      />
     </div>
   </DialogTrigger>
   <DialogContent class="bg-white">
