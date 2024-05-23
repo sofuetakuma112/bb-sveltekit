@@ -12,7 +12,7 @@
     <HeartIcon class="size-7 bg-white" />
   </Button>
   <h1 class="mt-4 h-8 w-[168px] text-center text-2xl font-semibold">いいね一覧</h1>
-  <div class="sm:mt-12">
+  <div class="sm:mt-12 w-full flex justify-center">
     <PostCards posts={data.posts} currentUser={data.currentUser} pageType="likes" />
   </div>
 </div>
