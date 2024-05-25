@@ -1,6 +1,7 @@
 import { followsTable, likesTable, postsTable, usersTable } from '$lib/server/db/schema';
 import { serializePost } from '$lib/server/serializers/post';
 import type { DrizzleClient } from '$lib/server/types/drizzle';
+import { shuffleArray } from '$lib/utils';
 import { eq, desc, and, not, notInArray, isNull, inArray, or, count } from 'drizzle-orm';
 
 export async function getUserPosts(db: DrizzleClient, r2: R2Bucket, userId: string) {
@@ -58,7 +59,16 @@ export async function getUserPostsCount(db: DrizzleClient, r2: R2Bucket, userId:
   };
 }
 
-export async function getRecommendedPosts(db: DrizzleClient, r2: R2Bucket, userId: string) {
+type Options = {
+  limit: number;
+};
+
+export async function getRecommendedPosts(
+  db: DrizzleClient,
+  r2: R2Bucket,
+  userId: string,
+  options: Options
+) {
   const likePostIds = (
     await db.query.likesTable.findMany({
       where: eq(likesTable.userId, userId),
@@ -66,13 +76,14 @@ export async function getRecommendedPosts(db: DrizzleClient, r2: R2Bucket, userI
     })
   ).map((like) => like.postId);
 
-  const recommendedPost = await db.query.postsTable.findFirst({
+  const posts = await db.query.postsTable.findMany({
     where: and(
       eq(postsTable.analysisResult, true),
       not(eq(postsTable.userId, userId)),
       likePostIds.length > 0 ? notInArray(postsTable.id, likePostIds) : undefined
     ),
     orderBy: desc(postsTable.id),
+    limit: options.limit,
     with: {
       user: true,
       likes: {
@@ -91,14 +102,15 @@ export async function getRecommendedPosts(db: DrizzleClient, r2: R2Bucket, userI
     }
   });
 
-  if (!recommendedPost) {
-    return { post: null };
-  }
-
-  return { post: await serializePost(r2, recommendedPost) };
+  return { posts: await Promise.all(posts.map((post) => serializePost(r2, post))) };
 }
 
-export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, currentUserId: string) {
+export async function getFollowingPosts(
+  db: DrizzleClient,
+  r2: R2Bucket,
+  currentUserId: string,
+  options: Options
+) {
   // フォローしているユーザーIDの配列を取得
   const followingUserIds = (
     await db.query.followsTable.findMany({
@@ -132,22 +144,25 @@ export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, current
       })
       .then((likes) => likes.map((like) => like.postId))
   ]);
-  
+
   const hasSuperLikePostId = superLikePostIds.length > 0;
   const hasMyLikesPostId = myLikesPostIds.length > 0;
 
   // 自分がlike, unlike, super_likeした投稿を除外する条件
-  const excludeMyLikesCondition = hasMyLikesPostId ? not(inArray(postsTable.id, myLikesPostIds)) : undefined;
+  const excludeMyLikesCondition = hasMyLikesPostId
+    ? not(inArray(postsTable.id, myLikesPostIds))
+    : undefined;
 
-  const [followingPost, superLikedPost] = await Promise.all([
+  const [followingPosts, superLikedPosts] = await Promise.all([
     // フォロー中ユーザーの投稿でかつ、自分がlike, unlike, super_likeしていない投稿
-    db.query.postsTable.findFirst({
+    db.query.postsTable.findMany({
       where: and(
         eq(postsTable.analysisResult, true),
         inArray(postsTable.userId, followingUserIds),
         excludeMyLikesCondition
       ),
       orderBy: desc(postsTable.id),
+      limit: Math.floor(options.limit / 2),
       with: {
         user: true,
         likes: {
@@ -166,13 +181,14 @@ export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, current
       }
     }),
     // フォロー中ユーザーがスーパーライクして、かつ自分がlike, unlike, super_likeしていない投稿
-    db.query.postsTable.findFirst({
+    db.query.postsTable.findMany({
       where: and(
         eq(postsTable.analysisResult, true),
         hasSuperLikePostId ? inArray(postsTable.id, superLikePostIds) : undefined,
         excludeMyLikesCondition
       ),
       orderBy: desc(postsTable.id),
+      limit: Math.floor(options.limit / 2),
       with: {
         user: true,
         likes: {
@@ -192,13 +208,13 @@ export async function getFollowingPosts(db: DrizzleClient, r2: R2Bucket, current
     })
   ]);
 
-  const posts = [followingPost, superLikedPost].flatMap((post) => (post == null ? [] : [post]));
+  const posts = [...followingPosts, ...superLikedPosts].flatMap((post) =>
+    post == null ? [] : [post]
+  );
 
-  if (posts.length === 0) {
-    return { post: null };
-  }
+  const serializedPosts = await Promise.all(posts.map((post) => serializePost(r2, post)));
 
   return {
-    post: await serializePost(r2, posts[0])
+    posts: shuffleArray(serializedPosts)
   };
 }

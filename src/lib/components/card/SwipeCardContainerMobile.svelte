@@ -7,8 +7,8 @@
   import type { SerializedPost } from '$lib/server/serializers/post';
   import StarIcon from '$lib/components/icons/StarIcon.svelte';
   import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
-  import { enhance } from '$app/forms';
   import { constructImageUrl } from '$lib/url';
+  import { invalidate } from '$app/navigation';
 
   const commonClasses = {
     profileImage: 'size-9 overflow-hidden rounded-lg',
@@ -24,16 +24,44 @@
   };
 
   export let tabValue: string;
-  export let post: SerializedPost | null;
+  export let posts: SerializedPost[];
+
+  let currentIndex = 0;
 
   const recommendCurrentScrollIndex = writable(0);
   const followingCurrentScrollIndex = writable(0);
 
   $: currentScrollIndex =
     tabValue === 'recommend' ? $recommendCurrentScrollIndex : $followingCurrentScrollIndex;
+  $: post = posts[currentIndex];
+
+  const fetchCreateLike = async (postId: string, likeType: 'unlike' | 'super_like' | 'like') =>
+    fetch('/api/like/create', {
+      method: 'POST',
+      body: JSON.stringify({ postId, likeType }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+
+  async function createLike(postId: string, likeType: 'unlike' | 'super_like' | 'like') {
+    const nextIndex = currentIndex + 1;
+    const isLast = nextIndex === posts.length;
+
+    if (isLast) {
+      await fetchCreateLike(postId, likeType);
+      await invalidate('swipe:allPosts');
+      currentIndex = 0;
+      return;
+    }
+
+    currentIndex += 1;
+
+    fetchCreateLike(postId, likeType);
+  }
 </script>
 
-{#if post === null}
+{#if post == null}
   <div class="flex h-full items-center justify-center text-xl">表示する女性がいません</div>
 {:else}
   <Card
@@ -89,29 +117,32 @@
 
         <!-- Action buttons -->
         <div class="absolute bottom-2 right-2 flex gap-x-2">
-          <form method="post" use:enhance>
-            <input name="postId" type="hidden" value={post.id} />
-            <input name="likeType" type="hidden" value="unlike" />
-            <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-              <span class="i-akar-icons-cross size-6"></span>
-            </Button>
-          </form>
+          <Button
+            type="submit"
+            variant="smOutline"
+            class={buttonVariants.smOutline}
+            on:click={() => createLike(post.id, 'unlike')}
+          >
+            <span class="i-akar-icons-cross size-6"></span>
+          </Button>
 
-          <form method="post" use:enhance>
-            <input name="postId" type="hidden" value={post.id} />
-            <input name="likeType" type="hidden" value="super_like" />
-            <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-              <StarIcon class="size-6 bg-[#25AADA]" />
-            </Button>
-          </form>
+          <Button
+            type="submit"
+            variant="smOutline"
+            class={buttonVariants.smOutline}
+            on:click={() => createLike(post.id, 'super_like')}
+          >
+            <StarIcon class="size-6 bg-[#25AADA]" />
+          </Button>
 
-          <form method="post" use:enhance>
-            <input name="postId" type="hidden" value={post.id} />
-            <input name="likeType" type="hidden" value="like" />
-            <Button type="submit" variant="smOutline" class={buttonVariants.smOutline}>
-              <HeartIcon class="size-6 bg-[#25AADA]" />
-            </Button>
-          </form>
+          <Button
+            type="submit"
+            variant="smOutline"
+            class={buttonVariants.smOutline}
+            on:click={() => createLike(post.id, 'like')}
+          >
+            <HeartIcon class="size-6 bg-[#25AADA]" />
+          </Button>
         </div>
 
         <!-- Superlike badge -->

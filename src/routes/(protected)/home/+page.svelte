@@ -24,9 +24,9 @@
     <div class="h-full max-h-[calc(100svh-56px-56px-12px)] flex-1 sm:max-h-full">
       <TabsContent value={data.type} variant="text" class="h-full flex justify-center flex-1">
         {#if data.isMobile}
-          <SwipeCardContainerMobile tabValue={data.type} post={data.post} />
+          <SwipeCardContainerMobile tabValue={data.type} posts={data.posts ?? []} />
         {:else}
-          <SwipeCardContainerPC tabValue={data.type} post={data.post} />
+          <SwipeCardContainerPC tabValue={data.type} posts={data.posts ?? []} />
         {/if}
       </TabsContent>
     </div>

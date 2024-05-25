@@ -5,12 +5,12 @@
   import { Button } from '$lib/components/ui/button';
   import { Card } from '$lib/components/ui/card';
   import type { SerializedPost } from '$lib/server/serializers/post';
-  import { enhance } from '$app/forms';
   import StarIcon from '$lib/components/icons/StarIcon.svelte';
   import ArrowUpIcon from '$lib/components/icons/ArrowUpIcon.svelte';
   import ArrowDownIcon from '$lib/components/icons/ArrowDownIcon.svelte';
   import HeartIcon from '$lib/components/icons/HeartIcon.svelte';
   import { constructImageUrl } from '$lib/url';
+  import { invalidate } from '$app/navigation';
 
   const commonClasses = {
     profileImage: 'size-9 overflow-hidden rounded-lg',
@@ -28,13 +28,16 @@
   };
 
   export let tabValue: string;
-  export let post: SerializedPost | null;
+  export let posts: SerializedPost[];
+
+  let currentIndex = 0;
 
   const recommendCurrentScrollIndex = writable(0);
   const followingCurrentScrollIndex = writable(0);
 
   $: currentScrollIndex =
     tabValue === 'recommend' ? $recommendCurrentScrollIndex : $followingCurrentScrollIndex;
+  $: post = posts[currentIndex];
 
   const handleScroll = (type: 'up' | 'down') => {
     // 現在のカードに基づいて次のカードを表示
@@ -44,9 +47,34 @@
       currentScrollIndex += 1;
     }
   };
+
+  const fetchCreateLike = async (postId: string, likeType: 'unlike' | 'super_like' | 'like') =>
+    fetch('/api/like/create', {
+      method: 'POST',
+      body: JSON.stringify({ postId, likeType }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+
+  async function createLike(postId: string, likeType: 'unlike' | 'super_like' | 'like') {
+    const nextIndex = currentIndex + 1;
+    const isLast = nextIndex === posts.length;
+
+    if (isLast) {
+      await fetchCreateLike(postId, likeType);
+      await invalidate('swipe:allPosts');
+      currentIndex = 0;
+      return;
+    }
+
+    currentIndex += 1;
+
+    fetchCreateLike(postId, likeType);
+  }
 </script>
 
-{#if post === null}
+{#if post == null}
   <div class="flex h-full items-center justify-center text-xl">表示する女性がいません</div>
 {:else}
   <div class="flex justify-center w-full">
@@ -192,29 +220,32 @@
 
       <!-- Action buttons -->
       <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 gap-x-16 sm:-bottom-12 sm:flex">
-        <form method="post" use:enhance>
-          <input name="postId" type="hidden" value={post.id} />
-          <input name="likeType" type="hidden" value="unlike" />
-          <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
-            <span class="i-akar-icons-cross size-8"></span>
-          </Button>
-        </form>
+        <Button
+          type="submit"
+          variant="lgOutline"
+          class={buttonVariants.lgOutline}
+          on:click={() => createLike(post.id, 'unlike')}
+        >
+          <span class="i-akar-icons-cross size-8"></span>
+        </Button>
 
-        <form method="post" use:enhance>
-          <input name="postId" type="hidden" value={post.id} />
-          <input name="likeType" type="hidden" value="super_like" />
-          <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
-            <StarIcon class="size-8 sm:size-16 bg-[#25AADA]" />
-          </Button>
-        </form>
+        <Button
+          type="submit"
+          variant="lgOutline"
+          class={buttonVariants.lgOutline}
+          on:click={() => createLike(post.id, 'super_like')}
+        >
+          <StarIcon class="size-8 sm:size-16 bg-[#25AADA]" />
+        </Button>
 
-        <form method="post" use:enhance>
-          <input name="postId" type="hidden" value={post.id} />
-          <input name="likeType" type="hidden" value="like" />
-          <Button type="submit" variant="lgOutline" class={buttonVariants.lgOutline}>
-            <HeartIcon class="size-8 sm:size-16 bg-[#25AADA]" />
-          </Button>
-        </form>
+        <Button
+          type="submit"
+          variant="lgOutline"
+          class={buttonVariants.lgOutline}
+          on:click={() => createLike(post.id, 'like')}
+        >
+          <HeartIcon class="size-8 sm:size-16 bg-[#25AADA]" />
+        </Button>
       </div>
     </Card>
   </div>
