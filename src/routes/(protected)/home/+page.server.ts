@@ -21,7 +21,7 @@ export const load: PageServerLoad = async (event) => {
       ? await getRecommendedPosts(db, r2, userId)
       : await getFollowingPosts(db, r2, userId);
 
-  return { type, post, isMobile: event.locals.isMobile };
+  return { type, post };
 };
 
 export const actions = {

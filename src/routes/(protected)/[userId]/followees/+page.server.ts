@@ -17,5 +17,5 @@ export const load: PageServerLoad = async (event) => {
 
   const data = await getFollowees(db, r2, event.params.userId, currentUser.id);
 
-  return { followees: data.followees, isMobile: event.locals.isMobile };
+  return { followees: data.followees };
 };
