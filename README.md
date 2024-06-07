@@ -1,38 +1,52 @@
-# create-svelte
+# BeauBelle
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+## 概要
 
-## Creating a project
+BeauBelleは、AIが生成した女性の画像を共有し、いいね！やスーパーライク！、フォローなどを通じて他のユーザーと交流できるソーシャルメディアプラットフォームです。
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 機能
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- **AI生成画像の投稿:** ユーザーは、Stable DiffusionなどのAIモデルを使用して生成した女性の画像を投稿できます。
+- **プロンプトとハッシュタグの追加:** 投稿には、画像生成に使用したプロンプトと関連するハッシュタグを追加できます。
+- **いいね！とスーパーライク！:** ユーザーは他のユーザーの投稿にいいね！やスーパーライク！をすることができます。スーパーライク！は特別ないいね！で、投稿者に通知されます。
+- **フォロー:** ユーザーは他のユーザーをフォローして、そのユーザーの新しい投稿を自分のフィードで見ることができます。
+- **おすすめフィード:** ユーザーの興味に基づいて、おすすめの投稿を表示します。
+- **プロフィール:** ユーザーは自分のプロフィール画像、名前、フォロー/フォロワー数を表示できます。
+- **通知:** いいね！、スーパーライク！、フォローに関する通知を受け取ることができます。
+- **Google認証:** Googleアカウントを使用してログインできます。
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## スクリーンショット
 
-## Developing
+| ホーム | ユーザーページ | ユーザーページ（投稿詳細情報） |
+|---|---|---|
+| ![ホーム](docs/images/1.png) | ![ユーザーページ](docs/images/2.png) | ![ユーザーページ（投稿詳細情報）](docs/images/2.1.png) |
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+| ホーム（ハッシュタグ） | ホーム（プロンプト） | 投稿ページ |
+|---|---|---|
+| ![ホーム（ハッシュタグ）](docs/images/3.png) | ![ホーム（プロンプト）](docs/images/4.png) | ![投稿ページ](docs/images/5.png) |
 
-```bash
-npm run dev
+| ホーム（SPレイアウト） | ユーザーページ（SPレイアウト） | フォロー一覧（SPレイアウト） |
+|---|---|---|
+| ![ホーム（SPレイアウト）](docs/images/7.png) | ![ユーザーページ（SPレイアウト）](docs/images/8.png) | ![フォロー一覧（SPレイアウト）](docs/images/9.png) |
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## 技術スタック
 
-## Building
+- **SvelteKit:** フロントエンドフレームワーク
+- **Tailwind CSS:** CSSフレームワーク
+- **Lucia:** 認証ライブラリ
+- **Drizzle ORM:** データベースORM
+- **Cloudflare D1:** データベース
+- **Cloudflare Workers:** サーバーレスプラットフォーム
+- **Cloudflare R2:** オブジェクトストレージ
+- **Cloudflare Pages:** 静的サイトホスティング
 
-To create a production version of your app:
+## 開発環境のセットアップ
 
-```bash
-npm run build
-```
+1. リポジトリをクローンします。
+2. `npm install` を実行して依存関係をインストールします。
+3. `.env` ファイルを作成し、必要な環境変数を設定します。
+4. `npm run dev` を実行して開発サーバーを起動します。
 
-You can preview the production build with `npm run preview`.
+## デプロイ
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Cloudflare Pagesを使用してBeauBelleをデプロイしています。詳細については、Cloudflare Pagesのドキュメントを参照してください。
